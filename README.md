@@ -3,8 +3,8 @@ BearNews aims at bringing all the news that are available both in Twitter and Ba
 
 Technologies Used:
 
-Docker
-Spring Boot 2.0+
-Mysql
-RabbitMQ as message queue
-Redis as cache
+1. Docker
+2. Spring Boot 2.0+
+3. Mysql
+4. RabbitMQ as message queue
+5. Redis as cache
