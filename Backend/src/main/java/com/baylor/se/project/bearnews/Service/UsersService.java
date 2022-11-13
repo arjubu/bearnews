@@ -29,4 +29,9 @@ public class UsersService {
             return String.valueOf(newUser.getId());
         }
     }
+
+    public List<Users> listAllUser(){
+        List<Users> allUserRegistered = userRepo.findAll();
+        return allUserRegistered;
+    }
 }
