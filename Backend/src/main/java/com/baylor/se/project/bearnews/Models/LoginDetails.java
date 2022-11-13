@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -20,9 +17,11 @@ public class LoginDetails {
     private long id;
 
     @Column
-    private String name;
+    private String username;
 
-    @Column
+    //@OneToOne(mappedBy = "username")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "loginDetails_email", referencedColumnName = "email")
     private String email;
 
     @Column
