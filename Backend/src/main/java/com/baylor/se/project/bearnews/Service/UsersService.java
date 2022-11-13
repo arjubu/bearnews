@@ -21,17 +21,41 @@ public class UsersService {
     }
     public String RegisterUserToSystem(Users user){
         Users newUser = user;
-        String regexPattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,3}";
-//        if((patternMatches(user.getEmail(),regexPattern))==false)
-//            return "email pattern is invalid";
-//        else{
-            userRepo.save(newUser);
-            return String.valueOf(newUser.getId());
-//        }
+        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        if((patternMatches(user.getEmail(),regexPattern)) ==false) {
+            return "email pattern is invalid";
+        }
+        else{
+            if(user.getFirstName().equals("")){
+                return "first name cannot be null";
+            }
+            else {
+                if(user.getLastName().equals("")){
+                    return "last name cannot be null";
+                }
+                else {
+                    if(userExsistence(user.getEmail())==true){
+                        return "the email already exists in the system";
+                    }
+                    else {
+                        user.setUserType(Users.type.SystemUser);
+                        userRepo.save(newUser);
+                        return String.valueOf(newUser.getId());
+                    }
+                }
+            }
+        }
     }
 
     public List<Users> listAllUser(){
         List<Users> allUserRegistered = userRepo.findAll();
         return allUserRegistered;
+    }
+    public boolean userExsistence(String email){
+        List<Users> userInSystem = userRepo.findByEmail(email);
+        if(userInSystem.isEmpty())
+            return false;
+        else
+            return true;
     }
 }

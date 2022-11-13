@@ -36,5 +36,11 @@ public class Users {
     @Column
     private String socialMediaLink;
 
+    @Enumerated(EnumType.STRING)
+    private type userType;
+    public enum type {
+        SystemUser, BearNewsPortal, Twitter;
+    }
+
 
 }
