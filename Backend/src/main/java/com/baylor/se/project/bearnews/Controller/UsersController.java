@@ -20,12 +20,14 @@ public class UsersController {
     @ResponseBody
     public ResponseEntity<?> registerForAccount(@RequestBody Users users) {
         String responseReturned = usersService.RegisterUserToSystem(users);
+        System.out.println(responseReturned);
         return new ResponseEntity<>(responseReturned,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/findAllUsers", method = RequestMethod.GET)
     public ResponseEntity<?> getAllUsers(){
         List<Users> foundApplicants = usersService.listAllUser();
+        System.out.println(foundApplicants);
         return new ResponseEntity<>(foundApplicants,HttpStatus.OK);
     }
 }
