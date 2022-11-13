@@ -20,14 +20,14 @@ public class UsersService {
                 .matches();
     }
     public String RegisterUserToSystem(Users user){
-        Users newUser = new Users();
-        String regexPattern = "^(.+)@(\\S+)$";
-        if((patternMatches(regexPattern,user.getEmail()))==false)
-            return "email pattern is invalid";
-        else{
+        Users newUser = user;
+        String regexPattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,3}";
+//        if((patternMatches(user.getEmail(),regexPattern))==false)
+//            return "email pattern is invalid";
+//        else{
             userRepo.save(newUser);
             return String.valueOf(newUser.getId());
-        }
+//        }
     }
 
     public List<Users> listAllUser(){
