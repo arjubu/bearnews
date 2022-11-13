@@ -16,8 +16,8 @@ public class UsersController {
 
     @RequestMapping(path="/applyForApplication", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> registerForJob(@RequestBody Users users) {
-        //String responseReturned = applicantService.applicantSave(applicant);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> registerForAccount(@RequestBody Users users) {
+        String responseReturned = usersService.RegisterUserToSystem(users);
+        return new ResponseEntity<>(responseReturned,HttpStatus.OK);
     }
 }
