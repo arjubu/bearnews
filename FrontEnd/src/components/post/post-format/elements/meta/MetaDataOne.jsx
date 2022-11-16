@@ -31,14 +31,6 @@ const MetaDataOne = ({metaData}) => {
                             </a>
                         </Link>
                     </li>
-                    <li>
-                        <i className="feather icon-activity" />
-                        {metaData.post_views}
-                    </li>
-                    <li>
-                        <i className="feather icon-share-2" />
-                        {metaData.post_share}
-                    </li>
                   </ul>
                 </div>
                 {/* End of .post-metas */}

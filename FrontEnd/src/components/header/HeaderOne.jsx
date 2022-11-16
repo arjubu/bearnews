@@ -50,6 +50,10 @@ const HeaderOne = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handlerSearchChange = (e) => {
+   setsearchValue(e.target.value);
+};
+
   // Header Search
   const [searchshow, setSearchShow] = useState(false);
 
@@ -60,8 +64,13 @@ const HeaderOne = () => {
     setSearchShow(false);
   };
 
+  // const searchTag = () =>{
+  //   href
+  // };
+
   // Mobile Menu Toggle
   const [mobileToggle, setMobileToggle] = useState(false);
+  const [searchValue, setsearchValue] = useState(false);
 
   const MobileMenuToggler = () => {
     setMobileToggle(!mobileToggle);
@@ -150,9 +159,9 @@ const HeaderOne = () => {
                   {MenuData.map((data, index) =>
                     data.submenu ? (
                       <li className="has-dropdown" key={index}>
-                        {/* <Link href={data.path}>
+                        <Link href={data.path}>
                           <a>{data.label}</a>
-                        </Link> */}
+                        </Link>
                         <ul className="submenu">
                           {data.submenu.map((data, index) => (
                             <li key={index}>
@@ -185,10 +194,13 @@ const HeaderOne = () => {
                       type="text"
                       className="navbar-search-field"
                       placeholder="Search Here..."
+                      onChange={handlerSearchChange}
                     />
-                    <button className="navbar-search-btn" type="button">
+                    <Link href={"/category/"+searchValue}>
+                    <button className="navbar-search-btn" type="button"  >
                       <i className="fal fa-search" />
                     </button>
+                    </Link>
                   </div>
                   <span
                     className="navbar-search-close"
