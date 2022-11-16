@@ -5,10 +5,8 @@ import HeadMeta from "../../components/elements/HeadMeta";
 import FooterOne from "../../components/footer/FooterOne";
 import HeaderOne from "../../components/header/HeaderOne";
 import PostLayoutTwo from "../../components/post/layout/PostLayoutTwo";
-import WidgetAd from "../../components/widget/WidgetAd";
 import WidgetCategory from "../../components/widget/WidgetCategory";
 import WidgetPost from "../../components/widget/WidgetPost";
-import WidgetSocialShare from "../../components/widget/WidgetSocialShare";
 import { slugify } from "../../utils";
 
 const PostAuthor = ({postData, allPosts}) => {
@@ -72,11 +70,8 @@ const PostAuthor = ({postData, allPosts}) => {
                     </div>
                     <div className="col-lg-4">
                         <div className="post-sidebar">
-                            <WidgetAd />
-                            <WidgetSocialShare />
                             <WidgetCategory cateData={allPosts} />
                             <WidgetPost dataPost={allPosts} />
-                            <WidgetAd img="/images/clientbanner/clientbanner3.jpg" height={492} width={320}/>
                         </div>
                     </div>
                 </div>

@@ -4790,8 +4790,8 @@ input[type="radio"] + label::after {
 }
 .navbar-search .navbar-search-btn {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  left: 100%;
+  bottom: -35%;
   border: none;
   background: transparent;
   padding: 0.5rem 2rem;
