@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ArticleController {
 
@@ -17,8 +19,14 @@ public class ArticleController {
     ArticleService articleService;
 
     @RequestMapping(value = "/populateArticle", method = RequestMethod.POST)
-    public ResponseEntity<?> createTeam(@RequestBody Article articleSent){
+    public ResponseEntity<?> createArticles(@RequestBody Article articleSent){
         articleService.createArticle(articleSent);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/fetchArticle", method = RequestMethod.GET)
+    public ResponseEntity<?> getArticles(){
+        List<Article> articleList= articleService.fetchAllarticles();
+        return new ResponseEntity(articleList,HttpStatus.OK);
     }
 }
