@@ -152,6 +152,28 @@ button:hover {
   justify-content: center;
 }
 
+.regis{
+  display: flex;
+  margin-right: 55%;
+  margin-top: 5%;
+}
+
+.forgotP{
+  display: flex;
+  margin-left: 0%;
+  margin-top: 5%;
+}
+
+
+.forgotandreg{ 
+  margin-left: 9%;
+  margin-top: 5%;
+  display: flex;
+}
+.regis:hover{
+  color:black;
+}
+
 .login_frame {
   top: 50%;
   left: 50%;
