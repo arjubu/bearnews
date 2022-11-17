@@ -20,8 +20,14 @@ public class UsersController {
     @ResponseBody
     public ResponseEntity<?> registerForAccount(@RequestBody Users users) {
         String responseReturned = usersService.RegisterUserToSystem(users);
-        System.out.println(responseReturned);
-        return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        int intValue;
+        try {
+            intValue = Integer.parseInt(responseReturned);
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        } catch (NumberFormatException e) {
+            System.out.println("Input String cannot be parsed to Integer.");
+        }
+        return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/findAllUsers", method = RequestMethod.GET)
