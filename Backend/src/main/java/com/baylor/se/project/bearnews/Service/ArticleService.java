@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -24,5 +25,12 @@ public class ArticleService {
 
     public List<Article> fetchAllarticles(){
         return articleRepository.findAll();
+    }
+
+    public Article fetchArticle(Long id){
+         Optional<Article> articleQueryOpt= articleRepository.findById(id);
+         if(articleQueryOpt.isPresent())
+            return articleQueryOpt.get();
+         return null;
     }
 }

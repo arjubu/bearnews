@@ -5,10 +5,7 @@ import com.baylor.se.project.bearnews.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,11 @@ public class ArticleController {
     public ResponseEntity<?> getArticles(){
         List<Article> articleList= articleService.fetchAllarticles();
         return new ResponseEntity(articleList,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/fetchArticleById", method = RequestMethod.GET)
+    public ResponseEntity<?> getArticlesById(@RequestParam (name="articleId" , required = false) Long articleId){
+       Article queryArticle = articleService.fetchArticle(articleId);
+       return new ResponseEntity(queryArticle,HttpStatus.OK);
     }
 }
