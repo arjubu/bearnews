@@ -47,4 +47,11 @@ public class User {
             property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private Set<Event> events = new HashSet<>();
+
+    @OneToMany(mappedBy = "user") // inverse-side
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private Set<Notification> notifications = new HashSet<>();
 }
