@@ -9,10 +9,12 @@ import Image from "next/image";
 function Login() {
     const [errorMessages, error_login] = useState({});
     const [islogin, login_set_true] = useState(false);
-    const [ismanager, manager_set_true] = useState(false);
-    const [isemp, emp_set_true] = useState(false);
+
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
+    const [repassword, setRepassword] = useState();
+    const [firstname, setFirstname] = useState();
+    const [lastname, setLastname] = useState();
     const [id, setID] = useState();
 
   
@@ -24,10 +26,13 @@ function Login() {
     const login_handle = (event) => {
       event.preventDefault();
   
-      fetch('http://localhost', {
+      fetch('http://localhost:8080/applyForAccount', {
         method: 'POST',
         body: JSON.stringify({
           email : username,
+          password : password,
+          firstname : firstname,
+          lastname : lastname,
           password : password
         }),
         headers: {
@@ -41,21 +46,14 @@ function Login() {
             return response.json();
             
           } else {
-            error_login({ name: "ID", message: errors.username});
+            error_login({ name: "ID", message: response.json()});
             throw new Error('Something went wrong ...');
   
           }
             
           }).then(data=>{
 
-            if(data.list[0].isManager==0){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }
-            else if(data.list[0].isManager==1){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }
+            navigator("/login");
           });
         
         
@@ -85,19 +83,30 @@ function Login() {
             <input type="text" name="Password" required onChange={e => setPassword(e.target.value)}/>
             {renderErrorMessage("Password")}{renderErrorMessage("ID")}
           </div>
+          <div className="input-container">
+            <label>Re-enter Password </label>
+            <input type="text" name="Password" required onChange={e => setRepassword(e.target.value)}/>
+            {renderErrorMessage("Password")}{renderErrorMessage("ID")}
+          </div>
+          <div className="input-container">
+            <label>First Name </label>
+            <input type="text" name="Password" required onChange={e => setFirstname(e.target.value)}/>
+            {renderErrorMessage("Password")}{renderErrorMessage("ID")}
+          </div>
+          <div className="input-container">
+            <label>Last Name </label>
+            <input type="text" name="Password" required onChange={e => setLastname(e.target.value)}/>
+            {renderErrorMessage("Password")}{renderErrorMessage("ID")}
+          </div>
           <div className="button-container">
             <input type="submit" value="Login"/>
           </div>
           <div className="forgotandreg">
-          <div className="regis">
-                <a href={"/registration"}>
-                  <l className="regisText"  n/>Sign up
-                </a>
-                </div>
+
 
                 <div className="forgotP">
-                <a href={"/forget"}>
-                  <l className="regisText"  n/>Forget Password?
+                <a href={"/login"}>
+                  <l className="regisText"  n/>Back to Login
                 </a>
                 </div>
             </div>
@@ -116,7 +125,7 @@ function Login() {
                         }}>
       <div className="app">
         <div className="login_frame">
-          <div className="title">Log In</div>
+          <div className="title">Sign Up</div>
           <a>
                     <Image
                     className="logo"

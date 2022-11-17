@@ -4,7 +4,6 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import HeadMeta from "../../components/elements/HeadMeta";
 import FooterOne from "../../components/footer/FooterOne";
 import HeaderOne from "../../components/header/HeaderOne";
-import PostFormatAudio from "../../components/post/post-format/PostFormatAudio";
 import PostFormatGallery from "../../components/post/post-format/PostFormatGallery";
 import PostFormatQuote from "../../components/post/post-format/PostFormatQuote";
 import PostFormatStandard from "../../components/post/post-format/PostFormatStandard";
@@ -20,8 +19,6 @@ const PostDetails = ({postContent, allPosts}) => {
 			return <PostFormatVideo postData={postContent} allData={allPosts}/>
 		} else if (postContent.postFormat === 'gallery') {
 			return <PostFormatGallery postData={postContent} allData={allPosts} />
-		}  else if (postContent.postFormat === 'audio') {
-			return <PostFormatAudio postData={postContent} allData={allPosts} />
 		} else if (postContent.postFormat === 'quote') {
 			return <PostFormatQuote postData={postContent} allData={allPosts} />
 		} else if (postContent.postFormat === 'text') {
@@ -62,8 +59,6 @@ export async function getStaticProps({ params }) {
 		'author_img',
 		'author_bio',
 		'author_social',
-		'post_views',
-        'post_share',
 		'content',
 	])
 	const content = await markdownToHtml(post.content || '')
