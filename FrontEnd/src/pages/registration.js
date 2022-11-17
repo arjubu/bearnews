@@ -26,10 +26,13 @@ function Login() {
     const login_handle = (event) => {
       event.preventDefault();
   
-      fetch('http://localhost', {
+      fetch('http://localhost:8080/applyForAccount', {
         method: 'POST',
         body: JSON.stringify({
           email : username,
+          password : password,
+          firstname : firstname,
+          lastname : lastname,
           password : password
         }),
         headers: {
@@ -43,21 +46,14 @@ function Login() {
             return response.json();
             
           } else {
-            error_login({ name: "ID", message: errors.username});
+            error_login({ name: "ID", message: response.json()});
             throw new Error('Something went wrong ...');
   
           }
             
           }).then(data=>{
 
-            if(data.list[0].isManager==0){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }
-            else if(data.list[0].isManager==1){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }
+            navigator("/login");
           });
         
         

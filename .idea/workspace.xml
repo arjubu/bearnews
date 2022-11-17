@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a65c3844-2858-4276-a167-62a7f5fd0623" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/baylor/se/project/bearnews/Controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/baylor/se/project/bearnews/Controller/UsersController.java" afterDir="false" />
-    </list>
+    <list default="true" id="a65c3844-2858-4276-a167-62a7f5fd0623" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +59,10 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm"
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
   <component name="RunManager" selected="Spring Boot.BearnewsApplication">
@@ -88,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1668721420899</updated>
-      <workItem from="1668721422214" duration="1477000" />
+      <workItem from="1668721422214" duration="2239000" />
     </task>
     <servers />
   </component>
