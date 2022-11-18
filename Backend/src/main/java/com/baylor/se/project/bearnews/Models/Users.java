@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,7 +26,6 @@ public class Users {
 
     @Column
     private String email;
-    //private Users email;
 
     @Column
     private boolean isActive;
@@ -36,6 +36,8 @@ public class Users {
     @Column
     private String socialMediaLink;
 
+//    @Column
+//    private List<Tag> interestList;[need to have user interests list]
     @Enumerated(EnumType.STRING)
     private type userType;
     public enum type {

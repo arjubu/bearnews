@@ -28,5 +28,12 @@ public class Comment {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+    //make relationship later
+    @Column
+    private long userId;
+    //make relation in here
+    @Column
+    private long articleId;
+
 
 }
