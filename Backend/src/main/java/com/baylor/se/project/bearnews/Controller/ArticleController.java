@@ -36,6 +36,9 @@ public class ArticleController {
     @RequestMapping(value = "/fetchArticleById", method = RequestMethod.GET)
     public ResponseEntity<?> getArticlesById(@RequestParam (name="articleId" , required = false) Long articleId){
        Article queryArticle = articleService.fetchArticle(articleId);
-       return new ResponseEntity(queryArticle,HttpStatus.OK);
+       if(queryArticle.getId()!=0)
+        return new ResponseEntity(queryArticle,HttpStatus.OK);
+
+        return new ResponseEntity<>("article id doesn't exsist",HttpStatus.BAD_REQUEST);
     }
 }
