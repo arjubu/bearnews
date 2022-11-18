@@ -34,7 +34,6 @@ public class UsersController {
     @RequestMapping(value = "/findAllUsers", method = RequestMethod.GET)
     public ResponseEntity<?> getAllUsers(){
         List<Users> foundApplicants = usersService.listAllUser();
-        System.out.println(foundApplicants);
         return new ResponseEntity<>(foundApplicants,HttpStatus.OK);
     }
 }
