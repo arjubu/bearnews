@@ -14,13 +14,14 @@ public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
 
-    public void createArticle(Article article){
+    public String createArticle(Article article){
         if(article.getContent()=="")
-            return;
+            return "content cannot be null";
         if(article.getTitle()=="")
-            return;
+            return "title cannot be null";
         else
             articleRepository.save(article);
+        return String.valueOf(article.getId());
     }
 
     public List<Article> fetchAllarticles(){

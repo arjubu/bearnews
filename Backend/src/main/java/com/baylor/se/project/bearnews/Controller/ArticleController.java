@@ -17,8 +17,14 @@ public class ArticleController {
 
     @RequestMapping(value = "/populateArticle", method = RequestMethod.POST)
     public ResponseEntity<?> createArticles(@RequestBody Article articleSent){
-        articleService.createArticle(articleSent);
-        return new ResponseEntity(HttpStatus.OK);
+        String responseReturned= articleService.createArticle(articleSent);
+        int intValue;
+        try {
+            intValue = Integer.parseInt(responseReturned);
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        } catch (NumberFormatException e) {
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/fetchArticle", method = RequestMethod.GET)
