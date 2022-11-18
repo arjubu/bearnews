@@ -20,7 +20,7 @@ public class BaylorNewsCrawler {
     BearNewsAPIKafkaProducer bearNewsAPIKafkaProducer;
 
     //@Scheduled(cron = "0/55 * * * * ?")
-    @Scheduled(cron = "30 17 * * *") // runs exactly at 5:30 PM everyday
+    @Scheduled(cron = "0 30 17 ? * *") // runs exactly at 5:30 PM everyday
     public List<BaylorNews> crawlDataFromBaylorNews() throws IOException {
         Document document = Jsoup.connect("https://www.baylor.edu/bn/news.php").get();
         Elements elements = document.getElementsByClass("newsWidget");
