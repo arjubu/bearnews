@@ -51,12 +51,10 @@ function Login() {
             if(data.list[0].isManager==0){
               setID(data.list[0].id);
               login_set_true(true);
-              emp_set_true(true);
             }
             else if(data.list[0].isManager==1){
               setID(data.list[0].id);
               login_set_true(true);
-              manager_set_true(true);            
             }
           });
         
@@ -90,6 +88,20 @@ function Login() {
           <div className="button-container">
             <input type="submit" value="Login"/>
           </div>
+          <div className="forgotandreg">
+          <div className="regis">
+                <a href={"/registration"}>
+                  <l className="regisText"  n/>Sign up
+                </a>
+                </div>
+
+                <div className="forgotP">
+                <a href={"/forget"}>
+                  <l className="regisText"  n/>Forget Password?
+                </a>
+                </div>
+            </div>
+
         </form>
       </div>
     );

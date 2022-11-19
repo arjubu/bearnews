@@ -2,6 +2,8 @@ package com.baylor.se.project.bearnews.Controller;
 
 
 import com.baylor.se.project.bearnews.Model.Event;
+
+import com.baylor.se.project.bearnews.Models.Event;
 import com.baylor.se.project.bearnews.Service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,5 +30,8 @@ public class EventController {
 
     }
 
+
+
+}
 
 }
