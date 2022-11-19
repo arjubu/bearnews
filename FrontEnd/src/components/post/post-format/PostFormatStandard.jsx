@@ -1,5 +1,4 @@
 import WidgetInstagram from "../../widget/WidgetInstagram";
-import WidgetNewsletter from "../../widget/WidgetNewsletter";
 import WidgetPost from "../../widget/WidgetPost";
 import WidgetSocialShare from "../../widget/WidgetSocialShare";
 import MetaDataOne from "./elements/meta/MetaDataOne";

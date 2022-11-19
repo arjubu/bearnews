@@ -5,6 +5,7 @@ import matter from 'gray-matter'
 const postsDirectory = join(process.cwd(), 'posts')
 
 export function getPostSlugs() {
+  //console.log(fs.readdirSync(postsDirectory));
   return fs.readdirSync(postsDirectory)
 }
 
