@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class BaylorNews {
+
+    Long baylorNewsId;
     String title;
 
     String detailLink;
@@ -17,6 +19,14 @@ public class BaylorNews {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     LocalDate date;
+
+    public Long getBaylorNewsId() {
+        return baylorNewsId;
+    }
+
+    public void setBaylorNewsId(Long baylorNewsId) {
+        this.baylorNewsId = baylorNewsId;
+    }
 
     public String getTitle() {
         return title;

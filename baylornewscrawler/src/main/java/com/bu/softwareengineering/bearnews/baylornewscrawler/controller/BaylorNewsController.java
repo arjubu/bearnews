@@ -38,6 +38,7 @@ public class BaylorNewsController {
 
                 Element titleElement = newsElement.select("a").first();
                 String href = titleElement.attr("href");
+                Long baylorNewsId = Long.valueOf(href.split("&")[1].split("=")[1]);
                 String title = titleElement.text();
 
 
@@ -50,6 +51,7 @@ public class BaylorNewsController {
                     thumbnailUrl = thumbE.select("img").attr("src");
                 }
                 BaylorNews baylorNews = new BaylorNews();
+                baylorNews.setBaylorNewsId(baylorNewsId);
                 baylorNews.setTitle(title);
                 baylorNews.setDetailLink(href);
                 baylorNews.setDescription(descriptionText);
