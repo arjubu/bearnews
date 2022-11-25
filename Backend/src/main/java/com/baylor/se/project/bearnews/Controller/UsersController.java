@@ -42,16 +42,21 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/updateUserInterest", method = RequestMethod.PUT)
-    public ResponseEntity<?> attachInterestList(@RequestBody Map<String, String> json) {
-        String tg1=json.get("tag1");
-        String tg2=json.get("tag2");
-        String tg3=json.get("tag3");
+    public ResponseEntity<?> attachInterestList(@RequestBody Map<String, String> json,
+                                                @RequestParam (name="usersId" , required = false) Long usersId) {
+        Users userFound = usersService.foundUserById(usersId);
+        if(userFound!=null) {
+            String tg1 = json.get("tag1");
+            String tg2 = json.get("tag2");
+            String tg3 = json.get("tag3");
 
-        List<String> userInterestList = new ArrayList<>();
-        userInterestList.add(tg1);
-        userInterestList.add(tg2);
-        userInterestList.add(tg3);
-        Users updateUsers =usersService.interestListAttach(userInterestList);
-        return new ResponseEntity<>(updateUsers,HttpStatus.OK);
+            List<String> userInterestList = new ArrayList<>();
+            userInterestList.add(tg1);
+            userInterestList.add(tg2);
+            userInterestList.add(tg3);
+            Users updateUsers = usersService.interestListAttach(userInterestList);
+            return new ResponseEntity<>(updateUsers, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("doesn't exsist", HttpStatus.BAD_REQUEST);
     }
 }

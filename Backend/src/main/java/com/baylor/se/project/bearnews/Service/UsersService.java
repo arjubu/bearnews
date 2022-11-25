@@ -77,5 +77,13 @@ public class UsersService {
         return usersToUpdate;
 
     }
+    public Users foundUserById(Long id){
+        Optional<Users> userQueryOpt = userRepo.findById(id);
+        if(userQueryOpt.isPresent()){
+           return userQueryOpt.get();
+        }
+        else
+            return null;
+    }
 
 }
