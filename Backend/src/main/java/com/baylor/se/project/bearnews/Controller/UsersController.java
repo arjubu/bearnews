@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -35,5 +37,18 @@ public class UsersController {
     public ResponseEntity<?> getAllUsers(){
         List<Users> foundApplicants = usersService.listAllUser();
         return new ResponseEntity<>(foundApplicants,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/updateUserInterest", method = RequestMethod.PUT)
+    public ResponseEntity<?> attachInterestList(@RequestBody Map<String, String> json) {
+        String tg1=json.get("tag1");
+        String tg2=json.get("tag2");
+        String tg3=json.get("tag3");
+        System.out.println(tg1+" "+tg2+" "+tg3);
+        List<String> userInterestList = new ArrayList<>();
+        userInterestList.add(tg1);
+        userInterestList.add(tg2);
+        userInterestList.add(tg3);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
