@@ -49,9 +49,6 @@ public class TagService {
         t1=tagRepository.findTagsByTagText(us.toLowerCase());
         foundTags.add(t1);
      }
-    for (Tag t: foundTags){
-        System.out.println(t.getId());
-     }
     return foundTags;
     }
 
