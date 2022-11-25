@@ -36,7 +36,7 @@ public class Users {
 
     @Column
     private String socialMediaLink;
-    
+
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> isLiked = new ArrayList<>();

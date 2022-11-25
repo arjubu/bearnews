@@ -24,7 +24,10 @@ public class TagController {
     @PostMapping("/createTag")
     public ResponseEntity<?> createTag(@RequestBody Tag tag) {
         Tag updated = tagService.createTag(tag);
+        if(updated!=null)
         return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
+
+        return new ResponseEntity<>("cannot create", new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
 

@@ -17,7 +17,9 @@ public class TagService {
 
 
     public Tag createTag(Tag tag) {
-        return tagRepository.save(tag);
+        if(!tag.getTagText().equals(""))
+            return tagRepository.save(tag);
+        return null;
     }
 
     public List<Tag> getAllTag() {return tagRepository.findAll();}
