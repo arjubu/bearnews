@@ -26,15 +26,7 @@ author_social:
     - 
         icon: fab fa-linkedin-in
         url: https://linkedin.com
-tags: 
-    - Gaming
-    - Adventure
-    - Travel
-    - Sports
-    - Science
-    - Technology
-    - Fashion
-    - Life Style
+
 
 ---
 

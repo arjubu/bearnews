@@ -42,9 +42,7 @@ export async function getStaticProps() {
     'cate_bg',
     'cate_img',
     'author_name',
-    'date',
-    'post_views',
-    'post_share',
+    'date'
   ])
   
   return {
