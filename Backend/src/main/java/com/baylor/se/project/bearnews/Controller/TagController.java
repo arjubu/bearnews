@@ -22,7 +22,7 @@ public class TagController {
 
 
     @PostMapping("/createTag")
-    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
+    public ResponseEntity<?> createTag(@RequestBody Tag tag) {
         Tag updated = tagService.createTag(tag);
         return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
     }
