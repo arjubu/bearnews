@@ -27,7 +27,7 @@ public class TagController {
         if(updated!=null)
         return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
 
-        return new ResponseEntity<>("cannot create", new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("cannot create already exsists", new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
 

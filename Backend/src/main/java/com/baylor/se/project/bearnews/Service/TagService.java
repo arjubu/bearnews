@@ -17,8 +17,15 @@ public class TagService {
 
 
     public Tag createTag(Tag tag) {
-        if(!tag.getTagText().equals(""))
-            return tagRepository.save(tag);
+        if(!tag.getTagText().equals("")) {
+            List<Tag> isTagExsisting = tagRepository.findByTagText(tag.getTagText().toLowerCase());
+            if(isTagExsisting.isEmpty()) {
+                tag.setTagText(tag.getTagText().toLowerCase());
+                return tagRepository.save(tag);
+            }
+            else
+                return null;
+        }
         return null;
     }
 
