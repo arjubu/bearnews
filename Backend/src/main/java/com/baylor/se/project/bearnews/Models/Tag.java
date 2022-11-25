@@ -1,5 +1,6 @@
 package com.baylor.se.project.bearnews.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,6 @@ public class Tag {
 
     @ManyToOne
     @JoinColumn(name = "users_id")
+    @JsonIgnore
     private Users users;
 }

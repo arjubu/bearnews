@@ -1,11 +1,14 @@
 package com.baylor.se.project.bearnews.Service;
 
+import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.Models.Users;
+import com.baylor.se.project.bearnews.Repository.TagRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -13,6 +16,9 @@ public class UsersService {
 
     @Autowired
     UsersRepository userRepo;
+
+    @Autowired
+    TagService tagService;
 
     public static boolean patternMatches(String emailAddress, String regexPattern) {
         return Pattern.compile(regexPattern)
@@ -58,4 +64,18 @@ public class UsersService {
         else
             return true;
     }
+
+    public Users interestListAttach(List<String> interestLists){
+        Users usersToUpdate = new Users();
+        List<Tag> tagsToAttach = tagService.ListOfTagsFound(interestLists);
+        Optional<Users> userQueryOpt = userRepo.findById(5L);
+        if(userQueryOpt.isPresent()){
+            usersToUpdate = userQueryOpt.get();
+            usersToUpdate.setIsLiked(tagsToAttach);
+            userRepo.save(usersToUpdate);
+        }
+        return usersToUpdate;
+
+    }
+
 }

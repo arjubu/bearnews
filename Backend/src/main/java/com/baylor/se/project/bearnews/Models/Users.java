@@ -38,8 +38,8 @@ public class Users {
     private String socialMediaLink;
 
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tag> isLiked = new ArrayList<>();
+    @OneToMany(mappedBy = "users")
+    private List<Tag> isLiked;
 
     @Enumerated(EnumType.STRING)
     private type userType;

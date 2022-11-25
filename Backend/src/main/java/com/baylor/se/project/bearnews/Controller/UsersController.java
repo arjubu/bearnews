@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Controller;
 
 import com.baylor.se.project.bearnews.Models.Users;
+import com.baylor.se.project.bearnews.Service.TagService;
 import com.baylor.se.project.bearnews.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,8 @@ public class UsersController {
 
     @Autowired
     UsersService usersService;
-
+    @Autowired
+    TagService tagService;
 
     @RequestMapping(path="/applyForAccount", method = RequestMethod.POST)
     @ResponseBody
@@ -44,11 +46,12 @@ public class UsersController {
         String tg1=json.get("tag1");
         String tg2=json.get("tag2");
         String tg3=json.get("tag3");
-        System.out.println(tg1+" "+tg2+" "+tg3);
+
         List<String> userInterestList = new ArrayList<>();
         userInterestList.add(tg1);
         userInterestList.add(tg2);
         userInterestList.add(tg3);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Users updateUsers =usersService.interestListAttach(userInterestList);
+        return new ResponseEntity<>(updateUsers,HttpStatus.OK);
     }
 }
