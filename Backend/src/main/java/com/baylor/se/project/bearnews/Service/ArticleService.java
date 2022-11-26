@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Service;
 
 import com.baylor.se.project.bearnews.Models.Article;
+import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.Repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,26 @@ public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    TagService tagService;
+
     public String createArticle(Article article){
         if(article.getContent()=="")
             return "content cannot be null";
         if(article.getTitle()=="")
             return "title cannot be null";
-        else
-            articleRepository.save(article);
+        if(article.getContains()==null)
+            return "tag has to be there";
+        else {
+            long tagId = article.getContains().getId();
+            Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
+            if(tagsToAttach!=null) {
+                article.setContains(tagsToAttach);
+                articleRepository.save(article);
+            }
+            else
+                return "please give valid tag or create new one";
+        }
         return String.valueOf(article.getId());
     }
 
