@@ -1,7 +1,7 @@
 package com.baylor.se.project.bearnews.Service;
 
 
-import com.baylor.se.project.bearnews.Model.Event;
+import com.baylor.se.project.bearnews.Models.Event;
 
 import com.baylor.se.project.bearnews.Models.Event;
 

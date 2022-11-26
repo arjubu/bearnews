@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,8 +37,10 @@ public class Users {
     @Column
     private String socialMediaLink;
 
-//    @Column
-//    private List<Tag> interestList;[need to have user interests list]
+
+    @OneToMany(mappedBy = "users")
+    private List<Tag> isLiked;
+
     @Enumerated(EnumType.STRING)
     private type userType;
     public enum type {
