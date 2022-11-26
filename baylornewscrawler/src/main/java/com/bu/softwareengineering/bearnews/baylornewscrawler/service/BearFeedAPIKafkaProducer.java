@@ -7,12 +7,12 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BearNewsAPIKafkaProducer<T> {
+public class BearFeedAPIKafkaProducer<T> {
 
     @Autowired
     KafkaTemplate kafkaTemplate;
 
     public void sendToBearNewsApiBackend(T message) throws JsonProcessingException {
-        kafkaTemplate.send("baylor-news-crawler", new ObjectMapper().writeValueAsString(message));
+        kafkaTemplate.send("baylor-news-topic", new ObjectMapper().writeValueAsString(message));
     }
 }

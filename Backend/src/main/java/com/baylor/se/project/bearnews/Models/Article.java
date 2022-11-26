@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,18 +22,40 @@ public class Article {
     @Id
     @GeneratedValue
     private long id;
+
     @Column
     private String title;
-    @Column
+
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
+
+    @Column
+    private String detailLink;
+
+    @Column
+    private String thumbLink;
+
+    @Column
+    private ArticleType articleType = ArticleType.SYSTEM;
+
+    @Column
+    private Integer baylorNewsId;
+
     //change it to relationship later
     @Column
     private long tagId;
     //change it to relationship later
+
     @Column
     private long userId;
-    @CreationTimestamp
-    private LocalDateTime createdDateTime;
+
+    @CreatedDate
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @LastModifiedDate
+    @Column
+    private LocalDateTime updatedAt;
 
 
 

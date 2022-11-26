@@ -3,8 +3,10 @@ package com.baylor.se.project.bearnews.Models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +22,23 @@ public class Users {
 
 
     @Column
+    @NotNull
     private String firstName;
 
     @Column
+    @NotNull
     private String lastName;
 
     @Column
+    @NotNull
     private String email;
 
     @Column
-    private boolean isActive;
+    @NotNull
+    private String password;
+
+    @Column
+    private boolean isActive = false;
 
     @Column
     private String profileImageUrl;
@@ -42,10 +51,7 @@ public class Users {
     private List<Tag> isLiked;
 
     @Enumerated(EnumType.STRING)
-    private type userType;
-    public enum type {
-        SystemUser, BearNewsPortal, Twitter;
-    }
+    private UserType userType;
 
 
 }
