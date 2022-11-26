@@ -1,15 +1,14 @@
 package com.baylor.se.project.bearnews.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,10 +23,10 @@ public class Article {
     private String title;
     @Column
     private String content;
-    //change it to relationship later
-    @Column
-    private long tagId;
-    //change it to relationship later
+
+    @ManyToOne
+    private Tag contains;
+    //relationship later
     @Column
     private long userId;
     @CreationTimestamp
