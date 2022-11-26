@@ -3,9 +3,13 @@ package com.baylor.se.project.bearnews.Controller;
 import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Service.TagService;
 import com.baylor.se.project.bearnews.Service.UsersService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,18 +25,16 @@ public class UsersController {
     @Autowired
     TagService tagService;
 
-    @RequestMapping(path="/applyForAccount", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<?> registerForAccount(@RequestBody Users users) {
-        String responseReturned = usersService.RegisterUserToSystem(users);
-        int intValue;
-        try {
-            intValue = Integer.parseInt(responseReturned);
-            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
-        } catch (NumberFormatException e) {
-            System.out.println("Input String cannot be parsed to Integer.");
+    @RequestMapping(path="/createUser", method = RequestMethod.POST)
+    public ResponseEntity<?> registerForAccount(@RequestBody @Validated Users users) throws JsonProcessingException {
+        ServiceResponseHelper serviceResponseHelper = usersService.RegisterUserToSystem(users);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        else {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.CREATED);
+        }
     }
 
     @RequestMapping(value = "/findAllUsers", method = RequestMethod.GET)
@@ -58,5 +60,17 @@ public class UsersController {
             return new ResponseEntity<>(updateUsers, HttpStatus.OK);
         }
         return new ResponseEntity<>("doesn't exsist", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/validateOtp")
+    public ResponseEntity<?> validateOtp(@RequestBody Map<String,String> requestBody) throws JsonProcessingException {
+        ServiceResponseHelper serviceResponseHelper = usersService.validateOtp(requestBody);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.CREATED);
+        }
     }
 }

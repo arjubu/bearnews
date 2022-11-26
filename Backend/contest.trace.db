@@ -1,0 +1,30 @@
+2022-11-25 20:17:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-25 20:17:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'President Linda A. Livingstone, Ph.D. has established a Spiritual Wellbeing tas... (313)"; SQL statement:
+insert into article (article_type, baylor_news_id, content, created_at, detail_link, tag_id, thumb_link, title, updated_at, user_id, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-214]

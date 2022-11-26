@@ -30,7 +30,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/fetchArticle", method = RequestMethod.GET)
     public ResponseEntity<?> getArticles(){
-        List<Article> articleList= articleService.fetchAllarticles();
+        List<Article> articleList= articleService.fetchAllArticles();
         return new ResponseEntity(articleList,HttpStatus.OK);
     }
 
