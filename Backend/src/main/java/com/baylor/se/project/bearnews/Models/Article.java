@@ -21,12 +21,13 @@ public class Article {
     private long id;
     @Column
     private String title;
-    @Column
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
     @ManyToOne
     private Tag contains;
     //relationship later
+
     @Column
     private long userId;
     @CreationTimestamp
