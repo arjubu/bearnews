@@ -1,13 +1,11 @@
 version: '3.3'
 services:
-  db:
+  bear-feed-db:
     image: mysql
     restart: always
     environment:
       MYSQL_DATABASE: 'bearfeed'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'sLT4NG#83UyK'
     ports:
       - '3306:3306'
     expose:

@@ -33,8 +33,6 @@ public class Article {
     //relationship later
 
 
-    @Column(columnDefinition = "LONGTEXT")
-    private String content;
 
     @Column
     private String detailLink;
