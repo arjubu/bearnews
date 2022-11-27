@@ -9,6 +9,11 @@ import PostSectionSix from "../components/post/PostSectionSix";
 import PostSectionThree from "../components/post/PostSectionThree";
 import PostSectionTwo from "../components/post/PostSectionTwo";
 
+import FullCalendar from "@fullcalendar/react";
+// The import order DOES MATTER here. If you change it, you'll get an error!
+import interactionPlugin from "@fullcalendar/interaction";
+import timeGridPlugin from "@fullcalendar/timegrid";
+
 const HomeOne = ({allPosts}) => {
  
   return ( 
