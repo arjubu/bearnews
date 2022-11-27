@@ -31,9 +31,8 @@ function Login() {
         body: JSON.stringify({
           email : username,
           password : password,
-          firstname : firstname,
-          lastname : lastname,
-          password : password
+          firstName : firstname,
+          lastName : lastname
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -47,7 +46,7 @@ function Login() {
             
           } else {
 <<<<<<< Updated upstream
-            error_login({ name: "ID", message: response.json()});
+            error_login({ name: "ID", message: response.status});
 =======
             error_login({ name: "ID", message: response.status + ": Your registration fails"});
 >>>>>>> Stashed changes
@@ -56,17 +55,19 @@ function Login() {
           }
             
           }).then(data=>{
-
-            navigator("/login");
-          });
+            console.log('gogo'); 
+            window.location.href = '/login';
+          }).catch((error) => {
+            //this.setState({ requestFailed: true })
+        });
         
         
     };
   
     const renderErrorMessage = (name) =>
-      name === errorMessages.name && (
+      
         <div className="error">{errorMessages.message}</div>
-      );
+      ;
   
       var sectionStyle = {
         width: "100%",
@@ -80,27 +81,23 @@ function Login() {
           <div className="input-container">
             <label>User Id </label>
             <input type="text" name="username" id="username" required onChange={e => setUserName(e.target.value)}/>
-            {renderErrorMessage("username")}
           </div>
           <div className="input-container">
             <label>Password </label>
             <input type="text" name="Password" required onChange={e => setPassword(e.target.value)}/>
-            {renderErrorMessage("Password")}{renderErrorMessage("ID")}
           </div>
           <div className="input-container">
             <label>Re-enter Password </label>
             <input type="text" name="Password" required onChange={e => setRepassword(e.target.value)}/>
-            {renderErrorMessage("Password")}{renderErrorMessage("ID")}
           </div>
           <div className="input-container">
             <label>First Name </label>
             <input type="text" name="Password" required onChange={e => setFirstname(e.target.value)}/>
-            {renderErrorMessage("Password")}{renderErrorMessage("ID")}
           </div>
           <div className="input-container">
             <label>Last Name </label>
             <input type="text" name="Password" required onChange={e => setLastname(e.target.value)}/>
-            {renderErrorMessage("Password")}{renderErrorMessage("ID")}
+            {renderErrorMessage("ID")}
           </div>
           <div className="button-container">
             <input type="submit" value="Login"/>
