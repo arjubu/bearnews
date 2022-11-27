@@ -48,7 +48,7 @@ function CreateArticle() {
           </MDBCol>
 
           <MDBCol md='9' className='pe-5'>
-            <MDBInput label='Title' size='lg' id='form1' type='text'/>
+            <MDBInput label='Title' size='lg' id='form1' type='text' onChange={e => setTitle(e.target.value)}/>
           </MDBCol>
 
         </MDBRow>
