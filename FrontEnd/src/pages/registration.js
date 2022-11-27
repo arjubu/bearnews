@@ -45,7 +45,7 @@ function Login() {
             return response.json();
             
           } else {
-            error_login({ name: "ID", message: response.status});
+            error_login({ name: "ID", message: response.status + ": Your registration fails"});
             throw new Error('Something went wrong ...');
   
           }
