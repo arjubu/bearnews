@@ -45,11 +45,7 @@ function Login() {
             return response.json();
             
           } else {
-<<<<<<< Updated upstream
-            error_login({ name: "ID", message: response.status});
-=======
             error_login({ name: "ID", message: response.status + ": Your registration fails"});
->>>>>>> Stashed changes
             throw new Error('Something went wrong ...');
   
           }
