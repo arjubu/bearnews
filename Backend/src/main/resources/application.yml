@@ -16,6 +16,9 @@ spring:
 
   kafka:
     consumer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: 137.184.37.205:9092
       #group-id: contest-group
       auto-offset-reset: earliest
+redis:
+  server: 137.184.37.205
+  port : 6379
