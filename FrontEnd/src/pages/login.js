@@ -4,13 +4,12 @@ import logo from '../../public/images/Bear_Mark_1_Color_01.jpg';
 import backgroundImage from '../../public/images/Background.jpg';
 //import { useNavigate } from 'react-router-dom';
 import Image from "next/image";
+import Link from "next/link";
 
 
 function Login() {
     const [errorMessages, error_login] = useState({});
     const [islogin, login_set_true] = useState(false);
-    const [ismanager, manager_set_true] = useState(false);
-    const [isemp, emp_set_true] = useState(false);
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     const [id, setID] = useState();
@@ -96,7 +95,7 @@ function Login() {
                 </div>
 
                 <div className="forgotP">
-                <a href={"/forget"}>
+                <a href={"/forgotpassword"}>
                   <l className="regisText"  n/>Forget Password?
                 </a>
                 </div>
@@ -117,6 +116,7 @@ function Login() {
       <div className="app">
         <div className="login_frame">
           <div className="title">Log In</div>
+          <Link href="/">
           <a>
                     <Image
                     className="logo"
@@ -126,6 +126,7 @@ function Login() {
                       height={80}
                     />
                   </a>
+                  </Link>
           {(() => {
         if (islogin) {
           navigate('/User/'+id, { state: { id: id}});
