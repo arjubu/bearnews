@@ -17,7 +17,10 @@ import {
     MDBFile } from 'mdb-react-ui-kit';
 
 function CreateArticle() {
- 
+  const [Title, setTitle] = useState();
+  const [Tags, setTags] = useState();
+  const [Context, setContext] = useState();
+  const [Files, setFiles] = useState();
     return ( 
       <>
       
