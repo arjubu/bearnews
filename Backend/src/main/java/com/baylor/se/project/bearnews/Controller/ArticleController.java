@@ -17,6 +17,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/populateArticle", method = RequestMethod.POST)
     public ResponseEntity<?> createArticles(@RequestBody Article articleSent){
+
         String responseReturned= articleService.createArticle(articleSent);
         int intValue;
         try {

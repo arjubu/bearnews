@@ -8,8 +8,10 @@ import com.baylor.se.project.bearnews.Repository.TagRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,13 +22,16 @@ import java.util.regex.Pattern;
 @Service
 public class UsersService {
 
+    @Value("${redis.server}")
+    private String redisServer;
+
+    @Value("${redis.port}")
+    private String redisPort;
     @Autowired
     UsersRepository userRepo;
 
     @Autowired
     TagService tagService;
-
-    Jedis jedis = new Jedis();
 
 
 
@@ -79,7 +84,7 @@ public class UsersService {
                         user.setUserType(UserType.SystemUser);
                         newUser = userRepo.save(newUser);
 
-
+                        Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort));
                         jedis.setex(user.getEmail(), 300, RandomStringUtils.randomNumeric(6));
                         //System.out.println(jedis.get(user.getEmail()));
                         serviceResponseHelper.setHasError(false);
@@ -132,6 +137,7 @@ public class UsersService {
 
         ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
 
+        Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort));
         String otp = jedis.get(requestBody.get("email"));
 
         if(otp != null){

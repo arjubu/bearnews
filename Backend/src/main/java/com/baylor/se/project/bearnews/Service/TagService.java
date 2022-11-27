@@ -52,4 +52,14 @@ public class TagService {
     return foundTags;
     }
 
+    public Tag findTagByIdForArticle(Long id) {
+        Optional<Tag> tag = tagRepository.findById(id);
+
+        if (tag.isPresent()) {
+            return tag.get();
+        } else {
+           return null;
+        }
+    }
+
 }

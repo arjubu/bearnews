@@ -1,9 +1,9 @@
 spring:
   datasource:
     #for localhost use this string jdbc:mysql://localhost:3306/bearfeed?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
-    url: jdbc:mysql://209.182.219.165:3306/bearfeed?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
+    url: jdbc:mysql://137.184.37.205:3306/bearfeed?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
     username: root
-    password: arjuCUET10# #change accordingly
+    password: sLT4NG#83UyK #change accordingly
     driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.MySQL5Dialect
@@ -16,6 +16,9 @@ spring:
 
   kafka:
     consumer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: 137.184.37.205:9092
       #group-id: contest-group
       auto-offset-reset: earliest
+redis:
+  server: 137.184.37.205
+  port : 6379

@@ -11,6 +11,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.18.6",
     "@emailjs/browser": "^3.7.0",
+<<<<<<< HEAD
     "@fullcalendar/common": "^5.11.3",
     "@fullcalendar/interaction": "^5.11.3",
     "@fullcalendar/react": "^5.11.3",
@@ -20,6 +21,17 @@
     "gray-matter": "^4.0.3",
     "luxon": "^3.0.3",
     "moment": "^2.29.4",
+=======
+    "@fullcalendar/daygrid": "^5.1.0",
+    "@fullcalendar/interaction": "5.1.0",
+    "@fullcalendar/moment-timezone": "5.1.0",
+    "@fullcalendar/react": "^5.11.2",
+    "@fullcalendar/timegrid": "5.1.0",
+    "bootstrap": "^5.2.3",
+    "gray-matter": "^4.0.3",
+    "luxon": "^3.0.3",
+    "mdb-react-ui-kit": "^5.0.0",
+>>>>>>> 50a26f024c33a2dcbfc883d749d21b2fc6f006e2
     "next": "12.2.5",
     "next-transpile-modules": "^10.0.0",
     "ng-fullcalendar": "^2.0.3",
