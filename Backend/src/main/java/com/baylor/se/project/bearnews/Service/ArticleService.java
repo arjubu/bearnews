@@ -36,20 +36,20 @@ public class ArticleService {
             return "title cannot be null";
         if(article.getContains()==null)
             return "tag has to be there";
-//        if(article.getUsers()==null)
-//            return "creater has to be there";
+        if(article.getCreatedBy()==null)
+            return "creater has to be there";
         else {
             long tagId = article.getContains().getId();
             Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
 
-//            long usersId = article.getUsers().getId();
-//            Users usersWhoCreated = usersService.foundUserById(usersId);
-//            if(usersWhoCreated==null){
-//                return "the user id doesn't exsist";
-//            }
+            long usersId = article.getCreatedBy().getId();
+            Users usersWhoCreated = usersService.foundUserById(usersId);
+            if(usersWhoCreated==null){
+                return "the user id doesn't exsist";
+            }
             if(tagsToAttach!=null) {
                 article.setContains(tagsToAttach);
-               // article.setUsers(usersWhoCreated);
+                article.setCreatedBy(usersWhoCreated);
                 articleRepository.save(article);
             }
             else

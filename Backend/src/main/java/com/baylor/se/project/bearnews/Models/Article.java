@@ -1,6 +1,6 @@
 package com.baylor.se.project.bearnews.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Article {
 
     @Id
@@ -47,10 +50,10 @@ public class Article {
     @Column
     private Integer baylorNewsId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "users_id")
-//    @Nullable
-//    private Users users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_articles",referencedColumnName = "id")
+    @JsonBackReference
+    private Users createdBy;
 
     @CreatedDate
     @Column
