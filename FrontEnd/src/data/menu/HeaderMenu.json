@@ -9,7 +9,7 @@
         "submenu": [
             {
                 "sublabel": "Create Article",
-                "subpath": "/create"
+                "subpath": "/createArticle"
             },
             {
                 "sublabel": "Create Event",
