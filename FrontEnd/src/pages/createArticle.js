@@ -62,7 +62,7 @@ function CreateArticle() {
           </MDBCol>
 
           <MDBCol md='9' className='pe-5'>
-            <MDBInput label='tags' size='lg' id='form2' type='email'/>
+            <MDBInput label='tags' size='lg' id='form2' type='text' onChange={e => setTags(e.target.value)}/>
           </MDBCol>
 
         </MDBRow>
@@ -76,7 +76,7 @@ function CreateArticle() {
           </MDBCol>
 
           <MDBCol md='9' className='pe-5'>
-            <MDBTextArea label='Context' id='textAreaExample' rows={3} />
+            <MDBTextArea label='Context' id='textAreaExample' rows={3} onChange={e => setContext(e.target.value)}/>
           </MDBCol>
 
         </MDBRow>
