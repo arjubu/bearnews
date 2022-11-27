@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -45,10 +46,11 @@ public class Article {
 
     @Column
     private Integer baylorNewsId;
-    
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    private Users users;
+
+//    @ManyToOne
+//    @JoinColumn(name = "users_id")
+//    @Nullable
+//    private Users users;
 
     @CreatedDate
     @Column

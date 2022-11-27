@@ -53,8 +53,9 @@ public class Users {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @OneToMany(mappedBy = "users")
-    private List<Article> isCreated;
+    @OneToMany
+    @Nullable
+    private List<Article> articles;
 
 
 }

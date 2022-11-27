@@ -6,7 +6,9 @@ import com.baylor.se.project.bearnews.Models.Tag;
 
 import com.baylor.se.project.bearnews.Models.ArticleType;
 
+import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.ArticleRepository;
+import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class ArticleService {
     ArticleRepository articleRepository;
 
     @Autowired
+    UsersService usersService;
+
+    @Autowired
     TagService tagService;
 
     public String createArticle(Article article){
@@ -31,11 +36,20 @@ public class ArticleService {
             return "title cannot be null";
         if(article.getContains()==null)
             return "tag has to be there";
+//        if(article.getUsers()==null)
+//            return "creater has to be there";
         else {
             long tagId = article.getContains().getId();
             Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
+
+//            long usersId = article.getUsers().getId();
+//            Users usersWhoCreated = usersService.foundUserById(usersId);
+//            if(usersWhoCreated==null){
+//                return "the user id doesn't exsist";
+//            }
             if(tagsToAttach!=null) {
                 article.setContains(tagsToAttach);
+               // article.setUsers(usersWhoCreated);
                 articleRepository.save(article);
             }
             else
@@ -81,5 +95,13 @@ public class ArticleService {
 
         articleRepository.saveAll(articles);
 
+    }
+    public String deleteAnArticle(Long id){
+        if(fetchArticle(id)==null)
+            return "article id doesn't exsists";
+        else{
+            articleRepository.deleteById(id);
+            return "deleted successfully";
+        }
     }
 }
