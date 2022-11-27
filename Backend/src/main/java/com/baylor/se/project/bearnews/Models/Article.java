@@ -45,15 +45,10 @@ public class Article {
 
     @Column
     private Integer baylorNewsId;
-
-    //change it to relationship later
-    @Column
-    private long tagId;
-    //change it to relationship later
-
-
-    @Column
-    private long userId;
+    
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private Users users;
 
     @CreatedDate
     @Column
