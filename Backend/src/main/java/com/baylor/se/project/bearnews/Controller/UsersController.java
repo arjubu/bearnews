@@ -73,4 +73,16 @@ public class UsersController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.CREATED);
         }
     }
+    @RequestMapping(value = "/deleteUserById", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAUser( @RequestParam (name="usersId" , required = true) Long usersId) throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper = usersService.deleteUSer(usersId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.OK);
+        }
+    }
+
 }

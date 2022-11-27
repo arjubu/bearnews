@@ -167,5 +167,28 @@ public class UsersService {
 
 
     }
+    public ServiceResponseHelper deleteUSer(Long id){
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        if(foundUserById(id)==null) {
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "no such user exsist in this id");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+        else{
+            userRepo.deleteById(id);
+            serviceResponseHelper.setHasError(false);
+            successResponse.put("message", "deleted successfully");
+            serviceResponseHelper.setResponseMessage(successResponse);
+            serviceResponseHelper.setContent("user deleted");
+            return serviceResponseHelper;
+        }
+
+    }
+
 
 }
