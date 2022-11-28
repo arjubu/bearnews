@@ -5,6 +5,7 @@ import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.Models.UserType;
 import com.baylor.se.project.bearnews.Models.Users;
+import com.baylor.se.project.bearnews.Repository.ArticleRepository;
 import com.baylor.se.project.bearnews.Repository.TagRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleByUsersObjectMapper;
@@ -32,7 +33,8 @@ public class UsersService {
     @Autowired
     TagService tagService;
 
-
+    @Autowired
+    ArticleRepository articleRepository;
 
     public static boolean patternMatches(String emailAddress, String regexPattern) {
         return Pattern.compile(regexPattern)
@@ -206,6 +208,35 @@ public class UsersService {
                }
               // System.out.println(responseArticle);
             }
+        }
+        return returnedArticles;
+    }
+    public List<ArticleByUsersObjectMapper> findArticlesByUserTags(Long id){
+        Users userInterestToFind = foundUserById(id);
+        Set<Article> interestArticles = new HashSet<Article>();
+        if(userInterestToFind!=null){
+            if(!userInterestToFind.getIsLiked().isEmpty()){
+                for(Tag t: userInterestToFind.getIsLiked()){
+                    List<Article> articleList = articleRepository.findArticlesByContains_Id(t.getId());
+                    for(Article a: articleList){
+                        interestArticles.add(a);
+                    }
+                }//all tags
+            }//interestList is empty
+        }//user doesn't exsist
+
+        List<ArticleByUsersObjectMapper> returnedArticles = new ArrayList<>();
+        for(Article ah: interestArticles) {
+            System.out.println(ah.getId());
+            ArticleByUsersObjectMapper responseArticle = new ArticleByUsersObjectMapper();
+            responseArticle.setArticleId(ah.getId());
+            responseArticle.setUsersCreatorId(ah.getCreatedBy().getId());
+            responseArticle.setArticleTitle(ah.getTitle());
+            responseArticle.setArticleContent(ah.getContent());
+            responseArticle.setArticleTagId(ah.getContains().getId());
+            responseArticle.setArticleTagText(ah.getContains().getTagText());
+            responseArticle.setArticleCreationTime(ah.getCreatedAt());
+            returnedArticles.add(responseArticle);
         }
         return returnedArticles;
     }

@@ -95,4 +95,13 @@ public class UsersController {
           return new ResponseEntity<>("the user didn't have article",HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "/getArticlesByUsersInterest", method = RequestMethod.GET)
+    public ResponseEntity<?> articleByUsersInterest( @RequestParam (name="usersId" , required = true) Long usersId) throws JsonProcessingException{
+        List<ArticleByUsersObjectMapper> responseReturned =usersService.findArticlesByUserTags(usersId);
+       if(responseReturned.isEmpty()==false)
+           return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+       else
+            return new ResponseEntity<>("query time checking",HttpStatus.BAD_REQUEST);
+    }
+
 }
