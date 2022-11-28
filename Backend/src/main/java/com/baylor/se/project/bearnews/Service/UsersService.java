@@ -189,6 +189,14 @@ public class UsersService {
         }
 
     }
+    public void findArticlesByUsers(Long id){
+        Users allArticlesByAuthor = foundUserById(id);
+        if(allArticlesByAuthor!=null){
+            if(allArticlesByAuthor.getArticles().isEmpty()==false) {
+                System.out.println(allArticlesByAuthor.getArticles().get(0).getContent());
+            }
+        }
+    }
 
 
 }

@@ -85,4 +85,10 @@ public class UsersController {
         }
     }
 
+    @RequestMapping(value = "/getArticlesByUsers", method = RequestMethod.GET)
+    public ResponseEntity<?> articleByUsers( @RequestParam (name="usersId" , required = true) Long usersId) throws JsonProcessingException{
+        usersService.findArticlesByUsers(usersId);
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
