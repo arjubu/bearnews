@@ -12,6 +12,7 @@ import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleByUsersObject
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -217,7 +218,7 @@ public class UsersService {
         if(userInterestToFind!=null){
             if(!userInterestToFind.getIsLiked().isEmpty()){
                 for(Tag t: userInterestToFind.getIsLiked()){
-                    List<Article> articleList = articleRepository.findArticlesByContains_Id(t.getId());
+                    List<Article> articleList = articleRepository.findArticlesByContains_Id(t.getId(), Sort.by(Sort.Direction.ASC, "createdAt"));
                     for(Article a: articleList){
                         interestArticles.add(a);
                     }
@@ -227,7 +228,7 @@ public class UsersService {
 
         List<ArticleByUsersObjectMapper> returnedArticles = new ArrayList<>();
         for(Article ah: interestArticles) {
-            System.out.println(ah.getId());
+           // System.out.println(ah.getId());
             ArticleByUsersObjectMapper responseArticle = new ArticleByUsersObjectMapper();
             responseArticle.setArticleId(ah.getId());
             responseArticle.setUsersCreatorId(ah.getCreatedBy().getId());
