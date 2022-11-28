@@ -36,7 +36,6 @@ const PostFormatText = ({ postData, allData }) => {
             </div>
             <div className="col-lg-4">
               <div className="post-sidebar">
-                <WidgetAd />
                 <WidgetNewsletter />
                 <WidgetSocialShare />
                 <WidgetPost dataPost={allData} />

@@ -36,7 +36,7 @@ function CreateArticle() {
 <MDBRow className='d-flex justify-content-center align-items-center'>
   <MDBCol lg='9' className='my-5'>
 
-    <h1 class="text-white mb-4">Create Article</h1>
+    <h1 className="text-white mb-4">Create Article</h1>
 
     <MDBCard>
       <MDBCardBody className='px-4'>
@@ -98,7 +98,7 @@ function CreateArticle() {
 
         <hr className="mx-n3" />
 
-        <button type="button" class="btn btn-danger">Danger</button>
+        <button type="button" className="btn btn-danger">Danger</button>
 
       </MDBCardBody>
     </MDBCard>
