@@ -6,7 +6,11 @@ services:
     ports:
       - '6379:6379'
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+      - ALLOW_EMPTY_PASSWORD=no
+    command:
+      - /bin/sh -c "redis-server --requirepass $$REDIS_HOST_PASSWORD"
+    env_file:
+      - redis.env
     volumes:
       - redis:/data
 volumes:

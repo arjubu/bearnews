@@ -10,6 +10,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.DefaultJedisClientConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -27,6 +28,9 @@ public class UsersService {
 
     @Value("${redis.port}")
     private String redisPort;
+
+    @Value("${redis.password}")
+    private String redisPassword;
     @Autowired
     UsersRepository userRepo;
 
@@ -82,9 +86,10 @@ public class UsersService {
                     }
                     else {
                         user.setUserType(UserType.SystemUser);
-                        newUser = userRepo.save(newUser);
 
-                        Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort));
+                        newUser = userRepo.save(newUser);
+                        DefaultJedisClientConfig defaultJedisClientConfig = DefaultJedisClientConfig.builder().password(redisPassword).build();
+                        Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort),defaultJedisClientConfig);
                         jedis.setex(user.getEmail(), 300, RandomStringUtils.randomNumeric(6));
                         //System.out.println(jedis.get(user.getEmail()));
                         serviceResponseHelper.setHasError(false);
@@ -137,7 +142,8 @@ public class UsersService {
 
         ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
 
-        Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort));
+        DefaultJedisClientConfig defaultJedisClientConfig = DefaultJedisClientConfig.builder().password(redisPassword).build();
+        Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort),defaultJedisClientConfig);
         String otp = jedis.get(requestBody.get("email"));
 
         if(otp != null){
