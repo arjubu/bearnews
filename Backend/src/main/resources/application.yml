@@ -22,3 +22,4 @@ spring:
 redis:
   server: 137.184.37.205
   port : 6379
+  password: dK!5d397DyT5

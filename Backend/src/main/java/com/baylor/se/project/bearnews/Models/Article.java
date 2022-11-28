@@ -1,12 +1,13 @@
 package com.baylor.se.project.bearnews.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Article {
 
     @Id
@@ -30,9 +34,6 @@ public class Article {
 
     @ManyToOne
     private Tag contains;
-    //relationship later
-
-
 
     @Column
     private String detailLink;
@@ -46,14 +47,10 @@ public class Article {
     @Column
     private Integer baylorNewsId;
 
-    //change it to relationship later
-    @Column
-    private long tagId;
-    //change it to relationship later
-
-
-    @Column
-    private long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_articles",referencedColumnName = "id")
+    @JsonBackReference
+    private Users createdBy;
 
     @CreatedDate
     @Column

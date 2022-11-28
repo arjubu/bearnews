@@ -1,5 +1,6 @@
 package com.baylor.se.project.bearnews.Models;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Users {
 
     @Id
@@ -52,6 +56,9 @@ public class Users {
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
+    @OneToMany(mappedBy = "createdBy",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Article> articles;
 
 
 }
