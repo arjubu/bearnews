@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Controller;
 
 import com.baylor.se.project.bearnews.Models.Article;
+import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
 import com.baylor.se.project.bearnews.Service.ArticleService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,8 +33,8 @@ public class ArticleController {
 
     @RequestMapping(value = "/fetchArticle", method = RequestMethod.GET)
     public ResponseEntity<?> getArticles(){
-        List<Article> articleList= articleService.fetchAllArticles();
-        return new ResponseEntity(articleList,HttpStatus.OK);
+        List<ArticleWithUsersObjectMapper> articleLists = articleService.getAllArticles();
+        return new ResponseEntity<>(articleLists,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/fetchArticleById", method = RequestMethod.GET)

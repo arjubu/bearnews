@@ -9,6 +9,7 @@ import com.baylor.se.project.bearnews.Models.ArticleType;
 import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.ArticleRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
+import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,9 +59,6 @@ public class ArticleService {
         return String.valueOf(article.getId());
     }
 
-    public List<Article> fetchAllArticles(){
-        return articleRepository.findAll();
-    }
 
     public Article fetchArticle(Long id){
          Optional<Article> articleQueryOpt= articleRepository.findById(id);
@@ -103,5 +101,27 @@ public class ArticleService {
             articleRepository.deleteById(id);
             return "deleted successfully";
         }
+    }
+
+    public List<ArticleWithUsersObjectMapper> getAllArticles(){
+        List<Article> allArticles = articleRepository.findAll();
+        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
+
+        if(allArticles.isEmpty()==false){
+            for(Article a: allArticles){
+                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+               // System.out.println(a.getId());
+                article.setIdOfArticle(a.getId());
+                article.setIdOfCreator(a.getCreatedBy().getId());
+                article.setNameofCreator(a.getCreatedBy().getFirstName());
+                article.setIdOfTag(a.getContains().getId());
+                article.setTextOfTag(a.getContains().getTagText());
+                article.setTitleOfArticle(a.getTitle());
+                article.setContentOfArticle(a.getContent());
+                article.setTimeOfArticleCretion(a.getCreatedAt());
+                articleDetails.add(article);
+            }
+        }
+        return articleDetails;
     }
 }

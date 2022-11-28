@@ -34,10 +34,7 @@ public class Article {
 
     @ManyToOne
     private Tag contains;
-    //relationship later
-
-
-
+  
     @Column
     private String detailLink;
 
