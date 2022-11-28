@@ -124,4 +124,25 @@ public class ArticleService {
         }
         return articleDetails;
     }
+    public List<ArticleWithUsersObjectMapper> findArtcilesByTags(Long tagId){
+       List<Article> allArticles = articleRepository.findArticlesByContains_Id(tagId);
+       List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
+
+        if(allArticles.isEmpty()==false){
+            for(Article a: allArticles){
+                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+                article.setIdOfArticle(a.getId());
+                article.setIdOfCreator(a.getCreatedBy().getId());
+                article.setNameofCreator(a.getCreatedBy().getFirstName());
+                article.setIdOfTag(a.getContains().getId());
+                article.setTextOfTag(a.getContains().getTagText());
+                article.setTitleOfArticle(a.getTitle());
+                article.setContentOfArticle(a.getContent());
+                article.setTimeOfArticleCretion(a.getCreatedAt());
+                articleDetails.add(article);
+            }
+        }
+        return articleDetails;
+
+    }
 }

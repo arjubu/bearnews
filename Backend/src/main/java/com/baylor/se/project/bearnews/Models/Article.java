@@ -34,7 +34,7 @@ public class Article {
 
     @ManyToOne
     private Tag contains;
-  
+
     @Column
     private String detailLink;
 

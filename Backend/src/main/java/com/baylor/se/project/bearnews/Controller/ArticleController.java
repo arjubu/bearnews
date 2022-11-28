@@ -51,4 +51,15 @@ public class ArticleController {
         return new ResponseEntity(responseReturned,HttpStatus.OK);
 
     }
+
+    @RequestMapping(value = "/fetchArticleByTagId", method = RequestMethod.GET)
+    public ResponseEntity<?> getArticlesByTag(@RequestParam (name="tagId" , required = false) Long tagId){
+      List<ArticleWithUsersObjectMapper> sentArticles= articleService.findArtcilesByTags(tagId);
+        if(sentArticles.isEmpty()==false)
+            return new ResponseEntity(sentArticles,HttpStatus.OK);
+
+        return new ResponseEntity<>("doesn't contains any article with id",HttpStatus.BAD_REQUEST);
+
+    }
+
 }
