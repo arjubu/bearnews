@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Controller;
 
 import com.baylor.se.project.bearnews.Models.Users;
+import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleByUsersObjectMapper;
 import com.baylor.se.project.bearnews.Service.TagService;
 import com.baylor.se.project.bearnews.Service.UsersService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -87,8 +88,11 @@ public class UsersController {
 
     @RequestMapping(value = "/getArticlesByUsers", method = RequestMethod.GET)
     public ResponseEntity<?> articleByUsers( @RequestParam (name="usersId" , required = true) Long usersId) throws JsonProcessingException{
-        usersService.findArticlesByUsers(usersId);
-      return new ResponseEntity<>(HttpStatus.OK);
+      List<ArticleByUsersObjectMapper> responseReturned= usersService.findArticlesByUsers(usersId);
+      if(responseReturned.isEmpty()==false)
+      return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+      else
+          return new ResponseEntity<>("the user didn't have article",HttpStatus.BAD_REQUEST);
     }
 
 }

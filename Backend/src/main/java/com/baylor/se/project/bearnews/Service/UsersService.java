@@ -1,11 +1,13 @@
 package com.baylor.se.project.bearnews.Service;
 
 import com.baylor.se.project.bearnews.Controller.ServiceResponseHelper;
+import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.Models.UserType;
 import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.TagRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
+import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleByUsersObjectMapper;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +15,7 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -189,13 +188,26 @@ public class UsersService {
         }
 
     }
-    public void findArticlesByUsers(Long id){
+    public List<ArticleByUsersObjectMapper> findArticlesByUsers(Long id){
         Users allArticlesByAuthor = foundUserById(id);
+        List<ArticleByUsersObjectMapper> returnedArticles = new ArrayList<>();
         if(allArticlesByAuthor!=null){
             if(allArticlesByAuthor.getArticles().isEmpty()==false) {
-                System.out.println(allArticlesByAuthor.getArticles().get(0).getContent());
+               for(Article a: allArticlesByAuthor.getArticles()){
+                   ArticleByUsersObjectMapper responseArticle = new ArticleByUsersObjectMapper();
+                   responseArticle.setArticleId(a.getId());
+                   responseArticle.setUsersCreatorId(a.getCreatedBy().getId());
+                   responseArticle.setArticleTitle(a.getTitle());
+                   responseArticle.setArticleContent(a.getContent());
+                   responseArticle.setArticleTagId(a.getContains().getId());
+                   responseArticle.setArticleTagText(a.getContains().getTagText());
+                   responseArticle.setArticleCreationTime(a.getCreatedAt());
+                   returnedArticles.add(responseArticle);
+               }
+              // System.out.println(responseArticle);
             }
         }
+        return returnedArticles;
     }
 
 
