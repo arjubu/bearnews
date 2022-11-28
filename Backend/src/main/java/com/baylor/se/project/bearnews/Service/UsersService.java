@@ -109,18 +109,18 @@ public class UsersService {
             return true;
     }
 
-//    public Users interestListAttach(List<String> interestLists,Long id){
-//        Users usersToUpdate = new Users();
-//        List<Tag> tagsToAttach = tagService.ListOfTagsFound(interestLists);
-//        Optional<Users> userQueryOpt = userRepo.findById(id);
-//        if(userQueryOpt.isPresent()){
-//            usersToUpdate = userQueryOpt.get();
-//            usersToUpdate.setIsLiked(tagsToAttach);
-//            userRepo.save(usersToUpdate);
-//        }
-//        return usersToUpdate;
-//
-//    }
+    public Users interestListAttach(List<String> interestLists,Long id){
+        Users usersToUpdate = new Users();
+        List<Tag> tagsToAttach = tagService.ListOfTagsFound(interestLists);
+        Optional<Users> userQueryOpt = userRepo.findById(id);
+        if(userQueryOpt.isPresent()){
+            usersToUpdate = userQueryOpt.get();
+            usersToUpdate.setIsLiked(tagsToAttach);
+            userRepo.save(usersToUpdate);
+        }
+        return usersToUpdate;
+
+    }
     public Users foundUserById(Long id){
         Optional<Users> userQueryOpt = userRepo.findById(id);
         if(userQueryOpt.isPresent()){

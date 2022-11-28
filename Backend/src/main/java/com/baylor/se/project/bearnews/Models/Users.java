@@ -51,7 +51,11 @@ public class Users {
     private String socialMediaLink;
 
 
-    @OneToMany(mappedBy = "users")
+    //@OneToMany(mappedBy = "users")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_TAG",
+            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "TAG_ID", referencedColumnName = "ID")})
     private List<Tag> isLiked;
 
     @Enumerated(EnumType.STRING)
