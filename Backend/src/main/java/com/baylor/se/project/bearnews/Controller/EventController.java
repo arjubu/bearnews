@@ -39,7 +39,7 @@ public class EventController {
         return new ResponseEntity(responseReturned,HttpStatus.OK);
 
     }
-    
+
 
 
 
