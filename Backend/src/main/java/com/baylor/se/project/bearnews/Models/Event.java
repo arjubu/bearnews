@@ -36,14 +36,14 @@ public class Event {
     private String location;
 
 
-//    @ManyToOne // owning-side
-//    @JoinColumn(name = "user_id")
-//    @JsonIdentityInfo(
-//            generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id")
-//    @JsonIdentityReference(alwaysAsId = true)
-//    private Users user;
-//ss
+    @ManyToOne // owning-side
+    @JoinColumn(name = "user_id")
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private Users user;
+
 
 
 }

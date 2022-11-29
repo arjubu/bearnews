@@ -16,7 +16,7 @@ public class EventController {
     EventService eventService;
 
 
-    @PostMapping("/event")
+    @PostMapping("/createevent")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         Event updated = eventService.createEvent(event);
         return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
