@@ -14,15 +14,17 @@ export default class Event extends React.Component {
     weekendsVisible: true,
     currentEvents: []
   }
-  render() {
+
+  getEvent() {
     console.log("Calender render");
     eventService.getAllEvent().then((response) => {
-      console.log(response);
       this.setState({
         currentEvents: response
       });
     });
+  }
 
+  render() {
     return (
       <div className='demo-app'>
         {this.renderSidebar()}
@@ -73,7 +75,6 @@ export default class Event extends React.Component {
   handleDateSelect = (selectInfo) => {
     let eventDate = selectInfo.startStr
     let currentDate = moment().format("YYYY-MM-DD")
-    console.log(eventDate, currentDate)
     if (moment(eventDate).isBefore(currentDate, 'day')) {
       alert('Sorry, you can not set event on past date')
     }
@@ -81,22 +82,16 @@ export default class Event extends React.Component {
       let title = prompt('Please enter a new title for your event')
       let calendarApi = selectInfo.view.calendar
       calendarApi.unselect() // clear date selection
-      console.log(selectInfo.startStr)
       if (title) {
         const event = {
-          data: selectInfo.startStr,
+          title: title,
+          startdate: selectInfo.startStr,
+          enddate: selectInfo.endStr,
           description: title
         }
         eventService.saveEvent(event).then((res) => {
-          console.log(res);
-        })
-        calendarApi.addEvent({
-          id: createEventId(),
-          title,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay
-        })
+          alert("Event save success");
+        });
       }
     }
   }
@@ -108,19 +103,20 @@ export default class Event extends React.Component {
   }
 
   handleEvents = (events) => {
-    console.log(events);
-    this.setState({
-      currentEvents: events
-    })
+    eventService.getAllEvent().then((response) => {
+      this.setState({
+        currentEvents: response.data
+      });
+    });
   }
 
 }
 
-function renderEventContent(eventInfo) {
+function renderEventContent(currentEvents) {
   return (
     <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
+      <b>{currentEvents.startdate}</b>
+      <i>{currentEvents.title}</i>
     </>
   )
 }
@@ -128,7 +124,7 @@ function renderEventContent(eventInfo) {
 function renderSidebarEvent(event) {
   return (
     <li key={event.id}>
-      <b>{formatDate(event.start, { year: 'numeric', month: 'short', day: 'numeric' })}</b>
+      <b>{formatDate(event.startdate, { year: 'numeric', month: 'short', day: 'numeric' })}</b>
       <i>{event.title}</i>
     </li>
   )
