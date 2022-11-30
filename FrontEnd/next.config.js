@@ -11,9 +11,13 @@
 
 
 const withTM = require("next-transpile-modules")([
- 
-  "@babel/preset-react"
-  
+  "@fullcalendar/common",
+  "@babel/preset-react",
+  "@fullcalendar/common",
+  "@fullcalendar/daygrid",
+  "@fullcalendar/interaction",
+  "@fullcalendar/react",
+  "@fullcalendar/timegrid",
 ]);
 
 module.exports = withTM({
