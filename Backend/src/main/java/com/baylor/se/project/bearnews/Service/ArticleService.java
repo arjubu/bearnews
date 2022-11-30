@@ -37,20 +37,20 @@ public class ArticleService {
             return "title cannot be null";
         if(article.getContains()==null)
             return "tag has to be there";
-        if(article.getCreatedBy()==null)
-            return "creater has to be there";
+//        if(article.getCreatedBy()==null)
+//            return "creater has to be there";
         else {
             long tagId = article.getContains().getId();
             Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
 
-            long usersId = article.getCreatedBy().getId();
-            Users usersWhoCreated = usersService.foundUserById(usersId);
-            if(usersWhoCreated==null){
-                return "the user id doesn't exsist";
-            }
+//            long usersId = article.getCreatedBy().getId();
+//            Users usersWhoCreated = usersService.foundUserById(usersId);
+//            if(usersWhoCreated==null){
+//                return "the user id doesn't exsist";
+//            }
             if(tagsToAttach!=null) {
                 article.setContains(tagsToAttach);
-                article.setCreatedBy(usersWhoCreated);
+               // article.setCreatedBy(usersWhoCreated);
                 articleRepository.save(article);
             }
             else
@@ -112,8 +112,8 @@ public class ArticleService {
                 ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
                // System.out.println(a.getId());
                 article.setIdOfArticle(a.getId());
-                article.setIdOfCreator(a.getCreatedBy().getId());
-                article.setNameofCreator(a.getCreatedBy().getFirstName());
+//                article.setIdOfCreator(a.getCreatedBy().getId());
+//                article.setNameofCreator(a.getCreatedBy().getFirstName());
                 article.setIdOfTag(a.getContains().getId());
                 article.setTextOfTag(a.getContains().getTagText());
                 article.setTitleOfArticle(a.getTitle());
@@ -132,8 +132,8 @@ public class ArticleService {
             for(Article a: allArticles){
                 ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
                 article.setIdOfArticle(a.getId());
-                article.setIdOfCreator(a.getCreatedBy().getId());
-                article.setNameofCreator(a.getCreatedBy().getFirstName());
+//                article.setIdOfCreator(a.getCreatedBy().getId());
+//                article.setNameofCreator(a.getCreatedBy().getFirstName());
                 article.setIdOfTag(a.getContains().getId());
                 article.setTextOfTag(a.getContains().getTagText());
                 article.setTitleOfArticle(a.getTitle());

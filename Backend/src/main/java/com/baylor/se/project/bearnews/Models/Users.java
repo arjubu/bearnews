@@ -51,19 +51,22 @@ public class Users {
     private String socialMediaLink;
 
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany
+            //(mappedBy = "users")
     private List<Tag> isLiked;
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @OneToMany(mappedBy = "createdBy",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
+            //(mappedBy = "createdBy",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articles;
 
     @OneToMany(mappedBy = "createdByevent",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Event> events;
 
-    @OneToMany(mappedBy = "createdBycomments",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
+            //(mappedBy = "createdBycomments",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
 

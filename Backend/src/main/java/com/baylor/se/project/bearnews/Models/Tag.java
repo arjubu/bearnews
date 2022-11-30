@@ -27,10 +27,11 @@ public class Tag {
 //    @OneToMany(cascade=CascadeType.ALL)
 //    @JoinColumn(name="ARTICLE_ID")
 //    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(name = "TAG_ARTICLE",
+    @OneToMany
+            //(cascade = CascadeType.ALL, orphanRemoval = true)
+   /* @JoinTable(name = "TAG_ARTICLE",
         joinColumns = {@JoinColumn(name = "TAG_ID", referencedColumnName = "ID")},
         inverseJoinColumns = {@JoinColumn(name = "ARTICLE_ID", referencedColumnName = "ID")})
-    @JsonIgnore
+    @JsonIgnore*/
     private List<Article> belongsArticles;
 }

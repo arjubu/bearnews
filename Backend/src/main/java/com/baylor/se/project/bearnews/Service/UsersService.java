@@ -202,7 +202,7 @@ public class UsersService {
                for(Article a: allArticlesByAuthor.getArticles()){
                    ArticleByUsersObjectMapper responseArticle = new ArticleByUsersObjectMapper();
                    responseArticle.setArticleId(a.getId());
-                   responseArticle.setUsersCreatorId(a.getCreatedBy().getId());
+                  // responseArticle.setUsersCreatorId(a.getCreatedBy().getId());
                    responseArticle.setArticleTitle(a.getTitle());
                    responseArticle.setArticleContent(a.getContent());
                    responseArticle.setArticleTagId(a.getContains().getId());
