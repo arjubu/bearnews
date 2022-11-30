@@ -216,5 +216,12 @@ public class UsersService {
         return returnedArticles;
     }
 
+    public void usersArticleAttach(long usersId, List<Article> toAttched){
+        Users usersUpdate = foundUserById(usersId);
+        usersUpdate.setArticles(toAttched);
+        userRepo.save(usersUpdate);
+
+    }
+
 
 }

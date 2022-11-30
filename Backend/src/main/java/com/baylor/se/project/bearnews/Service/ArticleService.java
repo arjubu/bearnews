@@ -1,5 +1,8 @@
 package com.baylor.se.project.bearnews.Service;
 
+import com.baylor.se.project.bearnews.Controller.ServiceResponseHelper;
+import com.baylor.se.project.bearnews.Controller.dto.ArticleDto;
+import com.baylor.se.project.bearnews.Controller.dto.ArticleResponseDto;
 import com.baylor.se.project.bearnews.Models.Article;
 
 import com.baylor.se.project.bearnews.Models.Tag;
@@ -13,10 +16,8 @@ import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObje
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class ArticleService {
@@ -30,33 +31,112 @@ public class ArticleService {
     @Autowired
     TagService tagService;
 
-    public String createArticle(Article article){
-        if(article.getContent()=="")
-            return "content cannot be null";
-        if(article.getTitle()=="")
-            return "title cannot be null";
-        if(article.getContains()==null)
-            return "tag has to be there";
-//        if(article.getCreatedBy()==null)
-//            return "creater has to be there";
-        else {
-            long tagId = article.getContains().getId();
-            Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
 
-//            long usersId = article.getCreatedBy().getId();
-//            Users usersWhoCreated = usersService.foundUserById(usersId);
-//            if(usersWhoCreated==null){
-//                return "the user id doesn't exsist";
-//            }
-            if(tagsToAttach!=null) {
-                article.setContains(tagsToAttach);
-               // article.setCreatedBy(usersWhoCreated);
-                articleRepository.save(article);
-            }
-            else
-                return "please give valid tag or create new one";
+    public ServiceResponseHelper createArticle(ArticleDto articleDto){
+        Article article = new Article();
+
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+
+        long tagId = articleDto.getTagContaiedId();
+        Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
+        long usersId = articleDto.getCreatedUsersId();
+        Users usersWhoCreated = usersService.foundUserById(usersId);
+
+        if(articleDto.getArticleTitle()==""){
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "article title cannot be empty");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
         }
-        return String.valueOf(article.getId());
+        if(articleDto.getArticleContent()==""){
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "article content cannot be empty");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+             return serviceResponseHelper;
+        }
+
+        if(articleDto.getArticleContent().length()<=0 || articleDto.getArticleContent().length()>5000){
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "content size excedeed");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+             return serviceResponseHelper;
+        }
+        if(articleDto.getTagContaiedId()==0){
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "article must contain a tag");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+             return serviceResponseHelper;
+        }
+
+        if(articleDto.getCreatedUsersId()==0){
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "article must have a user");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+
+        if(usersWhoCreated==null){
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "valid user id isn't provided");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+            }
+        if(tagsToAttach==null) {
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "the given tag is not valid");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+            }
+        else {
+            LocalDateTime articleCreatedAt = LocalDateTime.now();
+            article.setTitle(articleDto.getArticleTitle());
+            article.setContent(articleDto.getArticleContent());
+            article.setCreatedAt(articleCreatedAt);
+//            article.setDetailLink(articleDto.getArticleDetailLink());
+//            article.setThumbLink(articleDto.getArticleThumbLink());
+            article.setContains(tagsToAttach);
+
+            articleRepository.save(article);
+            long articleId = article.getId();
+            if(articleId!=0){
+                List<Article> listInserted = new ArrayList<>();
+                listInserted.add(article);
+                usersService.usersArticleAttach(usersWhoCreated.getId(),listInserted);
+
+                serviceResponseHelper.setHasError(false);
+                successResponse.put("message", "article created sucessfully");
+                serviceResponseHelper.setResponseMessage(successResponse);
+
+                ArticleResponseDto articleResponse = new ArticleResponseDto();;
+                articleResponse.setIdOfArticle(article.getId());
+                articleResponse.setIdOfTag(article.getContains().getId());
+                articleResponse.setTextOfTag(article.getContains().getTagText());
+                articleResponse.setTitleOfArticle(article.getTitle());
+                articleResponse.setContentOfArticle(article.getContent());
+               // articleResponse.setTimeOfArticleCretion(article.getCreatedAt());
+                articleResponse.setIdOfCreator(usersWhoCreated.getId());
+                articleResponse.setFirstNameofCreator(usersWhoCreated.getFirstName());
+                articleResponse.setLastNameofCreator(usersWhoCreated.getLastName());
+                serviceResponseHelper.setContent(articleResponse);
+                return serviceResponseHelper;
+            }
+            else{
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "article couldn't be created");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }
+        }
     }
 
 

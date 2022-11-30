@@ -1,5 +1,6 @@
 package com.baylor.se.project.bearnews.Controller;
 
+import com.baylor.se.project.bearnews.Controller.dto.ArticleDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
 import com.baylor.se.project.bearnews.Service.ArticleService;
@@ -17,17 +18,18 @@ public class ArticleController {
 
     @Autowired
     ArticleService articleService;
+    
 
-    @RequestMapping(value = "/populateArticle", method = RequestMethod.POST)
-    public ResponseEntity<?> createArticles(@RequestBody Article articleSent) throws JsonProcessingException {
+    @RequestMapping(value = "/createArticle", method = RequestMethod.POST)
+    public ResponseEntity<?> createArticles(@RequestBody ArticleDto articleSent) throws JsonProcessingException {
 
-        String responseReturned= articleService.createArticle(articleSent);
-        int intValue;
-        try {
-            intValue = Integer.parseInt(responseReturned);
-            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
-        } catch (NumberFormatException e) {
-            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+       ServiceResponseHelper serviceResponseHelper= articleService.createArticle(articleSent);
+       ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.CREATED);
         }
     }
 

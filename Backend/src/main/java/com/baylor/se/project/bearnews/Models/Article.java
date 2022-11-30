@@ -50,7 +50,7 @@ public class Article {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "users_articles",referencedColumnName = "id")
 //    @JsonBackReference
-//    private Users createdBy;
+    // private Users createdBy;
 
     @CreatedDate
     @Column
@@ -58,7 +58,7 @@ public class Article {
 
     @LastModifiedDate
     @Column
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt =LocalDateTime.now();
 
 
     @OneToMany(mappedBy = "articlecomments",cascade = CascadeType.ALL, orphanRemoval = true)
