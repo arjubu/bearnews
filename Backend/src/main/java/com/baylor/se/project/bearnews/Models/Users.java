@@ -60,5 +60,11 @@ public class Users {
     @OneToMany(mappedBy = "createdBy",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articles;
 
+    @OneToMany(mappedBy = "createdByevent",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Event> events;
+
+    @OneToMany(mappedBy = "createdBycomments",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
 
 }
