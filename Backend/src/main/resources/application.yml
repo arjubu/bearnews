@@ -15,6 +15,8 @@ spring:
       enabled: true
 
   kafka:
+    producer:
+      bootstrap-servers: 137.184.37.205:9092
     consumer:
       bootstrap-servers: 137.184.37.205:9092
       #group-id: contest-group
