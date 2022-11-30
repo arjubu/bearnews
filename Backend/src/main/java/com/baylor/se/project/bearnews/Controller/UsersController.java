@@ -1,5 +1,6 @@
 package com.baylor.se.project.bearnews.Controller;
 
+import com.baylor.se.project.bearnews.Controller.dto.UserDto;
 import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleByUsersObjectMapper;
 import com.baylor.se.project.bearnews.Service.TagService;
@@ -27,7 +28,14 @@ public class UsersController {
     TagService tagService;
 
     @RequestMapping(path="/createUser", method = RequestMethod.POST)
-    public ResponseEntity<?> registerForAccount(@RequestBody @Validated Users users) throws JsonProcessingException {
+    public ResponseEntity<?> registerForAccount(@RequestBody @Validated UserDto userDto) throws JsonProcessingException {
+        Users users = new Users();
+        users.setFirstName(userDto.getFirstName());
+        users.setLastName(userDto.getLastName());
+        users.setEmail(userDto.getEmail());
+        users.setPassword(userDto.getPassword());
+        users.setProfileImageUrl(userDto.getProfileImageUrl());
+        users.setSocialMediaLink(userDto.getSocialMediaLink());
         ServiceResponseHelper serviceResponseHelper = usersService.RegisterUserToSystem(users);
         ObjectMapper objectMapper = new ObjectMapper();
         if(serviceResponseHelper.getHasError()){

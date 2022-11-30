@@ -1,7 +1,7 @@
 package com.bu.softwareengineering.bearnews.baylornewscrawler.controller;
 
 import com.bu.softwareengineering.bearnews.baylornewscrawler.domain.BaylorNews;
-import com.bu.softwareengineering.bearnews.baylornewscrawler.service.BearNewsAPIKafkaProducer;
+import com.bu.softwareengineering.bearnews.baylornewscrawler.service.BearFeedAPIKafkaProducer;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -21,7 +20,7 @@ import java.util.List;
 public class BaylorNewsController {
 
     @Autowired
-    BearNewsAPIKafkaProducer bearNewsAPIKafkaProducer;
+    BearFeedAPIKafkaProducer bearFeedAPIKafkaProducer;
 
     @GetMapping("/get-baylor-news")
     public ResponseEntity<?> getBaylorNews() throws IOException {
@@ -91,7 +90,7 @@ public class BaylorNewsController {
 
         }
 
-        bearNewsAPIKafkaProducer.sendToBearNewsApiBackend(newsItems);
+        bearFeedAPIKafkaProducer.sendToBearNewsApiBackend(newsItems);
         return new ResponseEntity<>(newsItems, HttpStatus.OK);
     }
 }
