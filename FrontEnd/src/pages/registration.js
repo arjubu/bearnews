@@ -26,7 +26,7 @@ function Login() {
     const login_handle = (event) => {
       event.preventDefault();
   
-      fetch('http://localhost:8080/applyForAccount', {
+        fetch('http://localhost:8080/createUser', {
         method: 'POST',
         body: JSON.stringify({
           email : username,
