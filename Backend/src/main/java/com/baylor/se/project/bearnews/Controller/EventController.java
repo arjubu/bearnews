@@ -15,22 +15,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/event")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EventController {
     @Autowired
     EventService eventService;
 
 
-    @PostMapping("/createevent")
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        Event updated = eventService.createEvent(event);
-        return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
-    }
-
-
-    @RequestMapping(value = "/allevent", method = RequestMethod.GET)
-    public ResponseEntity<Event> getEvents() {
+    @GetMapping
+    public ResponseEntity<Event> getAllEvents() {
         return new ResponseEntity(eventService.getAllEvent(), HttpStatus.OK);
 
+    }
+
+    @PostMapping("/save-event")
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        Event updated = eventService.createEvent(event);
+        return new ResponseEntity(updated, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/deleteEventById", method = RequestMethod.DELETE)
