@@ -61,5 +61,9 @@ public class Article {
     private LocalDateTime updatedAt;
 
 
+    @OneToMany(mappedBy = "articlecomments",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> articlecomments;
+
+
 
 }

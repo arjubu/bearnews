@@ -1,5 +1,6 @@
 package com.baylor.se.project.bearnews.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -35,15 +36,11 @@ public class Event {
     @Column
     private String location;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_events",referencedColumnName = "id")
+    @JsonBackReference
+    private Users createdByevent;
 
-//    @ManyToOne // owning-side
-//    @JoinColumn(name = "user_id")
-//    @JsonIdentityInfo(
-//            generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id")
-//    @JsonIdentityReference(alwaysAsId = true)
-//    private Users user;
-//ss
 
 
 }
