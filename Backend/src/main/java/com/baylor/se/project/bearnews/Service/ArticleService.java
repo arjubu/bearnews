@@ -13,6 +13,7 @@ import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.ArticleRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -240,5 +241,57 @@ public class ArticleService {
     }
     public List<Article> getAll(){
       return   articleRepository.findAll();
+    }
+
+    public ServiceResponseHelper findArticleById(long articleId){
+        Optional<Article> queryArticleOpt = articleRepository.findById(articleId);
+        Article queryArticle = new Article();
+        ArticleResponseDto sentArticleResp = new ArticleResponseDto();
+
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+
+        if(queryArticleOpt.isPresent()){
+            queryArticle = queryArticleOpt.get();
+            List<Users> authorQuery = usersService.findingArticlesByUser(queryArticle.getId());
+            if(authorQuery.isEmpty()==false){
+
+                sentArticleResp.setIdOfCreator(authorQuery.get(0).getId());
+                sentArticleResp.setFirstNameofCreator(authorQuery.get(0).getFirstName());
+                sentArticleResp.setLastNameofCreator(authorQuery.get(0).getLastName());
+
+                sentArticleResp.setIdOfArticle(queryArticle.getId());
+                sentArticleResp.setTitleOfArticle(queryArticle.getTitle());
+                sentArticleResp.setContentOfArticle(queryArticle.getContent());
+
+                sentArticleResp.setIdOfTag(queryArticle.getContains().getId());
+                sentArticleResp.setTextOfTag(queryArticle.getContains().getTagText());
+
+                sentArticleResp.setTimeOfCreation(queryArticle.getCreatedAt());
+
+                serviceResponseHelper.setHasError(false);
+                successResponse.put("message", "article found in this id");
+                serviceResponseHelper.setResponseMessage(successResponse);
+                serviceResponseHelper.setContent(sentArticleResp);
+                return serviceResponseHelper;
+
+            }
+            else{
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "article author is empty");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }
+        }
+        else{
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "article id doesn't exsist");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+
     }
 }

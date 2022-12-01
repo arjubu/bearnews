@@ -8,12 +8,15 @@ import com.baylor.se.project.bearnews.Service.ArticleService;
 import com.baylor.se.project.bearnews.Service.UsersService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ArticleController {
@@ -47,12 +50,17 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/fetchArticleById", method = RequestMethod.GET)
-    public ResponseEntity<?> getArticlesById(@RequestParam (name="articleId" , required = false) Long articleId){
-       Article queryArticle = articleService.fetchArticle(articleId);
-       if(queryArticle!=null)
-        return new ResponseEntity(queryArticle,HttpStatus.OK);
-
-        return new ResponseEntity<>(queryArticle,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> getArticlesById(@RequestParam (name="articleId" , required = false) Long articleId) throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
     }
     @RequestMapping(value = "/deleteArticleById", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteAnArticle( @RequestParam (name="articleId" , required = true) Long articleId) throws JsonProcessingException{
