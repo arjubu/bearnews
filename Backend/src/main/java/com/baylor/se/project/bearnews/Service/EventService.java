@@ -1,7 +1,10 @@
 package com.baylor.se.project.bearnews.Service;
 
 
+import com.baylor.se.project.bearnews.Controller.dto.CommentDto;
+import com.baylor.se.project.bearnews.Controller.dto.EventDto;
 import com.baylor.se.project.bearnews.Models.Article;
+import com.baylor.se.project.bearnews.Models.Comment;
 import com.baylor.se.project.bearnews.Models.Event;
 
 import com.baylor.se.project.bearnews.Models.Event;
@@ -18,11 +21,29 @@ public class EventService {
     @Autowired
     EventRepository eventRepository;
 
+    public String createEvent(EventDto eventDto) {
+        Event event = new Event();
+        event.setTitle(eventDto.geteventTitle());
+        event.setDescription(eventDto.geteventdescription());
+        event.setLocation(eventDto.geteventlocation());
+        eventRepository.save(event);
+        return "inserted";
 
-
-    public Event createEvent(Event event) {
-        return eventRepository.save(event);
     }
+
+//    public Event createEvent(Event event) {
+//        return eventRepository.save(event);
+//    }
+
+
+//    public String createEvent(EventDto eventDto){
+////            Event event = new Event();
+////            event.setTitle(eventDto.geteventTitle());
+//        eventRepository.save(eventDto);
+//            return "inserted";
+//
+//    }
+
 
     public List<Event> getAllEvent() {return eventRepository.findAll();}
     
