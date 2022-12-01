@@ -9,6 +9,7 @@ import SocialShareSide from "./elements/SocialShareSide";
 
 
 const PostFormatStandard = ({postData, allData}) => {
+  console.log(postData);
   const basePathLink = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_BASEPATH ?? "" : "";
   
   const postContent = postData.content.replaceAll('/images/', basePathLink + '/images/');
@@ -37,7 +38,7 @@ const PostFormatStandard = ({postData, allData}) => {
                 <div className="post-sidebar">
                   <WidgetSocialShare />
                   <WidgetPost dataPost={allData} />
-                  <WidgetInstagram />
+                  {/* <WidgetInstagram /> */}
                 </div>
               </div>
             </div>
