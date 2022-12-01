@@ -30,18 +30,18 @@ const HeaderOne = () => {
       element.children[0].addEventListener("click", () => {
         if (element.classList.contains("active")) {
           element.classList.remove("active");
-          element.childNodes[1].classList.remove("opened");
-        } else {
-          dropdownList.forEach((submenu) => {
-            if (element !== submenu) {
-              submenu.classList.remove("active");
-              submenu.childNodes[1].classList.remove("opened");
-            } else {
-              submenu.classList.add("active");
-              submenu.childNodes[1].classList.add("opened");
-            }
-          });
-        }
+          element.childNodes[1].classList.remove("opened");}
+        // } else {
+        //   dropdownList.forEach((submenu) => {
+        //     if (element !== submenu) {
+        //       submenu.classList.remove("active");
+        //       submenu.childNodes[1].classList.remove("opened");
+        //     } else {
+        //       submenu.classList.add("active");
+        //       submenu.childNodes[1].classList.add("opened");
+        //     }
+        //   });
+        // }
       });
     });
   };
