@@ -57,4 +57,9 @@ public class CommentService {
         return "inserted";
 
     }
+
+    public String deleteComment(Long id){
+        articleRepository.deleteById(id);
+        return "deleted successfully";
+    }
 }
