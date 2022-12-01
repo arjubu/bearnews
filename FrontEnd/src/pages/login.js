@@ -23,7 +23,7 @@ function Login() {
     const login_handle = (event) => {
       event.preventDefault();
   
-      fetch('http://localhost', {
+        fetch('http://localhost:8080/user-login', {
         method: 'POST',
         body: JSON.stringify({
           email : username,
@@ -47,14 +47,14 @@ function Login() {
             
           }).then(data=>{
 
-            if(data.list[0].isManager==0){
+ /*           if(data.list[0].isManager==0){
               setID(data.list[0].id);
               login_set_true(true);
             }
             else if(data.list[0].isManager==1){
               setID(data.list[0].id);
               login_set_true(true);
-            }
+            }*/
           });
         
         
