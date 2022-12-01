@@ -1,5 +1,5 @@
 package com.baylor.se.project.bearnews.Controller;
-
+import java.util.ArrayList;
 import com.baylor.se.project.bearnews.Controller.dto.ArticleDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Users;
@@ -81,5 +81,36 @@ public class ArticleController {
             return new ResponseEntity<>(responseReturned,HttpStatus.OK);
         }
     }
+
+    @RequestMapping(value = "/fetchArticleTitles", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllArticleTitlwa(){
+        List<String> responseReturned = articleService.getAllTitles();
+        List<String> response = new ArrayList<>();
+
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+            for (String i : responseReturned
+            ) {
+
+                response.add(i.replace(" ","-"));
+
+            }
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchTitleArticles", method = RequestMethod.GET)
+    public ResponseEntity<?> getArticleByTitles(@RequestBody String titleSent){
+        List<Article> responseReturned = articleService.getAll();
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        }
+    }
+
 
 }

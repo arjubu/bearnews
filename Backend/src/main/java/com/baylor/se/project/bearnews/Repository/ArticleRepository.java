@@ -17,4 +17,6 @@ public interface ArticleRepository extends JpaRepository<Article,Long> {
      Optional<Article> findByBaylorNewsId(Integer baylorNewsId);
 
      List<Article> findArticlesByContains_Id(Long id);
+
+     List<Article> findArticlesByTitle(String )
 }

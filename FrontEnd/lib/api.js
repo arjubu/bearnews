@@ -4,12 +4,39 @@ import matter from 'gray-matter'
 
 const postsDirectory = join(process.cwd(), 'posts')
 
-export function getPostSlugs() {
-  console.log(fs.readdirSync(postsDirectory));
-  return fs.readdirSync(postsDirectory)
+export async function getPostSlugs() {
+  //console.log(fs.readdirSync(postsDirectory));
+  let Mylist = {};
+  Mylist = await fetch('http://localhost:8080/fetchArticleTitles'
+  )
+    .then(response => {
+       
+      if (response.status == 200) {
+        console.log('go'); 
+        return response.json();
+        
+      } else {
+        
+        throw new Error('Something went wrong ...');
+
+      }
+        
+      }).then(data=>{
+
+        return data;
+        //console.log(Mylist);
+      });
+      let a = [];
+      Mylist.forEach(myfunction)
+      function myfunction(item){
+        a.push(item);
+      }
+      //console.log(a);
+      //console.log(JSON.parse(Mylist));
+  return a;
 }
 
-export function getPostBySlug(slug, fields = []) {
+export async function getPostBySlug(slug, fields = []) {
   const realSlug = slug.replace(/\.md$/, '')
   const fullPath = join(postsDirectory, `${realSlug}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
@@ -34,12 +61,13 @@ export function getPostBySlug(slug, fields = []) {
   return items
 }
 
-export function getAllPosts(fields = []) {
-  const slugs = getPostSlugs()
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug, fields))
+export async function getAllPosts(fields = []) {
+  const slugs = await getPostSlugs();
 
-  return posts
+   const posts = slugs
+     .map((slug) => getPostBySlug(slug, fields))
+
+  return slugs;
 }
 
 

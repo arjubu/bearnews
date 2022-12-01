@@ -241,4 +241,20 @@ public class ArticleService {
     public List<Article> getAll(){
       return   articleRepository.findAll();
     }
+
+    public List<String> getAllTitles(){
+        String titles;
+        List<Article> articleList = articleRepository.findAll();
+        List<String> titlesList =  new ArrayList<>();
+        if(articleList.isEmpty()){
+            return null;
+        }
+        else{
+            for(Article a: articleList){
+                titles=a.getTitle();
+                titlesList.add(titles);
+            }
+        }
+        return titlesList;
+    }
 }
