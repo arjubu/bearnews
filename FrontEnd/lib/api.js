@@ -76,14 +76,14 @@ export async function getPostBySlug(slug, fields = []) {
   //     items[field] = data[field]
   //   }
   // })
-  items['title'] = article.title;
-  items['content'] = article.content;
-  items['slug'] = article.id.toString();
-  items['cate'] = article.contains.tagText;
-  items['author_name'] = article.articleType;
+  items['title'] = article.data.titleOfArticle;
+  items['content'] = article.data.contentOfArticle;
+  items['slug'] = article.data.idOfArticle.toString();
+  items['cate'] = article.data.textOfTag;
+  items['author_name'] = article.data.firstNameofCreator +" "+article.data.lastNameofCreator;
   items['postFormat'] = 'standard';
   items['cate_bg'] = 'bg-color-purple-one';
-  items['date'] = article.createdAt;
+  items['date'] = article.data.timeOfCreation;
   items['cate_img'] = '/images/category/travel.png';
   items['featureImg'] =  '/images/posts/post_2.jpg';
   items['author_img'] = '/images/author/amachea_jajah.png';
