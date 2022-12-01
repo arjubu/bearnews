@@ -104,7 +104,7 @@ export async function getPostBySlug(slug, fields = []) {
   {icon: "fab fa-linkedin-in",
     url: "https://linkedin.com"}];
 
-  items['author_bio'] = 'I am a new guy!!';
+  items['author_bio'] = '';
   //console.log(items);
 
   return items
