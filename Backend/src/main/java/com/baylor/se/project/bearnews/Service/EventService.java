@@ -26,21 +26,7 @@ public class EventService {
 
     public List<Event> getAllEvent() {return eventRepository.findAll();}
 
-    public Event fetchEvenet(Long id) {
-        Optional<Event> eventQueryOpt = eventRepository.findById(id);
-        if (eventQueryOpt.isPresent())
-            return eventQueryOpt.get();
-        return null;
-    }
 
-    public String deleteAnEvent(Long id){
-        if(fetchEvenet(id)==null)
-            return "event id doesn't exsists";
-        else{
-            eventRepository.deleteById(id);
-            return "deleted successfully";
-        }
-    }
 }
 
 
