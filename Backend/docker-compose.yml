@@ -5,9 +5,6 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    volumes:
-      - /root/data/zookeeper/etc:/etc/zookeeper
-      - /root/data/zookeeper/data:/var/lib/zookeeper/data
     container_name: "zookeeper"
     network_mode: "host"
 
@@ -24,8 +21,5 @@ services:
       KAFKA_LOG4J_LOGGERS: "kafka.controller=WARN"
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_TOOLS_LOG4J_LOGLEVEL: ERROR
-    volumes:
-      - /root/data/kafka/etc:/etc/kafka
-      - /root/data/kafka/data:/var/lib/kafka/data
     container_name: "kafka"
     network_mode: "host"
