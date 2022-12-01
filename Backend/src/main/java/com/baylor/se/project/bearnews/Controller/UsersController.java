@@ -108,4 +108,16 @@ public class UsersController {
         usersService.findingArticlesByUser(37L);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/user-login")
+    public ResponseEntity<?> validateLogin(@RequestBody Map<String,String> requestBody) throws JsonProcessingException {
+        ServiceResponseHelper serviceResponseHelper = usersService.validateLogin(requestBody);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.OK);
+        }
+    }
 }
