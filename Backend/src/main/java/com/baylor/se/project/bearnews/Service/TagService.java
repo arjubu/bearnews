@@ -17,30 +17,7 @@ public class TagService {
     TagRepository tagRepository;
 
 
-    public Tag createTag(Tag tag) {
-        if(!tag.getTagText().equals("")) {
-            List<Tag> isTagExsisting = tagRepository.findByTagText(tag.getTagText().toLowerCase());
-            if(isTagExsisting.isEmpty()) {
-                tag.setTagText(tag.getTagText().toLowerCase());
-                return tagRepository.save(tag);
-            }
-            else
-                return null;
-        }
-        return null;
-    }
-
-    public List<Tag> getAllTag() {return tagRepository.findAll();}
-
-    public Tag getTagById(Long id) {
-        Optional<Tag> tag = tagRepository.findById(id);
-
-        if (tag.isPresent()) {
-            return tag.get();
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No tag record exist for given id");
-        }
-    }
+    
 
     public List<Tag> ListOfTagsFound(List<String> userInterests){
     List<Tag> foundTags = new ArrayList<>();
