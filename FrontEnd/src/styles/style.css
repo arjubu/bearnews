@@ -4770,6 +4770,7 @@ Date Created: July 26, 2019
   .navbar-search .search-field {
     width: 60%;
     margin: 0 auto;
+    margin-right: 17.5%;
     position: relative;
   }
   .searchlist{
