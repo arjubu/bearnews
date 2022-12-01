@@ -41,8 +41,8 @@ public class ArticleService {
 
         long tagId = articleDto.getTagContaiedId();
         Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
-        long usersId = articleDto.getCreatedUsersId();
-        Users usersWhoCreated = usersService.foundUserById(usersId);
+        String usersName = articleDto.getCreatedUsername();
+        Users usersWhoCreated = usersService.findUserEmail(usersName);
 
         if(articleDto.getArticleTitle()==""){
             serviceResponseHelper.setHasError(true);
@@ -74,7 +74,7 @@ public class ArticleService {
              return serviceResponseHelper;
         }
 
-        if(articleDto.getCreatedUsersId()==0){
+        if(articleDto.getCreatedUsername()==""){
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article must have a user");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -84,7 +84,7 @@ public class ArticleService {
 
         if(usersWhoCreated==null){
             serviceResponseHelper.setHasError(true);
-            errorResponse.put("message", "valid user id isn't provided");
+            errorResponse.put("message", "valid user email isn't provided");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;

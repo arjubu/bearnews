@@ -19,7 +19,7 @@ public class ArticleDto {
 
     private long tagContaiedId;
 
-    private long createdUsersId;
+    private String createdUsername;
 
 
 //    private String articleDetailLink;
@@ -50,13 +50,14 @@ public class ArticleDto {
         this.tagContaiedId = tagContaiedId;
     }
 
-    public long getCreatedUsersId() {
-        return createdUsersId;
+    public String getCreatedUsername() {
+        return createdUsername;
     }
 
-    public void setCreatedUsersId(long createdUsersId) {
-        this.createdUsersId = createdUsersId;
+    public void setCreatedUsername(String createdUsername) {
+        this.createdUsername = createdUsername;
     }
+
     //    public String getArticleDetailLink() {
 //        return articleDetailLink;
 //    }

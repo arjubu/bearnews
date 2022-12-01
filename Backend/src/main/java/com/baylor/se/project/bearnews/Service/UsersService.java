@@ -276,5 +276,13 @@ public class UsersService {
             return serviceResponseHelper;
         }
     }
+    public Users findUserEmail(String email){
+        Optional<Users> userQueryOpt = userRepo.findByEmail(email);
+        if(userQueryOpt.isPresent()){
+            return userQueryOpt.get();
+        }
+        else
+            return null;
+    }
 
 }
