@@ -207,8 +207,7 @@ public class UsersService {
                    ArticleByUsersObjectMapper responseArticle = new ArticleByUsersObjectMapper();
                    responseArticle.setArticleId(a.getId());
 
-                   Users author= findingArticlesByUser(a.getId()); //lines work
-                   responseArticle.setUsersCreatorId(author.getId()); //lines work
+                   responseArticle.setUsersCreatorId(allArticlesByAuthor.getId()); 
 
                    responseArticle.setArticleTitle(a.getTitle());
                    responseArticle.setArticleContent(a.getContent());
@@ -240,9 +239,9 @@ public class UsersService {
         return articlesCreated;
     }
 
-    public Users findingArticlesByUser(Long id){
+    public List<Users> findingArticlesByUser(Long id){
         List<Users> as = userRepo.findByArticlesIsNotNullAndArticlesIdEquals(id);
-        return as.get(0);
+        return as;
     }
 
     public  ServiceResponseHelper validateLogin(Map<String,String> requestBody){

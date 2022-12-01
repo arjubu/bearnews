@@ -196,9 +196,11 @@ public class ArticleService {
                 article.setContentOfArticle(a.getContent());
                 article.setTimeOfArticleCretion(a.getCreatedAt());
 
-                Users author= usersService.findingArticlesByUser(a.getId());
-                article.setIdOfCreator(author.getId());
-                article.setNameofCreator(author.getFirstName());
+                List<Users> author= usersService.findingArticlesByUser(a.getId());
+                if(author.isEmpty()==false) {
+                    article.setIdOfCreator(author.get(0).getId());
+                    article.setNameofCreator(author.get(0).getFirstName());
+                }
 
                 article.setIdOfTag(a.getContains().getId());
                 article.setTextOfTag(a.getContains().getTagText());
@@ -210,34 +212,6 @@ public class ArticleService {
 
     }
     public List<ArticleWithUsersObjectMapper> getAllArticles(){
-//        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
-//        Map errorResponse = new HashMap<>();
-//        Map successResponse = new HashMap<>();
-//
-//        List<Users> systemUsersArticles = usersService.findingUsersCreatedArticles();
-//        if(systemUsersArticles.isEmpty()){
-//            return null;
-//        }
-//        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
-//        for(Users us: systemUsersArticles){
-//            for(Article a: us.getArticles()){
-//                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
-//                article.setTitleOfArticle(a.getTitle());
-//                article.setContentOfArticle(a.getContent());
-//                article.setIdOfArticle(a.getId());
-//                article.setTimeOfArticleCretion(a.getCreatedAt());
-//
-//                article.setNameofCreator(us.getFirstName());
-//                article.setIdOfCreator(us.getId());
-//
-//                article.setIdOfTag(a.getContains().getId());
-//                article.setTextOfTag(a.getContains().getTagText());
-//
-//                articleDetails.add(article);
-//            }
-//        }
-//
-//        return articleDetails;
         List<Article> articleList = articleRepository.findAll();
         if(articleList.isEmpty()){
             return null;
@@ -250,9 +224,11 @@ public class ArticleService {
                 article.setIdOfArticle(a.getId());
                 article.setTimeOfArticleCretion(a.getCreatedAt());
 
-                Users author= usersService.findingArticlesByUser(a.getId());
-                article.setIdOfCreator(author.getId());
-                article.setNameofCreator(author.getFirstName());
+                List<Users> author= usersService.findingArticlesByUser(a.getId());
+                if(author.isEmpty()==false) {
+                    article.setIdOfCreator(author.get(0).getId());
+                    article.setNameofCreator(author.get(0).getFirstName());
+                }
 
                 article.setIdOfTag(a.getContains().getId());
                 article.setTextOfTag(a.getContains().getTagText());
@@ -261,5 +237,8 @@ public class ArticleService {
         }
         return articleDetails;
 
+    }
+    public List<Article> getAll(){
+      return   articleRepository.findAll();
     }
 }
