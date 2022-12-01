@@ -1,5 +1,6 @@
 package com.baylor.se.project.bearnews.Controller;
 
+import com.baylor.se.project.bearnews.Controller.dto.CommentDto;
 import com.baylor.se.project.bearnews.Models.Comment;
 import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.Models.Users;
@@ -21,15 +22,9 @@ public class CommentController {
     CommentService commentService;
 
     @RequestMapping(value = "/insertComment", method = RequestMethod.POST)
-    public ResponseEntity<?> insertComment(@RequestBody Comment commentSent) {
-      String responseReturned =commentService.createComment(commentSent);
-        int intValue;
-        try {
-            intValue = Integer.parseInt(responseReturned);
-            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
-        } catch (NumberFormatException e) {
-            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> insertComment(@RequestBody CommentDto commentSent) {
+      String responseReturned =commentService.createCommentforArticle(commentSent);
+      return new ResponseEntity<>(responseReturned,HttpStatus.OK);
     }
     @RequestMapping(value = "/findAllComments", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComments(){

@@ -30,21 +30,21 @@ public class Comment {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
     //make relationship later
-    @Column
-    private long userId;
-    //make relation in here
-    @Column
-    private long articleId;
+//    @Column
+//    private long userId;
+//    //make relation in here
+//    @Column
+//    private long articleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_comments",referencedColumnName = "id")
     @JsonBackReference
     private Users createdBycomments;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_comments",referencedColumnName = "id")
-    @JsonBackReference
-    private Article articlecomments;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "article_comments",referencedColumnName = "id")
+//    @JsonBackReference
+//    private Article articlecomments;
 
 
 }
