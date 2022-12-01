@@ -8,34 +8,52 @@ import OffcanvasMenu from "./OffcanvasMenu";
 import Select from 'react-select';
 
 
-class SearchResultList extends React.Component {
+ function SearchResultList (){
+  const [DATASET, setDataset] = useState();
 
+   function handlerChange(input){
+     fetch('http://localhost:8080/fetchArticleTitles'
+    )
+      .then(response => {
+         
+        if (response.status == 200) {
+          //console.log('this works'); 
+          return response.json();
+          
+        } else {
+          
+          throw new Error('Something went wrong ...');
+  
+        }
+          
+        }).then(data=>{
+          let a = [];
+        data.forEach(myfunction)
+        function myfunction(item){
+          let b = {lable:item};
+          a.push(b);
+        }
+        console.log(b)
+          return data;
+          //console.log(Mylist);
+        });
 
-	render() {
+  }
+
+	return(
 		//const resultItems = this.props.data;
-
-var DATASET = [
-	{label: 'Wanna Be Starting Something',},
-	{label: 'Baby be Mine'},
-	{label: 'The Girl is Mine'},
-	{label: 'Thriller'},
-	{label: 'Beat It'},
-	{label: 'Bilie Jean'}
-];
-
-		
- 
-		return (
       <div className="search-field">
       <Select
   options={DATASET}
   getOptionValue={(option) => option.label}
+  //inputValue={this.state.searchKey}
+  onInputChange = {(event) => handlerChange(event)}
   
   //onChange={opt => console.log(opt.label, opt.value)}
 />
 </div>
-		);
-	}
+		
+  );
 }
 
 

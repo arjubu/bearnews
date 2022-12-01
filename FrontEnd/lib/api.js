@@ -39,7 +39,7 @@ export async function getPostSlugs() {
 
 export async function getPostBySlug(slug, fields = []) {
   const realSlug = slug.toString();
-  console.log(typeof realSlug);
+  //console.log(typeof realSlug);
   let article = await fetch('http://localhost:8080/fetchArticleById?articleId='+realSlug
   )
     .then(response => {
