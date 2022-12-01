@@ -51,14 +51,17 @@ public class Users {
     private String socialMediaLink;
 
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany
+            //(mappedBy = "users")
     private List<Tag> isLiked;
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @OneToMany(mappedBy = "createdBy",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Article> articles;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "USERS_ID", referencedColumnName = "id")
+    private List<Article> articles = new ArrayList<>();
 
     @OneToMany(mappedBy = "createdByevent",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Event> events;

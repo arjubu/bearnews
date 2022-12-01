@@ -6,10 +6,15 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Repository
 public interface UsersRepository extends JpaRepository<Users,Long> {
 
-    List<Users> findByEmail(String email);
+    Optional<Users> findByEmail(String email);
+
+    List<Users> findByArticlesIsNotNull();
+
+    List<Users> findByArticlesIsNotNullAndArticlesIdEquals(long id);
 }

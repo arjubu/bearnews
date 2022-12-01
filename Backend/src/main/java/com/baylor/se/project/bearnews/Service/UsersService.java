@@ -8,6 +8,7 @@ import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.TagRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleByUsersObjectMapper;
+import com.google.common.hash.Hashing;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import redis.clients.jedis.DefaultJedisClientConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -85,6 +87,8 @@ public class UsersService {
                     }
                     else {
                         user.setUserType(UserType.SystemUser);
+                        String passwordHash = Hashing.sha256().hashString(user.getPassword(), StandardCharsets.UTF_8).toString();
+                        user.setPassword(passwordHash);
 
                         newUser = userRepo.save(newUser);
                         DefaultJedisClientConfig defaultJedisClientConfig = DefaultJedisClientConfig.builder().password(redisPassword).build();
@@ -107,8 +111,8 @@ public class UsersService {
         return allUserRegistered;
     }
     public boolean userExsistence(String email){
-        List<Users> userInSystem = userRepo.findByEmail(email);
-        if(userInSystem.isEmpty())
+        Optional<Users> userInSystem = userRepo.findByEmail(email);
+        if(!userInSystem.isPresent())
             return false;
         else
             return true;
@@ -202,7 +206,10 @@ public class UsersService {
                for(Article a: allArticlesByAuthor.getArticles()){
                    ArticleByUsersObjectMapper responseArticle = new ArticleByUsersObjectMapper();
                    responseArticle.setArticleId(a.getId());
-                   responseArticle.setUsersCreatorId(a.getCreatedBy().getId());
+
+                   Users author= findingArticlesByUser(a.getId()); //lines work
+                   responseArticle.setUsersCreatorId(author.getId()); //lines work
+
                    responseArticle.setArticleTitle(a.getTitle());
                    responseArticle.setArticleContent(a.getContent());
                    responseArticle.setArticleTagId(a.getContains().getId());
@@ -216,5 +223,56 @@ public class UsersService {
         return returnedArticles;
     }
 
+    public void usersArticleAttach(long usersId, Article articleSent){
+        Users usersUpdate = foundUserById(usersId);
+        List<Article> listToInsert = usersUpdate.getArticles();
+        listToInsert.add(articleSent);
+        userRepo.save(usersUpdate);
+
+    }
+    public List<Users> findingUsersCreatedArticles(){
+        List<Users> articlesCreated = userRepo.findByArticlesIsNotNull();
+        for(Users us: articlesCreated){
+            for(Article a: us.getArticles()){
+                System.out.println(a.getTitle());
+            }
+        }
+        return articlesCreated;
+    }
+
+    public Users findingArticlesByUser(Long id){
+        List<Users> as = userRepo.findByArticlesIsNotNullAndArticlesIdEquals(id);
+        return as.get(0);
+    }
+
+    public  ServiceResponseHelper validateLogin(Map<String,String> requestBody){
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+
+        Optional<Users> users = userRepo.findByEmail(requestBody.get("email"));
+        if(users.isPresent()){
+            if(users.get().getPassword().equals(Hashing.sha256().hashString(requestBody.get("password"), StandardCharsets.UTF_8).toString())){
+                serviceResponseHelper.setHasError(false);
+                successResponse.put("message", "deleted successfully");
+                serviceResponseHelper.setResponseMessage(successResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }else{
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "Password is incorrect!");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }
+
+        }else{
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "No User Found!");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+    }
 
 }
