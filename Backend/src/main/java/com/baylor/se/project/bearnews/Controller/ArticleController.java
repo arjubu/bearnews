@@ -71,4 +71,15 @@ public class ArticleController {
 
     }
 
+    @RequestMapping(value = "/fetchAllArticles", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllArticles(){
+        List<Article> responseReturned = articleService.getAll();
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        }
+    }
+
 }
