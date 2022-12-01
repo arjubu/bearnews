@@ -1,10 +1,11 @@
-import React, { useState , Component} from "react";
+import React, { useState , Component, useEffect} from "react";
 //import ReactDOM from "react-dom";
 import logo from '../../public/images/Bear_Mark_1_Color_01.jpg';
 import backgroundImage from '../../public/images/Background.jpg';
 //import { useNavigate } from 'react-router-dom';
 import Image from "next/image";
 import Link from "next/link";
+import { useCookies } from 'react-cookie';
 
 
 function Login() {
@@ -13,30 +14,35 @@ function Login() {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     const [id, setID] = useState();
+    const [cookies, setCookie] = useCookies(['username'])
 
   
     const errors = {
       username: "This user Id does not exit or invalid password",
      
     };
+
+    useEffect(() => {
+        console.log('password', password)
+    }, [password]);
+
+    //const login_handle = async (event) => {
+     // event.preventDefault();
   
-    const login_handle = (event) => {
-      event.preventDefault();
-  
-        fetch('http://localhost:8080/user-login', {
+       /* fetch('http://localhost:8080/user-login', {
         method: 'POST',
         body: JSON.stringify({
           email : username,
           password : password
         }),
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
+          "Content-type": "application/json"
         }
       })
         .then(response => {
            
-          if (response.status == 200) {
-            console.log('go'); 
+           /* if (response.status == 200) {
+                console.log(response);
             return response.json();
             
           } else {
@@ -44,6 +50,8 @@ function Login() {
             throw new Error('Something went wrong ...');
   
           }
+            console.log("---------");
+            console.log(response.json());
             
           }).then(data=>{
 
@@ -55,11 +63,71 @@ function Login() {
               setID(data.list[0].id);
               login_set_true(true);
             }*/
-          });
-        
-        
-    };
+         // });
+    const test = (event) => {
+        event.preventDefault();
+        console.log('Test')
+
+        fetch('http://localhost:8080/user-login', {
+            mode: 'cors',
+            method: 'POST',
+            body: JSON.stringify({
+                email: username,
+                password: password,
+            }),
+            headers: {
+                'Content-type': 'application/json',
+            },
+        })
+            .then((response) => {
+                console.log('response', response);
+                if (response.status == 200) {
+                    console.log('go');
+                    return response.json();
+                } else {
+                    error_login({ name: 'ID', message: errors.username });
+                    throw new Error('Something went wrong ...');
+                }
+            })
+            .then((data) => {
+                console.log('data', data);
+                if (!data?.hasError) {
+                    console.log('username', username);
+                    console.log('password', password);
+                    setCookie('username', username)
+                } else {
+                    console.log("error");
+                }
+            });
+    }
+  /*  const login_handle = async (url = 'http://localhost:8080/user-login',
+        data = {
+            email: username,
+            password: password
+        }) => {
+        console.log("----");
+        console.log("function calling");
+        console.log(data);
+            const response = await fetch(url, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                        
+                body: JSON.stringify(data),
+            });
   
+            try {
+                const newData = await response.json();
+                console.log(newData);
+                return newData;
+            } catch (error) {
+                console.log(error)
+
+            }
+    };*/
+
     const renderErrorMessage = (name) =>
       name === errorMessages.name && (
         <div className="error">{errorMessages.message}</div>
@@ -72,8 +140,8 @@ function Login() {
       };
 
     const renderForm = (
-      <div className="form">
-        <form onSubmit={login_handle}>
+        <div className="form">
+            <form onSubmit={test}>
           <div className="input-container">
             <label>User Id </label>
             <input type="text" name="username" id="username" required onChange={e => setUserName(e.target.value)}/>
@@ -129,7 +197,7 @@ function Login() {
                   </Link>
           {(() => {
         if (islogin) {
-          navigate('/User/'+id, { state: { id: id}});
+        //  navigate('/User/'+id, { state: { id: id}});
         } else {
           return (
             renderForm
