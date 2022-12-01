@@ -36,7 +36,7 @@ export default HomeOne;
 
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts([
+  const allPosts = await getAllPosts([
     'postFormat',
     'trending',
     'story',

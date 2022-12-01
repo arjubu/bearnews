@@ -242,16 +242,16 @@ public class ArticleService {
       return   articleRepository.findAll();
     }
 
-    public List<String> getAllTitles(){
-        String titles;
+    public List<Long> getAllTitles(){
+        Long titles;
         List<Article> articleList = articleRepository.findAll();
-        List<String> titlesList =  new ArrayList<>();
+        List<Long> titlesList =  new ArrayList<>();
         if(articleList.isEmpty()){
             return null;
         }
         else{
             for(Article a: articleList){
-                titles=a.getTitle();
+                titles=a.getId();
                 titlesList.add(titles);
             }
         }

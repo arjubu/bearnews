@@ -85,24 +85,24 @@ public class ArticleController {
 
     @RequestMapping(value = "/fetchArticleTitles", method = RequestMethod.GET)
     public ResponseEntity<?> getAllArticleTitlwa(){
-        List<String> responseReturned = articleService.getAllTitles();
-        List<String> response = new ArrayList<>();
+        List<Long> responseReturned = articleService.getAllTitles();
+
 
         if(responseReturned==null){
             return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
         }
         else{
-            for (String i : responseReturned
-            ) {
-
-                response.add(i.replace(" ","-"));
-
-            }
-            return new ResponseEntity<>(response,HttpStatus.OK);
+//            for (String i : responseReturned
+//            ) {
+//
+//                response.add(i.replace(" ","-"));
+//
+//            }
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
         }
     }
 
-    @RequestMapping(value = "/fetchTitleArticles", method = RequestMethod.GET)
+    @RequestMapping(value = "/fetchTitleArticles", method = RequestMethod.POST)
     public ResponseEntity<?> getArticleByTitles(@RequestBody Map<String, String> json){
 
         String titleSent = json.get("title");
