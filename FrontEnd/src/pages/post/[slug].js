@@ -13,6 +13,8 @@ import PostSectionSix from "../../components/post/PostSectionSix";
 
 
 const PostDetails = ({postContent, allPosts}) => {
+	
+
 
 	const PostFormatHandler = () => {
 		if (postContent.postFormat === 'video') {
@@ -43,7 +45,7 @@ const PostDetails = ({postContent, allPosts}) => {
 export default PostDetails;
 
 export async function getStaticProps({ params }) {
-    const post = getPostBySlug(params.slug, [
+    const post = await getPostBySlug(params.slug, [
 		'postFormat',
 		'title',
 		'quoteText',
@@ -61,7 +63,11 @@ export async function getStaticProps({ params }) {
 		'author_social',
 		'content',
 	])
+	console.log(params.slug);
+	console.log("content");
+	console.log(post);
 	const content = await markdownToHtml(post.content || '')
+
 
     const allPosts = await getAllPosts([
 		'title',
@@ -74,6 +80,9 @@ export async function getStaticProps({ params }) {
 		'cate_img',
 		'author_name',
 	  ])
+
+	//   console.log("getAllPosts");
+	//   console.log(allPosts);
 
     return {
         props: {
