@@ -93,7 +93,10 @@ public class UsersService {
                         newUser = userRepo.save(newUser);
                         DefaultJedisClientConfig defaultJedisClientConfig = DefaultJedisClientConfig.builder().password(redisPassword).build();
                         Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort),defaultJedisClientConfig);
-                        jedis.setex(user.getEmail(), 300, RandomStringUtils.randomNumeric(6));
+                        String OTP = RandomStringUtils.randomNumeric(6);
+                        jedis.setex(user.getEmail(), 300, OTP);
+                        EmailSenderService emailSenderService = new EmailSenderService();
+                        emailSenderService.zohoSendMail(user.getEmail(),OTP);
                         //System.out.println(jedis.get(user.getEmail()));
                         serviceResponseHelper.setHasError(false);
                         successResponse.put("message", "User created Successfully!");
@@ -152,7 +155,7 @@ public class UsersService {
         if(otp != null){
             if(otp.equals(requestBody.get("otp"))){
                 serviceResponseHelper.setHasError(false);
-                successResponse.put("message", "OTP");
+                successResponse.put("message", "OTP Validate Successfully!");
                 serviceResponseHelper.setResponseMessage(successResponse);
                 serviceResponseHelper.setContent(otp);
                 return serviceResponseHelper;

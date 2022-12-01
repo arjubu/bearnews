@@ -61,7 +61,10 @@ public class Article {
     private LocalDateTime updatedAt =LocalDateTime.now();
 
 
-    @OneToMany(mappedBy = "articlecomments",cascade = CascadeType.ALL, orphanRemoval = true)
+//    @OneToMany(mappedBy = "articlecomments",cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Comment> articlecomments;
+
+    @OneToMany
     private List<Comment> articlecomments;
 
 
