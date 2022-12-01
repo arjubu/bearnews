@@ -12,7 +12,15 @@ import Select from 'react-select';
   const [DATASET, setDataset] = useState();
 
    function handlerChange(input){
-     fetch('http://localhost:8080/fetchArticleTitles'
+     fetch('http://localhost:8080/getTagByLetter', {
+      method: 'POST',
+      body: JSON.stringify({
+        suggString : input,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    }
     )
       .then(response => {
          
@@ -28,7 +36,7 @@ import Select from 'react-select';
           
         }).then(data=>{
           let a = [];
-        data.forEach(myfunction)
+        data.data.forEach(myfunction)
         function myfunction(item){
           let b = {label:item.toString()};
           a.push(b);
