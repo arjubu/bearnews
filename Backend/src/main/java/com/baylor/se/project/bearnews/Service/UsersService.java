@@ -202,7 +202,10 @@ public class UsersService {
                for(Article a: allArticlesByAuthor.getArticles()){
                    ArticleByUsersObjectMapper responseArticle = new ArticleByUsersObjectMapper();
                    responseArticle.setArticleId(a.getId());
-                   responseArticle.setUsersCreatorId(a.getCreatedBy().getId());
+
+                   Users author= findingArticlesByUser(a.getId()); //lines work
+                   responseArticle.setUsersCreatorId(author.getId()); //lines work
+
                    responseArticle.setArticleTitle(a.getTitle());
                    responseArticle.setArticleContent(a.getContent());
                    responseArticle.setArticleTagId(a.getContains().getId());
@@ -214,6 +217,27 @@ public class UsersService {
             }
         }
         return returnedArticles;
+    }
+
+    public void usersArticleAttach(long usersId, List<Article> toAttched){
+        Users usersUpdate = foundUserById(usersId);
+        usersUpdate.setArticles(toAttched);
+        userRepo.save(usersUpdate);
+
+    }
+    public List<Users> findingUsersCreatedArticles(){
+        List<Users> articlesCreated = userRepo.findByArticlesIsNotNull();
+        for(Users us: articlesCreated){
+            for(Article a: us.getArticles()){
+                System.out.println(a.getTitle());
+            }
+        }
+        return articlesCreated;
+    }
+
+    public Users findingArticlesByUser(Long id){
+        List<Users> as = userRepo.findByArticlesIsNotNullAndArticlesIdEquals(id);
+        return as.get(0);
     }
 
 
