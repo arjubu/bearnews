@@ -183,27 +183,27 @@ public class ArticleService {
         }
     }
 
-    public List<ArticleWithUsersObjectMapper> getAllArticles(){
-        List<Article> allArticles = articleRepository.findAll();
-        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
-
-        if(allArticles.isEmpty()==false){
-            for(Article a: allArticles){
-                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
-               // System.out.println(a.getId());
-                article.setIdOfArticle(a.getId());
-//                article.setIdOfCreator(a.getCreatedBy().getId());
-//                article.setNameofCreator(a.getCreatedBy().getFirstName());
-                article.setIdOfTag(a.getContains().getId());
-                article.setTextOfTag(a.getContains().getTagText());
-                article.setTitleOfArticle(a.getTitle());
-                article.setContentOfArticle(a.getContent());
-                article.setTimeOfArticleCretion(a.getCreatedAt());
-                articleDetails.add(article);
-            }
-        }
-        return articleDetails;
-    }
+//    public List<ArticleWithUsersObjectMapper> getAllArticles(){
+//        List<Article> allArticles = articleRepository.findAll();
+//        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
+//
+//        if(allArticles.isEmpty()==false){
+//            for(Article a: allArticles){
+//                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+//               // System.out.println(a.getId());
+//                article.setIdOfArticle(a.getId());
+////                article.setIdOfCreator(a.getCreatedBy().getId());
+////                article.setNameofCreator(a.getCreatedBy().getFirstName());
+//                article.setIdOfTag(a.getContains().getId());
+//                article.setTextOfTag(a.getContains().getTagText());
+//                article.setTitleOfArticle(a.getTitle());
+//                article.setContentOfArticle(a.getContent());
+//                article.setTimeOfArticleCretion(a.getCreatedAt());
+//                articleDetails.add(article);
+//            }
+//        }
+//        return articleDetails;
+//    }
     public List<ArticleWithUsersObjectMapper> findArtcilesByTags(Long tagId){
        List<Article> allArticles = articleRepository.findArticlesByContains_Id(tagId);
        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
@@ -222,6 +222,37 @@ public class ArticleService {
                 articleDetails.add(article);
             }
         }
+        return articleDetails;
+
+    }
+    public List<ArticleWithUsersObjectMapper> getAllArticles(){
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+
+        List<Users> systemUsersArticles = usersService.findingUsersCreatedArticles();
+        if(systemUsersArticles.isEmpty()){
+            return null;
+        }
+        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
+        for(Users us: systemUsersArticles){
+            for(Article a: us.getArticles()){
+                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+                article.setTitleOfArticle(a.getTitle());
+                article.setContentOfArticle(a.getContent());
+                article.setIdOfArticle(a.getId());
+                article.setTimeOfArticleCretion(a.getCreatedAt());
+
+                article.setNameofCreator(us.getFirstName());
+                article.setIdOfCreator(us.getId());
+
+                article.setIdOfTag(a.getContains().getId());
+                article.setTextOfTag(a.getContains().getTagText());
+
+                articleDetails.add(article);
+            }
+        }
+
         return articleDetails;
 
     }

@@ -2,8 +2,10 @@ package com.baylor.se.project.bearnews.Controller;
 
 import com.baylor.se.project.bearnews.Controller.dto.ArticleDto;
 import com.baylor.se.project.bearnews.Models.Article;
+import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
 import com.baylor.se.project.bearnews.Service.ArticleService;
+import com.baylor.se.project.bearnews.Service.UsersService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ public class ArticleController {
 
     @Autowired
     ArticleService articleService;
-    
+
 
     @RequestMapping(value = "/createArticle", method = RequestMethod.POST)
     public ResponseEntity<?> createArticles(@RequestBody ArticleDto articleSent) throws JsonProcessingException {
@@ -33,10 +35,15 @@ public class ArticleController {
         }
     }
 
-    @RequestMapping(value = "/fetchArticle", method = RequestMethod.GET)
+    @RequestMapping(value = "/fetchSystemArticles", method = RequestMethod.GET)
     public ResponseEntity<?> getArticles(){
-        List<ArticleWithUsersObjectMapper> articleLists = articleService.getAllArticles();
-        return new ResponseEntity<>(articleLists,HttpStatus.OK);
+    List<ArticleWithUsersObjectMapper> responseReturned = articleService.getAllArticles();
+    if(responseReturned==null){
+        return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+    }
+     else{
+        return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+     }
     }
 
     @RequestMapping(value = "/fetchArticleById", method = RequestMethod.GET)
@@ -45,7 +52,7 @@ public class ArticleController {
        if(queryArticle!=null)
         return new ResponseEntity(queryArticle,HttpStatus.OK);
 
-        return new ResponseEntity<>("article id doesn't exsist",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(queryArticle,HttpStatus.BAD_REQUEST);
     }
     @RequestMapping(value = "/deleteArticleById", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteAnArticle( @RequestParam (name="articleId" , required = true) Long articleId) throws JsonProcessingException{

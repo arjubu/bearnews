@@ -222,6 +222,15 @@ public class UsersService {
         userRepo.save(usersUpdate);
 
     }
+    public List<Users> findingUsersCreatedArticles(){
+        List<Users> articlesCreated = userRepo.findByArticlesIsNotNull();
+        for(Users us: articlesCreated){
+            for(Article a: us.getArticles()){
+                System.out.println(a.getTitle());
+            }
+        }
+        return articlesCreated;
+    }
 
 
 }
