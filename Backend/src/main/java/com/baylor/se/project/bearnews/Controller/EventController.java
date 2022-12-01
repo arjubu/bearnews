@@ -32,6 +32,13 @@ public class EventController {
         return new ResponseEntity(eventService.getAllEvent(), HttpStatus.OK);
 
     }
+    
+    @RequestMapping(value = "/deleteEventById", method = RequestMethod.DELETE)
+public ResponseEntity<?> deleteAnEvent( @RequestParam (name="eventId" , required = true) Long eventId) throws JsonProcessingException {
+    String responseReturned = eventService.deleteAnEvent(eventId);
+    return new ResponseEntity(responseReturned,HttpStatus.OK);
+
+
 
    
 
