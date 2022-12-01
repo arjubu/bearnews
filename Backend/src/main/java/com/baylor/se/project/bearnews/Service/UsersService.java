@@ -219,9 +219,10 @@ public class UsersService {
         return returnedArticles;
     }
 
-    public void usersArticleAttach(long usersId, List<Article> toAttched){
+    public void usersArticleAttach(long usersId, Article articleSent){
         Users usersUpdate = foundUserById(usersId);
-        usersUpdate.setArticles(toAttched);
+        List<Article> listToInsert = usersUpdate.getArticles();
+        listToInsert.add(articleSent);
         userRepo.save(usersUpdate);
 
     }

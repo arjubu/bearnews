@@ -110,7 +110,7 @@ public class ArticleService {
             if(articleId!=0){
                 List<Article> listInserted = new ArrayList<>();
                 listInserted.add(article);
-                usersService.usersArticleAttach(usersWhoCreated.getId(),listInserted);
+                usersService.usersArticleAttach(usersWhoCreated.getId(),article);
 
                 serviceResponseHelper.setHasError(false);
                 successResponse.put("message", "article created sucessfully");
