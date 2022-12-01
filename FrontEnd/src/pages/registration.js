@@ -40,7 +40,7 @@ function Login() {
       })
         .then(response => {
            
-          if (response.status == 200) {
+          if (response.status == 201) {
             console.log('go'); 
             return response.json();
             
