@@ -103,4 +103,9 @@ public class UsersController {
           return new ResponseEntity<>("the user didn't have article",HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "/findingAuthors", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllAuthors(){
+        usersService.findingArticlesByUser(37L);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -11,7 +11,7 @@ public class ArticleResponseDto {
     public String lastNameofCreator;
     public String titleOfArticle;
     public String contentOfArticle;
-    public LocalDateTime timeOfArticleCretion;
+    public LocalDateTime timeOfCreation;
 
     public long getIdOfArticle() {
         return idOfArticle;
@@ -77,11 +77,11 @@ public class ArticleResponseDto {
         this.contentOfArticle = contentOfArticle;
     }
 
-    public LocalDateTime getTimeOfArticleCretion() {
-        return timeOfArticleCretion;
+    public LocalDateTime getTimeOfCreation() {
+        return timeOfCreation;
     }
 
-    public void setTimeOfArticleCretion(LocalDateTime timeOfArticleCretion) {
-        this.timeOfArticleCretion = timeOfArticleCretion;
+    public void setTimeOfCreation(LocalDateTime timeOfCreation) {
+        this.timeOfCreation = timeOfCreation;
     }
 }

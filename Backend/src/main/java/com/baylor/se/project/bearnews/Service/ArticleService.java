@@ -122,7 +122,7 @@ public class ArticleService {
                 articleResponse.setTextOfTag(article.getContains().getTagText());
                 articleResponse.setTitleOfArticle(article.getTitle());
                 articleResponse.setContentOfArticle(article.getContent());
-               // articleResponse.setTimeOfArticleCretion(article.getCreatedAt());
+                //articleResponse.setTimeOfArticleCreation(article.getCreatedAt());
                 articleResponse.setIdOfCreator(usersWhoCreated.getId());
                 articleResponse.setFirstNameofCreator(usersWhoCreated.getFirstName());
                 articleResponse.setLastNameofCreator(usersWhoCreated.getLastName());
@@ -183,27 +183,6 @@ public class ArticleService {
         }
     }
 
-//    public List<ArticleWithUsersObjectMapper> getAllArticles(){
-//        List<Article> allArticles = articleRepository.findAll();
-//        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
-//
-//        if(allArticles.isEmpty()==false){
-//            for(Article a: allArticles){
-//                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
-//               // System.out.println(a.getId());
-//                article.setIdOfArticle(a.getId());
-////                article.setIdOfCreator(a.getCreatedBy().getId());
-////                article.setNameofCreator(a.getCreatedBy().getFirstName());
-//                article.setIdOfTag(a.getContains().getId());
-//                article.setTextOfTag(a.getContains().getTagText());
-//                article.setTitleOfArticle(a.getTitle());
-//                article.setContentOfArticle(a.getContent());
-//                article.setTimeOfArticleCretion(a.getCreatedAt());
-//                articleDetails.add(article);
-//            }
-//        }
-//        return articleDetails;
-//    }
     public List<ArticleWithUsersObjectMapper> findArtcilesByTags(Long tagId){
        List<Article> allArticles = articleRepository.findArticlesByContains_Id(tagId);
        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
@@ -211,14 +190,19 @@ public class ArticleService {
         if(allArticles.isEmpty()==false){
             for(Article a: allArticles){
                 ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+
                 article.setIdOfArticle(a.getId());
-//                article.setIdOfCreator(a.getCreatedBy().getId());
-//                article.setNameofCreator(a.getCreatedBy().getFirstName());
-                article.setIdOfTag(a.getContains().getId());
-                article.setTextOfTag(a.getContains().getTagText());
                 article.setTitleOfArticle(a.getTitle());
                 article.setContentOfArticle(a.getContent());
                 article.setTimeOfArticleCretion(a.getCreatedAt());
+
+                Users author= usersService.findingArticlesByUser(a.getId());
+                article.setIdOfCreator(author.getId());
+                article.setNameofCreator(author.getFirstName());
+
+                article.setIdOfTag(a.getContains().getId());
+                article.setTextOfTag(a.getContains().getTagText());
+
                 articleDetails.add(article);
             }
         }

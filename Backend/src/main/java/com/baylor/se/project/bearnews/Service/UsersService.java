@@ -202,7 +202,10 @@ public class UsersService {
                for(Article a: allArticlesByAuthor.getArticles()){
                    ArticleByUsersObjectMapper responseArticle = new ArticleByUsersObjectMapper();
                    responseArticle.setArticleId(a.getId());
-                  // responseArticle.setUsersCreatorId(a.getCreatedBy().getId());
+
+                   Users author= findingArticlesByUser(a.getId()); //lines work
+                   responseArticle.setUsersCreatorId(author.getId()); //lines work
+
                    responseArticle.setArticleTitle(a.getTitle());
                    responseArticle.setArticleContent(a.getContent());
                    responseArticle.setArticleTagId(a.getContains().getId());
@@ -230,6 +233,11 @@ public class UsersService {
             }
         }
         return articlesCreated;
+    }
+
+    public Users findingArticlesByUser(Long id){
+        List<Users> as = userRepo.findByArticlesIsNotNullAndArticlesIdEquals(id);
+        return as.get(0);
     }
 
 
