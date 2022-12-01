@@ -30,28 +30,32 @@ import Select from 'react-select';
           let a = [];
         data.forEach(myfunction)
         function myfunction(item){
-          let b = {lable:item};
+          let b = {label:item.toString()};
           a.push(b);
         }
-        console.log(b)
+        setDataset(a);
+        
           return data;
           //console.log(Mylist);
         });
+        //console.log(DATASET);
 
   }
 
 	return(
 		//const resultItems = this.props.data;
+ 
       <div className="search-field">
-      <Select
-  options={DATASET}
-  getOptionValue={(option) => option.label}
-  //inputValue={this.state.searchKey}
-  onInputChange = {(event) => handlerChange(event)}
-  
-  //onChange={opt => console.log(opt.label, opt.value)}
-/>
-</div>
+        {console.log("DATASET")}
+        {console.log(DATASET)}
+        <Select
+        onInputChange = {(event) => handlerChange(event) }
+        options={DATASET}
+        getOptionValue={(option) => option.label}
+        //inputValue={this.state.searchKey}
+        //onChange={opt => console.log(opt.label, opt.value)}
+        />
+      </div>
 		
   );
 }
