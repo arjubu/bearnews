@@ -4772,8 +4772,20 @@ Date Created: July 26, 2019
     margin: 0 auto;
     position: relative;
   }
+  .searchlist{
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 20%;
+    margin-right: 20%;
+    position: relative;
+    background-color: white;
+  }
+
   @media (max-width: 991px) {
     .navbar-search .search-field {
+      width: 70%;
+    }
+    .navbar-search .searchlist{
       width: 70%;
     }
   }
@@ -4790,8 +4802,8 @@ Date Created: July 26, 2019
   }
   .navbar-search .navbar-search-btn {
     position: absolute;
-    left: 100%;
-    bottom: -35%;
+    left: 80%;
+    bottom: -1%;
     border: none;
     background: transparent;
     padding: 0.5rem 2rem;

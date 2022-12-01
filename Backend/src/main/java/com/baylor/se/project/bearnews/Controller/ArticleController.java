@@ -1,5 +1,5 @@
 package com.baylor.se.project.bearnews.Controller;
-
+import java.util.ArrayList;
 import com.baylor.se.project.bearnews.Controller.dto.ArticleDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Users;
@@ -14,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.Map;
+@CrossOrigin("*")
 @RestController
 public class ArticleController {
 
@@ -81,5 +82,39 @@ public class ArticleController {
             return new ResponseEntity<>(responseReturned,HttpStatus.OK);
         }
     }
+
+    @RequestMapping(value = "/fetchArticleTitles", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllArticleTitlwa(){
+        List<Long> responseReturned = articleService.getAllTitles();
+
+
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+//            for (String i : responseReturned
+//            ) {
+//
+//                response.add(i.replace(" ","-"));
+//
+//            }
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchTitleArticles", method = RequestMethod.POST)
+    public ResponseEntity<?> getArticleByTitles(@RequestBody Map<String, String> json){
+
+        String titleSent = json.get("title");
+        System.out.println(titleSent);
+        Article responseReturned = articleService.getArticlesByTitle(titleSent);
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        }
+    }
+
 
 }

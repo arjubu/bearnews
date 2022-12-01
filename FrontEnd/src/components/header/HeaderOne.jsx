@@ -5,6 +5,11 @@ import { dateFormate } from "../../utils";
 import SocialLink from "../../data/social/SocialLink.json";
 import MenuData from "../../data/menu/HeaderMenu.json";
 import OffcanvasMenu from "./OffcanvasMenu";
+import Select from 'react-select';
+
+
+ 
+
 
 const HeaderOne = () => {
   // Main Menu Toggle
@@ -51,8 +56,78 @@ const HeaderOne = () => {
   const handleShow = () => setShow(true);
 
   const handlerSearchChange = (e) => {
-   setsearchValue(e.target.value);
+   setsearchValue(e);
+   window.location.href = "http://localhost:3000/category/"+ e;
 };
+
+
+function SearchResultList (){
+  const [DATASET, setDataset] = useState();
+
+   function handlerChange(input){
+    //setsearchValue(input);
+     fetch('http://localhost:8080/getTagByLetter', {
+      method: 'POST',
+      body: JSON.stringify({
+        suggString : input,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    }
+    )
+      .then(response => {
+         
+        if (response.status == 200) {
+          //console.log('this works'); 
+          return response.json();
+          
+        } else {
+          
+          throw new Error('Something went wrong ...');
+  
+        }
+          
+        }).then(data=>{
+          let a = [];
+          console.log(data);
+          if(data.data == "doesn't exsist"){
+            setDataset(a);
+            return data;
+          }
+        data.data.forEach(myfunction)
+        function myfunction(item){
+          let b = {label:item.toString()};
+          a.push(b);
+        }
+        setDataset(a);
+        
+          return data;
+          //console.log(Mylist);
+        });
+        //console.log(DATASET);
+
+  }
+
+	return(
+		//const resultItems = this.props.data;
+ 
+      <div className="search-field">
+        {console.log("DATASET")}
+        {console.log(DATASET)}
+        <Select
+        onInputChange = {(event) => handlerChange(event) }
+        options={DATASET}
+        getOptionValue={(option) => option.label}
+        //inputValue={this.state.searchKey}
+        onChange={opt => handlerSearchChange(opt.label)}
+        
+        />
+      </div>
+		
+  );
+}
+
 
   // Header Search
   const [searchshow, setSearchShow] = useState(false);
@@ -190,24 +265,23 @@ const HeaderOne = () => {
                   }`}
                 >
                   <div className="search-field">
-                    <input
-                      type="text"
-                      className="navbar-search-field"
-                      placeholder="Search Here..."
-                      onChange={handlerSearchChange}
-                    />
-                    <Link href={"/category/"+searchValue}>
+                  <SearchResultList></SearchResultList>
+                    
+                    {/* <Link href={"/category/"+searchValue}>
                     <button className="navbar-search-btn" type="button"  >
                       <i className="fal fa-search" />
                     </button>
-                    </Link>
+                    </Link> */}
+                    
                   </div>
+                  
                   <span
                     className="navbar-search-close"
                     onClick={headerSearchClose}
                   >
                     <i className="fal fa-times" />
                   </span>
+                  
                 </form>
 
                 <button
@@ -216,6 +290,7 @@ const HeaderOne = () => {
                 >
                   <i className="far fa-search" />
                 </button>
+                
                 {/* <button className="side-nav-toggler" onClick={handleShow}>
                   <span />
                   <span />
