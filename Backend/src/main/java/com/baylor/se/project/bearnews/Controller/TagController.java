@@ -58,7 +58,9 @@ public class TagController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         if(serviceResponseHelper.getHasError()){
-            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", "doesn't exsist");
+            return new ResponseEntity<>(map,HttpStatus.OK);
         }
         else {
             Map<String, Object> map = new HashMap<String, Object>();
