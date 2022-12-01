@@ -100,33 +100,7 @@ function Login() {
                 }
             });
     }
-  /*  const login_handle = async (url = 'http://localhost:8080/user-login',
-        data = {
-            email: username,
-            password: password
-        }) => {
-        console.log("----");
-        console.log("function calling");
-        console.log(data);
-            const response = await fetch(url, {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                        
-                body: JSON.stringify(data),
-            });
-  
-            try {
-                const newData = await response.json();
-                console.log(newData);
-                return newData;
-            } catch (error) {
-                console.log(error)
 
-            }
-    };*/
 
     const renderErrorMessage = (name) =>
       name === errorMessages.name && (
