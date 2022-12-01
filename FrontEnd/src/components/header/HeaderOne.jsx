@@ -5,6 +5,39 @@ import { dateFormate } from "../../utils";
 import SocialLink from "../../data/social/SocialLink.json";
 import MenuData from "../../data/menu/HeaderMenu.json";
 import OffcanvasMenu from "./OffcanvasMenu";
+import Select from 'react-select';
+
+
+class SearchResultList extends React.Component {
+
+
+	render() {
+		//const resultItems = this.props.data;
+
+var DATASET = [
+	{label: 'Wanna Be Starting Something',},
+	{label: 'Baby be Mine'},
+	{label: 'The Girl is Mine'},
+	{label: 'Thriller'},
+	{label: 'Beat It'},
+	{label: 'Bilie Jean'}
+];
+
+		
+ 
+		return (
+      <div className="search-field">
+      <Select
+  options={DATASET}
+  getOptionValue={(option) => option.label}
+  
+  //onChange={opt => console.log(opt.label, opt.value)}
+/>
+</div>
+		);
+	}
+}
+
 
 const HeaderOne = () => {
   // Main Menu Toggle
@@ -190,24 +223,23 @@ const HeaderOne = () => {
                   }`}
                 >
                   <div className="search-field">
-                    <input
-                      type="text"
-                      className="navbar-search-field"
-                      placeholder="Search Here..."
-                      onChange={handlerSearchChange}
-                    />
+                  <SearchResultList></SearchResultList>
+                    
                     <Link href={"/category/"+searchValue}>
                     <button className="navbar-search-btn" type="button"  >
                       <i className="fal fa-search" />
                     </button>
                     </Link>
+                    
                   </div>
+                  
                   <span
                     className="navbar-search-close"
                     onClick={headerSearchClose}
                   >
                     <i className="fal fa-times" />
                   </span>
+                  
                 </form>
 
                 <button
@@ -216,6 +248,7 @@ const HeaderOne = () => {
                 >
                   <i className="far fa-search" />
                 </button>
+                
                 {/* <button className="side-nav-toggler" onClick={handleShow}>
                   <span />
                   <span />
