@@ -18,5 +18,5 @@ public interface ArticleRepository extends JpaRepository<Article,Long> {
 
      List<Article> findArticlesByContains_Id(Long id);
 
-     List<Article> findArticlesByTitle(String )
+     List<Article> findArticlesByTitle(String titles);
 }

@@ -257,4 +257,14 @@ public class ArticleService {
         }
         return titlesList;
     }
+
+    public Article getArticlesByTitle(String titleSent){
+        List<Article> foundArticle = articleRepository.findArticlesByTitle(titleSent);
+        if(foundArticle.isEmpty()==false) {
+            System.out.println(foundArticle.get(0).getId());
+            return foundArticle.get(0);
+        }
+        else
+            return null;
+    }
 }

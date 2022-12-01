@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ArticleController {
@@ -102,8 +103,11 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/fetchTitleArticles", method = RequestMethod.GET)
-    public ResponseEntity<?> getArticleByTitles(@RequestBody String titleSent){
-        List<Article> responseReturned = articleService.getAll();
+    public ResponseEntity<?> getArticleByTitles(@RequestBody Map<String, String> json){
+
+        String titleSent = json.get("title");
+        System.out.println(titleSent);
+        Article responseReturned = articleService.getArticlesByTitle(titleSent);
         if(responseReturned==null){
             return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
         }
