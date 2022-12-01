@@ -49,7 +49,7 @@ public class TagController {
         return new ResponseEntity<>(tag, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getTagByLetter", method = RequestMethod.GET)
+    @RequestMapping(value = "/getTagByLetter", method = RequestMethod.POST)
     public ResponseEntity<?> getTagsByLetter(@RequestBody Map<String, String> sentLetter) throws JsonProcessingException {
         String letterToSearch = sentLetter.get("suggString").toLowerCase();
 
