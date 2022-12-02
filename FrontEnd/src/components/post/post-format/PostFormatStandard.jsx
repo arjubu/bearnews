@@ -9,6 +9,7 @@ import SocialShareSide from "./elements/SocialShareSide";
 
 
 const PostFormatStandard = ({postData, allData}) => {
+  console.log("postData");
   console.log(postData);
   const basePathLink = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_BASEPATH ?? "" : "";
   

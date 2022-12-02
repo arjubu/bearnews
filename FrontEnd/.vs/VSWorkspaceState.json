@@ -2,9 +2,18 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\components",
+    "\\src\\components\\category",
+    "\\src\\components\\common",
+    "\\src\\components\\contact",
     "\\src\\pages",
-    "\\src\\services"
+    "\\src\\pages\\category",
+    "\\src\\utils"
   ],
+<<<<<<< HEAD
   "SelectedNode": "\\src\\pages\\login.js",
+=======
+  "SelectedNode": "\\src\\pages\\coming-soon.js",
+>>>>>>> 9a031aeab8b964f0143e349803f07de0800c69b4
   "PreviewInSolutionExplorer": false
 }

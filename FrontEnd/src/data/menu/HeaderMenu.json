@@ -4,34 +4,8 @@
         "path": "/event"
     },
     {
-        "label": "Create",
-        "path": "#",
-        "submenu": [
-            {
-                "sublabel": "Create Article",
-                "subpath": "/createArticle"
-            },
-            {
-                "sublabel": "Create Event",
-                "subpath": "/create"
-            }
-        ]
-    },
-    {
-        "label": "TAG1",
-        "path": "/category/tag1"
-    },
-    {
-        "label": "TAG2",
-        "path": "/category/tag2"
-    },
-    {
-        "label": "TAG3",
-        "path": "/category/tag3"
-    },
-    {
-        "label": "TAG4",
-        "path": "/category/tag4"
+        "label": "Create Article",
+        "path": "createArticle"
     }
    
 ]

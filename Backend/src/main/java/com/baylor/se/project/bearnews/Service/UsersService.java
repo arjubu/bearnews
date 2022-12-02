@@ -256,7 +256,7 @@ public class UsersService {
         if(users.isPresent()){
             if(users.get().getPassword().equals(Hashing.sha256().hashString(requestBody.get("password"), StandardCharsets.UTF_8).toString())){
                 serviceResponseHelper.setHasError(false);
-                successResponse.put("message", "deleted successfully");
+                successResponse.put("message", "login successful");
                 serviceResponseHelper.setResponseMessage(successResponse);
                 serviceResponseHelper.setContent(null);
                 return serviceResponseHelper;
