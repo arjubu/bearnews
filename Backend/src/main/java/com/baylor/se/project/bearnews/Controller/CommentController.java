@@ -4,8 +4,11 @@ import com.baylor.se.project.bearnews.Controller.dto.CommentDto;
 import com.baylor.se.project.bearnews.Models.Comment;
 import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.Models.Users;
+import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
+import com.baylor.se.project.bearnews.Service.ArticleService;
 import com.baylor.se.project.bearnews.Service.CommentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +22,19 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    ArticleService articleService;
+
     @RequestMapping(value = "/insertComment", method = RequestMethod.POST)
-    public ResponseEntity<?> insertComment(@RequestBody CommentDto commentSent) {
-      String responseReturned =commentService.createCommentforArticle(commentSent);
-      return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+    public ResponseEntity<?> insertComment(@RequestBody CommentDto commentSent,
+                                           @RequestParam(name="articleId" , required = true) Long articleId) throws JsonProcessingException{
+
+        ServiceResponseHelper serviceResponseHelper =commentService.createComment(commentSent, articleId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.CREATED);
     }
     @RequestMapping(value = "/findAllComments", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComments(){
@@ -36,4 +48,15 @@ public class CommentController {
         return new ResponseEntity(responseReturned,HttpStatus.OK);
 
     }
+
+
+//    @RequestMapping(value = "/fetchArticlcomment", method = RequestMethod.GET)
+//    public ResponseEntity<?> getArticlesByCommnet(@RequestParam (name="articleId" , required = false) Long articleId){
+//        commentService.findArticleComment(articleId);
+//       /* if(commentlist.isEmpty()==false)
+//            return new ResponseEntity(commentlist,HttpStatus.OK);*/
+//
+//        return new ResponseEntity<>("doesn't contains any article with id",HttpStatus.BAD_REQUEST);
+//
+//    }
 }
