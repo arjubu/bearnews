@@ -2,9 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\components",
+    "\\src\\components\\header",
     "\\src\\pages",
+    "\\src\\pages\\author",
+    "\\src\\pages\\category",
     "\\src\\services"
   ],
-  "SelectedNode": "\\src\\pages\\post",
+  "SelectedNode": "\\src\\pages\\login.js",
   "PreviewInSolutionExplorer": false
 }

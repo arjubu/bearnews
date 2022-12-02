@@ -1,6 +1,9 @@
 import { DateTime } from 'luxon'
 
 const slugify = function (text) {
+	if(text == undefined){
+		return null;
+	}
 	return text
 		.toString()
 		.toLowerCase()

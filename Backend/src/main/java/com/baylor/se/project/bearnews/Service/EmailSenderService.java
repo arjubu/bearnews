@@ -37,7 +37,7 @@ public class EmailSenderService {
         try
         {   MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress("bearfeed@zohomail.com"));
-            message.setRecipients(MimeMessage.RecipientType.TO,InternetAddress.parse("rahmanashfakur@gmail.com"));
+            message.setRecipients(MimeMessage.RecipientType.TO,InternetAddress.parse(to));
             message.setSubject("OTP For BearFeed");
             message.setText("Authentication code for your Email is: " +body);
             Transport.send(message);

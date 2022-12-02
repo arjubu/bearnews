@@ -26,7 +26,7 @@ function Login() {
     const login_handle = (event) => {
       event.preventDefault();
   
-        fetch('http://localhost:8080/createUser', {
+        fetch('http://137.184.37.205:8080/createUser', {
         method: 'POST',
         body: JSON.stringify({
           email : username,
@@ -40,7 +40,7 @@ function Login() {
       })
         .then(response => {
            
-          if (response.status == 200) {
+          if (response.status == 201) {
             console.log('go'); 
             return response.json();
             

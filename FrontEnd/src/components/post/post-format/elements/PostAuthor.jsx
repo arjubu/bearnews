@@ -4,6 +4,9 @@ import { slugify } from "../../../../utils";
 
 
 const PostAuthor = ({authorData}) => {
+  console.log("authorData");
+
+  console.log(authorData);
 
   return (
     <div className="about-author m-b-xs-60">

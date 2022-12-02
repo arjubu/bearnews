@@ -21,7 +21,7 @@ const HomeOne = ({allPosts}) => {
     <HeadMeta metaTitle="Home One"/>
     <HeaderOne />
     <PostSectionOne postData={allPosts} />
-    {console.log(allPosts)}
+    {/* {console.log(allPosts)} */}
     <PostSectionTwo postData={allPosts} />
     <PostSectionThree postData={allPosts} />
     <PostSectionFour postData={allPosts} />
@@ -36,7 +36,7 @@ export default HomeOne;
 
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts([
+  const allPosts = await getAllPosts([
     'postFormat',
     'trending',
     'story',

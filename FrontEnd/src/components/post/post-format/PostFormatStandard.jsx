@@ -4,11 +4,14 @@ import WidgetSocialShare from "../../widget/WidgetSocialShare";
 import MetaDataOne from "./elements/meta/MetaDataOne";
 import PostAuthor from "./elements/PostAuthor";
 import PostComment from "./elements/PostComment";
+import Comments from "./elements/Comments";
+
 import SocialShareBottom from "./elements/SocialShareBottom";
 import SocialShareSide from "./elements/SocialShareSide";
 
 
 const PostFormatStandard = ({postData, allData}) => {
+  console.log("postData");
   console.log(postData);
   const basePathLink = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_BASEPATH ?? "" : "";
   
@@ -32,6 +35,8 @@ const PostFormatStandard = ({postData, allData}) => {
 				  <hr className="m-t-xs-50 m-b-xs-60" />
 				  <PostAuthor authorData={postData}/>
 				  <PostComment />
+          <Comments />
+
                 </main>
               </div>
               <div className="col-lg-4">

@@ -412,12 +412,16 @@ body > div { /* the react root */
   padding: 0;
   height: 100%;
 }
-
+  .comment{
+    outline: #000;
+  }
 
 h2 {
   margin: 0;
   font-size: 16px;
 }
+
+
 
 ul {
   margin: 0;
