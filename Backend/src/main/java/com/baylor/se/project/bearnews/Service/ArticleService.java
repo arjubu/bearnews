@@ -11,8 +11,10 @@ import com.baylor.se.project.bearnews.Models.ArticleType;
 
 import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.ArticleRepository;
+import com.baylor.se.project.bearnews.Repository.TagRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class ArticleService {
 
     @Autowired
     TagService tagService;
+
+    @Autowired
+    TagRepository tagRepository;
 
 
     public ServiceResponseHelper createArticle(ArticleDto articleDto){
@@ -175,6 +180,29 @@ public class ArticleService {
         articleRepository.saveAll(articles);
 
     }
+
+    public  void saveBaylorTweet(Map baylorTweet){
+
+        List<String> tags = (List)baylorTweet.get("thumbLink");
+        List<Tag> savedTags = new ArrayList<>();
+        for(String s : tags){
+            Tag tag = new Tag();
+            tag.setTagText(s);
+            tag = tagService.createTag(tag);
+            savedTags.add(tag);
+        }
+
+        Article article = new Article();
+        article.setArticleType(ArticleType.TWITTER);
+        article.setContent(baylorTweet.get("description").toString());
+        article.setDetailLink(baylorTweet.get("detailLink").toString());
+        article.setThumbLink(baylorTweet.get("thumbLink").toString());
+        if(savedTags.size()>0){
+            article.setContains(savedTags.get(0));
+        }
+        articleRepository.save(article);
+    }
+
     public String deleteAnArticle(Long id){
         if(fetchArticle(id)==null)
             return "article id doesn't exsists";
