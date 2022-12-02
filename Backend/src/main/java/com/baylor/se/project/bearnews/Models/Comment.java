@@ -25,7 +25,7 @@ public class Comment {
     private String text;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime createdCommentAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -36,10 +36,10 @@ public class Comment {
 //    @Column
 //    private long articleId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_comments",referencedColumnName = "id")
-    @JsonBackReference
-    private Users createdBycomments;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "users_comments",referencedColumnName = "id")
+//    @JsonBackReference
+//    private Users createdBycomments;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "article_comments",referencedColumnName = "id")

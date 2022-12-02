@@ -10,15 +10,16 @@ public class CommentDto {
 
     private String commentText;
 
-    private long articleIdComment;
+    private String commentEmail;
 
-    public long getArticleIdComment(){
-        return articleIdComment;
+    public String getCommentEmail() {
+        return commentEmail;
     }
 
-    public void setArticleIdComment(long articleIdComment){
-        this.articleIdComment=articleIdComment;
+    public void setCommentEmail(String commentEmail) {
+        this.commentEmail = commentEmail;
     }
+
 
     public String getCommentText() {
         return commentText;
