@@ -6781,6 +6781,19 @@ Date Created: July 26, 2019
     font-size: 1.6rem;
     line-height: 2.8rem;
   }
+
+  .comments-box h2 {
+    font-size: 2.4rem;
+    line-height: 3rem;
+    margin-bottom: 2rem;
+  }
+  .comments-box p {
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+  }
+  .comment{
+    outline: thick double #32a1ce;
+  }
   .comment-form textarea.form-control {
     min-height: 18rem;
   }
@@ -6956,6 +6969,17 @@ Date Created: July 26, 2019
     border-color: var(--primary-color);
     box-shadow: none;
     color: #fff;
+  }
+
+  .gradient-custom {
+    /* fallback for old browsers */
+    background: #115c1d;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right bottom, rgb(29, 156, 75), rgb(17, 105, 25));
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right bottom, rgb(63, 184, 58), rgb(40, 122, 76))
   }
   .post-shares li a.btn-secondary {
     background: var(--grey-mid);
