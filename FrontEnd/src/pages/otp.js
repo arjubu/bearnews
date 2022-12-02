@@ -5,13 +5,14 @@ import backgroundImage from '../../public/images/Background.jpg';
 //import { useNavigate } from 'react-router-dom';
 import Image from "next/image";
 import Link from "next/link";
+import { useCookies } from 'react-cookie';
 
 
 function OTP() {
     const [errorMessages, error_login] = useState({});
 
     const [otp, setOTP] = useState();
-
+    const [cookies, setCookie] = useCookies(['username']);
   
     const errors = {
       username: "This user Id does not exit or invalid password",
@@ -19,13 +20,15 @@ function OTP() {
     };
   
     const login_handle = (event) => {
-      event.preventDefault();
-  
-      fetch('http://localhost', {
+        event.preventDefault();
+        console.log(cookies.username);
+        console.log(otp);
+
+        fetch('http://137.184.37.205:8080/validateOtp', {
         method: 'POST',
         body: JSON.stringify({
-          email : cookies.username,
-          otp : password
+            email: cookies.username,
+            otp: otp
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -53,7 +56,12 @@ function OTP() {
     const renderErrorMessage = (name) =>
       name === errorMessages.name && (
         <div className="error">{errorMessages.message}</div>
-      );
+        );
+
+    function otpChangeHandler(input) {
+        setOTP(input);
+        console.log(otp);
+    }
   
       var sectionStyle = {
         width: "100%",
@@ -66,7 +74,7 @@ function OTP() {
         <form onSubmit={login_handle}>
           <div className="input-container">
             <label>Your 6 digits</label>
-            <input type="text" name="username" id="username" required onChange={e => setOTP(e.target.value)}/>
+                    <input type="text" name="username" id="username" required onChange={e => otpChangeHandler(e.target.value)}/>
             {renderErrorMessage("username")}
           </div>
 
@@ -108,13 +116,13 @@ function OTP() {
                   </a>
                   </Link>
           {(() => {
-        if (islogin) {
+       /* if (islogin) {
           navigate('/User/'+id, { state: { id: id}});
-        } else {
+        } else {*/
           return (
             renderForm
           )
-        }
+        //}
       })()}   
         </div>
         </div>

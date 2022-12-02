@@ -43,7 +43,7 @@ export default function PersonalProfile() {
       
          function handlerChange(input){
           //setsearchValue(input);
-           fetch('http://localhost:8080/getTagByLetter', {
+             fetch('http://137.184.37.205:8080/getTagByLetter', {
             method: 'POST',
             body: JSON.stringify({
               suggString : input,

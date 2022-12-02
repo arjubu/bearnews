@@ -79,7 +79,7 @@ public class UsersController {
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
         }
         else {
-            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.CREATED);
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.OK);
         }
     }
     @RequestMapping(value = "/deleteUserById", method = RequestMethod.DELETE)
