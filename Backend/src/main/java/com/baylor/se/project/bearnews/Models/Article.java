@@ -64,7 +64,7 @@ public class Article {
 //    @OneToMany(mappedBy = "articlecomments",cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Comment> articlecomments;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> articlecomments;
 
 

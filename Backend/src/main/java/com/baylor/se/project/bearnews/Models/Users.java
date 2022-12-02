@@ -66,7 +66,7 @@ public class Users {
     @OneToMany(mappedBy = "createdByevent",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Event> events;
 
-    @OneToMany(mappedBy = "createdBycomments",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
 

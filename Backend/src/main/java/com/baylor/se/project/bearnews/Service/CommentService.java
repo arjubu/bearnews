@@ -1,14 +1,21 @@
 package com.baylor.se.project.bearnews.Service;
 
+import com.baylor.se.project.bearnews.Controller.ServiceResponseHelper;
 import com.baylor.se.project.bearnews.Controller.dto.CommentDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Comment;
+import com.baylor.se.project.bearnews.Models.Tag;
+import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.ArticleRepository;
 import com.baylor.se.project.bearnews.Repository.CommentRepository;
+import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -19,6 +26,9 @@ public class CommentService {
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    UsersRepository usersRepository;
 
     public String createComment(Comment comment){
         if(comment.getText()=="")
@@ -33,33 +43,101 @@ public class CommentService {
     }
 
 
-    public String createCommentforArticle(CommentDto commentDto){
-        long articleId = commentDto.getArticleIdComment();
-        Optional<Article> article = articleRepository.findById(articleId);
+    public ServiceResponseHelper createComment(CommentDto commentdto,Long articleId){
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
 
-        if(!article.isPresent()){
-            return "article id isn't valid";
+        if(commentdto.getCommentText()=="") {
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "comment body couldn't be empty");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
         }
-        if(commentDto.getCommentText()==""){
-            return "comment body couldn't be empty";
+        if(commentdto.getCommentEmail()=="") {
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "commentor email not there");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
         }
-        else{
-            Comment comment = new Comment();
-            comment.setText(commentDto.getCommentText());
-            commentRepository.save(comment);
-            if(comment.getId()!=0) {
-                List<Comment> commentList = article.get().getArticlecomments();
+        Optional<Article> articleListOpt = articleRepository.findById(articleId);
+        if(articleListOpt.isEmpty()){
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "article is not valid");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+        else {
+
+            // commentRepository.save(comment);
+            String uEmail = commentdto.getCommentEmail();
+            Optional<Users> commentorOpt = usersRepository.findByEmail(uEmail);
+            Article foundArticle = articleListOpt.get();
+
+            if(commentorOpt.isPresent()){
+                Users commentor =commentorOpt.get();
+                Comment comment = new Comment();
+                comment.setText(commentdto.getCommentText());
+                comment.setCreatedcomment(LocalDateTime.now());
+                commentRepository.save(comment);
+
+                List<Comment> commentList= commentor.getComments();
                 commentList.add(comment);
-                articleRepository.save(article.get());
+                usersRepository.save(commentor);
+
+                List<Comment> articleComments = foundArticle.getArticlecomments();
+                articleComments.add(comment);
+                articleRepository.save(foundArticle);
+
+                serviceResponseHelper.setHasError(false);
+                successResponse.put("message", "inserted successfully");
+                serviceResponseHelper.setResponseMessage(successResponse);
+                serviceResponseHelper.setContent("works");
+                return serviceResponseHelper;
+            }
+            if(foundArticle==null){
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "no such article exsist");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }
+            else{
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "no such user exsist");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
             }
 
         }
-        return "inserted";
-
     }
 
     public String deleteComment(Long id){
-        articleRepository.deleteById(id);
+        commentRepository.deleteById(id);
         return "deleted successfully";
     }
+
+
+
+//    public void findArticleComment(Long articleid){
+//        Optional<Article> findarticle= articleRepository.findById(articleid);
+//        if(findarticle.isPresent()){
+//            List<Comment> articlecomment = findarticle.get().getArticlecomments();
+//            if(articlecomment.isEmpty()==false){
+//                for(Comment c: articlecomment){
+//                    long commentId = c.getId();
+//                    System.out.println(commentId);
+//                    List<Users> findUsers = usersRepository.findByCommentsIsNotNullAndCommentsIdEquals(commentId);
+//
+//                    for(Users us: findUsers){
+//                        System.out.println(us.getFirstName());
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

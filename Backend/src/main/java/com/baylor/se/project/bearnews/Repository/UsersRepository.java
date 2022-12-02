@@ -17,4 +17,6 @@ public interface UsersRepository extends JpaRepository<Users,Long> {
     List<Users> findByArticlesIsNotNull();
 
     List<Users> findByArticlesIsNotNullAndArticlesIdEquals(long id);
+
+    List<Users> findByCommentsIsNotNullAndCommentsIdEquals(long id);
 }
