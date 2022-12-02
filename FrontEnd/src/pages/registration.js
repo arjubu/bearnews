@@ -57,7 +57,7 @@ function Login() {
           }).then(data=>{
             console.log('gogo'); 
             setCookie('username', username);
-            window.location.href =  "http://localhost:3000/otp";
+            window.location.href =  "/otp";
           }).catch((error) => {
             //this.setState({ requestFailed: true })
         });
