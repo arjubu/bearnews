@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BaylorNewsConsumerService {
+public class BaylorCrawlersConsumerService {
     
     @Autowired
     ArticleService articleService;
@@ -23,6 +23,15 @@ public class BaylorNewsConsumerService {
         List<Map> baylorNews = mapper.readValue(message, new TypeReference<List<Map>>(){});
         
         articleService.saveBaylorNews(baylorNews);
+        System.out.println("i am here!");
+    }
+
+    @KafkaListener(topics = "baylor-tweet-topic", groupId = "baylor-tweet-group")
+    public void baylorTweetConsumer(String message) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Map baylorNews = mapper.readValue(message, Map.class);
+
+        articleService.saveBaylorTweet(baylorNews);
         System.out.println("i am here!");
     }
 }

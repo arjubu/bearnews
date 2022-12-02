@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,11 +26,13 @@ public class Comment {
     @Column
     private String text;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    @CreatedDate
+    @Column
+    private LocalDateTime createdcomment = LocalDateTime.now();
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    @LastModifiedDate
+    @Column
+    private LocalDateTime updatedcomment =LocalDateTime.now();
     //make relationship later
 //    @Column
 //    private long userId;
@@ -36,10 +40,10 @@ public class Comment {
 //    @Column
 //    private long articleId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_comments",referencedColumnName = "id")
-    @JsonBackReference
-    private Users createdBycomments;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "users_comments",referencedColumnName = "id")
+//    @JsonBackReference
+//    private Users createdBycomments;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "article_comments",referencedColumnName = "id")
