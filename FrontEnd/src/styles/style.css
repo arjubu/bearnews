@@ -6971,6 +6971,17 @@ Date Created: July 26, 2019
     color: #fff;
   }
 
+  .mybutton{
+    background: rgb(69, 247, 69);
+    margin-top: 1.5%;
+    margin-left: -2%;
+    border-radius: 25px;
+    outline: transparent;
+    border: solid #eee thin;
+  }
+  .mybutton:hover{
+    background:#36b97c;
+  }
   .gradient-custom {
     /* fallback for old browsers */
     background: #115c1d;
