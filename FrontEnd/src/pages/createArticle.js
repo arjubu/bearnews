@@ -5,6 +5,9 @@ import logo from '../../public/images/Bear_Mark_1_Color_01.jpg';
 import backgroundImage from '../../public/images/Background.jpg';
 import HeaderOne from "../components/header/HeaderOne";
 import Image from "next/image";
+import Select from 'react-select';
+import Creatable from 'react-select/creatable';
+
 import {
     MDBBtn,
     MDBContainer,
@@ -21,6 +24,72 @@ function CreateArticle() {
   const [Tags, setTags] = useState();
   const [Context, setContext] = useState();
   const [Files, setFiles] = useState();
+  function SearchResultList (){
+    const [DATASET, setDataset] = useState();
+  
+     function handlerChange(input){
+      //setsearchValue(input);
+       fetch('http://localhost:8080/getTagByLetter', {
+        method: 'POST',
+        body: JSON.stringify({
+          suggString : input,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      }
+      )
+        .then(response => {
+           
+          if (response.status == 200) {
+            //console.log('this works'); 
+            return response.json();
+            
+          } else {
+            
+            throw new Error('Something went wrong ...');
+    
+          }
+            
+          }).then(data=>{
+            let a = [];
+            console.log(data);
+            if(data.data == "doesn't exsist"){
+              setDataset(a);
+              return data;
+            }
+          data.data.forEach(myfunction)
+          function myfunction(item){
+            let b = {label:item.toString()};
+            a.push(b);
+          }
+          setDataset(a);
+          
+            return data;
+            //console.log(Mylist);
+          });
+          //console.log(DATASET);
+  
+    }
+  
+    return(
+      //const resultItems = this.props.data;
+   
+        <div className="upload-tag">
+          {console.log("DATASET")}
+          {console.log(DATASET)}
+          <Creatable
+          onInputChange = {(event) => handlerChange(event) }
+          options={DATASET}
+          getOptionValue={(option) => option.label}
+          //inputValue={this.state.searchKey}
+          onChange={opt => (opt.label)}
+          
+          />
+        </div>
+      
+    );
+  }
     return ( 
       <>
       
@@ -60,9 +129,8 @@ function CreateArticle() {
           <MDBCol md='3' className='ps-5'>
             <h6 className="mb-0">Tags</h6>
           </MDBCol>
-
           <MDBCol md='9' className='pe-5'>
-            <MDBInput label='tags' size='lg' id='form2' type='text' onChange={e => setTags(e.target.value)}/>
+          <SearchResultList></SearchResultList>
           </MDBCol>
 
         </MDBRow>
