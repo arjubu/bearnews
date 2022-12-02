@@ -66,7 +66,8 @@ function SearchResultList (){
 
    function handlerChange(input){
     //setsearchValue(input);
-     fetch('http://localhost:8080/getTagByLetter', {
+       fetch('http://localhost:8080/getTagByLetter', {
+           mode: 'cors',
       method: 'POST',
       body: JSON.stringify({
         suggString : input,
