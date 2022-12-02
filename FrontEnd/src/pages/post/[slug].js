@@ -36,7 +36,6 @@ const PostDetails = ({postContent, allPosts}) => {
         <HeaderOne />
         <Breadcrumb bCat={postContent.cate} aPage={postContent.title}/>
 		<PostFormatHandler />
-		<PostSectionSix postData={allPosts} />
         <FooterOne />
         </>
      );
