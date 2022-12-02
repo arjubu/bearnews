@@ -1,5 +1,6 @@
 import React, { useState , Component} from "react";
 import Creatable from 'react-select/creatable';
+import {EasyButton} from 'react-easy-button';
 
 import {
     MDBCol,
@@ -19,6 +20,22 @@ import {
     MDBListGroupItem
   } from 'mdb-react-ui-kit';import FooterOne from "../components/footer/FooterOne";
 import HeaderOne from "../components/header/HeaderOne";
+class Button extends React.Component {
+
+    render() {
+      const { 
+        variant,
+        content,
+        ...others
+      } = this.props;
+      
+      return (
+        <button className={variant} {...others}>
+          {content}
+        </button>
+      )
+    }
+  }
 
 export default function PersonalProfile() {
     function SearchResultList (){
@@ -88,6 +105,8 @@ export default function PersonalProfile() {
           
         );
       }
+
+
   return (
     <>
     <HeaderOne />
@@ -185,11 +204,25 @@ export default function PersonalProfile() {
                     <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
                   </MDBCol>
                 </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>My interest tags</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText className="text-muted">tag,tag</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
               </MDBCardBody>
             </MDBCard>
+            <MDBRow>
             <MDBCol md="6">
             <SearchResultList></SearchResultList>
             </MDBCol>
+            <MDBCol md="6">
+            <Button className="mybutton" content="Submit" variant="green" />            </MDBCol>
+            </MDBRow>
+
 
             <MDBRow>
 
