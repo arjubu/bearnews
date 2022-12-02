@@ -154,6 +154,9 @@ public class UsersService {
 
         if(otp != null){
             if(otp.equals(requestBody.get("otp"))){
+                Optional<Users> users = userRepo.findByEmail(requestBody.get("email"));
+                users.get().setActive(true);
+                userRepo.save(users.get());
                 serviceResponseHelper.setHasError(false);
                 successResponse.put("message", "OTP Validate Successfully!");
                 serviceResponseHelper.setResponseMessage(successResponse);
@@ -254,20 +257,27 @@ public class UsersService {
 
         Optional<Users> users = userRepo.findByEmail(requestBody.get("email"));
         if(users.isPresent()){
-            if(users.get().getPassword().equals(Hashing.sha256().hashString(requestBody.get("password"), StandardCharsets.UTF_8).toString())){
-                serviceResponseHelper.setHasError(false);
-                successResponse.put("message", "login successful");
-                serviceResponseHelper.setResponseMessage(successResponse);
-                serviceResponseHelper.setContent(null);
-                return serviceResponseHelper;
+            if(users.get().isActive()){
+                if(users.get().getPassword().equals(Hashing.sha256().hashString(requestBody.get("password"), StandardCharsets.UTF_8).toString())){
+                    serviceResponseHelper.setHasError(false);
+                    successResponse.put("message", "login successful");
+                    serviceResponseHelper.setResponseMessage(successResponse);
+                    serviceResponseHelper.setContent(null);
+                    return serviceResponseHelper;
+                }else{
+                    serviceResponseHelper.setHasError(true);
+                    errorResponse.put("message", "Password is incorrect!");
+                    serviceResponseHelper.setResponseMessage(errorResponse);
+                    serviceResponseHelper.setContent(null);
+                    return serviceResponseHelper;
+                }
             }else{
                 serviceResponseHelper.setHasError(true);
-                errorResponse.put("message", "Password is incorrect!");
+                errorResponse.put("message", "Email Validation Pending!");
                 serviceResponseHelper.setResponseMessage(errorResponse);
                 serviceResponseHelper.setContent(null);
                 return serviceResponseHelper;
             }
-
         }else{
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "No User Found!");

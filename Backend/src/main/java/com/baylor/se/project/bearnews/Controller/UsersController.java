@@ -109,7 +109,7 @@ public class UsersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/user-login")
+    @PostMapping("/userLogin")
     public ResponseEntity<?> validateLogin(@RequestBody Map<String,String> requestBody) throws JsonProcessingException {
         ServiceResponseHelper serviceResponseHelper = usersService.validateLogin(requestBody);
         ObjectMapper objectMapper = new ObjectMapper();
