@@ -133,8 +133,26 @@ public class CommentService {
 
     }
 
-    public String deleteComment(Long id){
-        articleRepository.deleteById(id);
-        return "deleted successfully";
+    public void deleteComment(Long id){
+
+     List<Article> articleList = articleRepository.findAll();
+     for(Article a: articleList){
+         for(Comment c1: a.getArticlecomments()){
+             if(c1.getId()==id){
+                 a.getArticlecomments().remove(c1);
+                 break;
+             }
+         }
+     }
+     List<Users> usersList = usersRepository.findAll();
+     for(Users u: usersList){
+         for(Comment c2: u.getComments()){
+             if(c2.getId()==id){
+                 u.getComments().remove(c2);
+                 break;
+             }
+         }
+     }
+     commentRepository.deleteById(id);
     }
 }

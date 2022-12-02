@@ -39,8 +39,8 @@ public class CommentController {
 
     @RequestMapping(value = "/deleteComment", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteComment( @RequestParam(name="commentId" , required = true) Long commentId) throws JsonProcessingException {
-        String responseReturned = commentService.deleteComment(commentId);
-        return new ResponseEntity(responseReturned,HttpStatus.OK);
+        commentService.deleteComment(commentId);
+        return new ResponseEntity(HttpStatus.OK);
 
     }
 }
