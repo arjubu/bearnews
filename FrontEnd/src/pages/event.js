@@ -9,22 +9,34 @@ import moment from 'moment'
 import eventService from '../services/event-service';
 
 export default class Event extends React.Component {
-
+ constructor() {
+        super();
+    };
   state = {
     weekendsVisible: true,
-    currentEvents: []
+    currentEvents: [],
+    count : 0,
   }
 
-  getEvent() {
-    console.log("Calender render");
-    eventService.getAllEvent().then((response) => {
+
+
+
+componentDidMount(){
+this.getEvent();
+}
+
+async getEvent(){
+ await eventService.getAllEvent().then((response) => {
       this.setState({
-        currentEvents: response
+        currentEvents: response.data
       });
     });
-  }
+}
+
+
 
   render() {
+  console.log(this.state.currentEvents);
     return (
       <div className='demo-app'>
         {this.renderSidebar()}
@@ -42,7 +54,7 @@ export default class Event extends React.Component {
             selectMirror={true}
             dayMaxEvents={true}
             weekends={this.state.weekendsVisible}
-            initialEvents={INITIAL_EVENTS}
+            initialEvents={this.state.testEvent}
             select={this.handleDateSelect}
             eventContent={renderEventContent}
             eventClick={this.handleEventClick}
@@ -50,10 +62,13 @@ export default class Event extends React.Component {
           />
         </div>
       </div>
+
+
     )
   }
 
   renderSidebar() {
+  console.log(INITIAL_EVENTS);
     return (
       <div className='demo-app-sidebar'>
         <div className='demo-app-sidebar-section'>
@@ -72,7 +87,7 @@ export default class Event extends React.Component {
     })
   }
 
-  handleDateSelect = (selectInfo) => {
+   handleDateSelect (selectInfo) {
     let eventDate = selectInfo.startStr
     let currentDate = moment().format("YYYY-MM-DD")
     if (moment(eventDate).isBefore(currentDate, 'day')) {
@@ -85,13 +100,11 @@ export default class Event extends React.Component {
       if (title) {
         const event = {
           title: title,
-          startdate: selectInfo.startStr,
-          enddate: selectInfo.endStr,
-          description: title
+          start: selectInfo.startStr,
         }
         eventService.saveEvent(event).then((res) => {
-          alert("Event save success");
-        });
+         alert("Event save success");
+        })
       }
     }
   }
@@ -113,6 +126,7 @@ export default class Event extends React.Component {
 }
 
 function renderEventContent(currentEvents) {
+
   return (
     <>
       <b>{currentEvents.startdate}</b>

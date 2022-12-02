@@ -7,8 +7,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -23,24 +27,12 @@ public class Event {
     @Column
     private String title;
 
-    @Column
-    private String description;
-
-
-    @Column
-    private Date startdate;
-
-    @Column
-    private Date enddate;
-
-    @Column
-    private String location;
+    @CreationTimestamp
+    private LocalDate start;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_events",referencedColumnName = "id")
     @JsonBackReference
     private Users createdByevent;
-
-
 
 }
