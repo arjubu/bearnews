@@ -68,7 +68,7 @@ function Login() {
         event.preventDefault();
         console.log('Test')
 
-        fetch('http://137.184.37.205:8080/user-login', {
+        fetch('http://localhost:8080/user-login', {
             mode: 'cors',
             method: 'POST',
             body: JSON.stringify({
@@ -92,9 +92,10 @@ function Login() {
             .then((data) => {
                 console.log('data', data);
                 if (!data?.hasError) {
-                    console.log('username', username);
-                    console.log('password', password);
-                    setCookie('username', username)
+                    // console.log('username', username);
+                    // console.log('password', password);
+                    setCookie('username', username);
+                    console.log(cookies.username);
                 } else {
                     console.log("error");
                 }

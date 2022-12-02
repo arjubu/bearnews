@@ -4,22 +4,13 @@ import logo from '../../public/images/Bear_Mark_1_Color_01.jpg';
 import backgroundImage from '../../public/images/Background.jpg';
 //import { useNavigate } from 'react-router-dom';
 import Image from "next/image";
-import { useCookies } from 'react-cookie';
+import Link from "next/link";
 
 
-
-function Login() {
+function OTP() {
     const [errorMessages, error_login] = useState({});
-    const [islogin, login_set_true] = useState(false);
 
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
-    const [repassword, setRepassword] = useState();
-    const [firstname, setFirstname] = useState();
-    const [lastname, setLastname] = useState();
-    const [id, setID] = useState();
-    const [cookies, setCookie] = useCookies(['username'])
-
+    const [otp, setOTP] = useState();
 
   
     const errors = {
@@ -30,13 +21,11 @@ function Login() {
     const login_handle = (event) => {
       event.preventDefault();
   
-        fetch('http://137.184.37.205:8080/createUser', {
+      fetch('http://localhost', {
         method: 'POST',
         body: JSON.stringify({
-          email : username,
-          password : password,
-          firstName : firstname,
-          lastName : lastname
+          email : cookies.username,
+          otp : password
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -44,31 +33,27 @@ function Login() {
       })
         .then(response => {
            
-          if (response.status == 201) {
+          if (response.status == 200) {
             console.log('go'); 
             return response.json();
             
           } else {
-            error_login({ name: "ID", message: response.status + ": Your registration fails"});
+            error_login({ name: "ID", message: errors.username});
             throw new Error('Something went wrong ...');
   
           }
             
           }).then(data=>{
-            console.log('gogo'); 
-            setCookie('username', username);
-            window.location.href =  "http://localhost:3000/otp";
-          }).catch((error) => {
-            //this.setState({ requestFailed: true })
-        });
+            window.location.href = "http://localhost:3000/";
+          });
         
         
     };
   
     const renderErrorMessage = (name) =>
-      
+      name === errorMessages.name && (
         <div className="error">{errorMessages.message}</div>
-      ;
+      );
   
       var sectionStyle = {
         width: "100%",
@@ -80,33 +65,16 @@ function Login() {
       <div className="form">
         <form onSubmit={login_handle}>
           <div className="input-container">
-            <label>User Id </label>
-            <input type="text" name="username" id="username" required onChange={e => setUserName(e.target.value)}/>
+            <label>Your 6 digits</label>
+            <input type="text" name="username" id="username" required onChange={e => setOTP(e.target.value)}/>
+            {renderErrorMessage("username")}
           </div>
-          <div className="input-container">
-            <label>Password </label>
-            <input type="text" name="Password" required onChange={e => setPassword(e.target.value)}/>
-          </div>
-          <div className="input-container">
-            <label>Re-enter Password </label>
-            <input type="text" name="Password" required onChange={e => setRepassword(e.target.value)}/>
-          </div>
-          <div className="input-container">
-            <label>First Name </label>
-            <input type="text" name="Password" required onChange={e => setFirstname(e.target.value)}/>
-          </div>
-          <div className="input-container">
-            <label>Last Name </label>
-            <input type="text" name="Password" required onChange={e => setLastname(e.target.value)}/>
-            {renderErrorMessage("ID")}
-          </div>
+
           <div className="button-container">
-            <input type="submit" value="Login"/>
+            <input type="submit" value="Confirm"/>
           </div>
           <div className="forgotandreg">
-
-
-                <div className="forgotP">
+          <div className="regis">
                 <a href={"/login"}>
                   <l className="regisText"  n/>Back to Login
                 </a>
@@ -127,7 +95,8 @@ function Login() {
                         }}>
       <div className="app">
         <div className="login_frame">
-          <div className="title">Sign Up</div>
+          <div className="title">Forgot Password</div>
+          <Link href="/">
           <a>
                     <Image
                     className="logo"
@@ -137,6 +106,7 @@ function Login() {
                       height={80}
                     />
                   </a>
+                  </Link>
           {(() => {
         if (islogin) {
           navigate('/User/'+id, { state: { id: id}});
@@ -154,4 +124,4 @@ function Login() {
   
  // const rootElement = document.getElementById("root");
   //ReactDOM.render(<App />, rootElement);
-  export default Login;
+  export default OTP;
