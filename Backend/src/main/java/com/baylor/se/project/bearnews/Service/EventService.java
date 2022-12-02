@@ -21,29 +21,19 @@ public class EventService {
     @Autowired
     EventRepository eventRepository;
 
-    public String createEvent(EventDto eventDto) {
-        Event event = new Event();
-        event.setTitle(eventDto.geteventTitle());
-        event.setDescription(eventDto.geteventdescription());
-        event.setLocation(eventDto.geteventlocation());
-        eventRepository.save(event);
-        return "inserted";
-
-    }
-
-//    public Event createEvent(Event event) {
-//        return eventRepository.save(event);
-//    }
-
-
-//    public String createEvent(EventDto eventDto){
-////            Event event = new Event();
-////            event.setTitle(eventDto.geteventTitle());
-//        eventRepository.save(eventDto);
-//            return "inserted";
+//    public String createEvent(EventDto eventDto) {
+//        Event event = new Event();
+//        event.setTitle(eventDto.geteventTitle());
+//        event.setDescription(eventDto.geteventdescription());
+//        event.setLocation(eventDto.geteventlocation());
+//        eventRepository.save(event);
+//        return "inserted";
 //
 //    }
 
+    public Event createEvent(Event event){
+        return eventRepository.save(event);
+    }
 
     public List<Event> getAllEvent() {return eventRepository.findAll();}
     

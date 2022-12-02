@@ -26,7 +26,6 @@ public class EventDto {
     public String geteventlocation(){
         return eventlocation;
     }
-
     public void seteventlocation(String eventlocation){
         this.eventlocation=eventlocation;
     }

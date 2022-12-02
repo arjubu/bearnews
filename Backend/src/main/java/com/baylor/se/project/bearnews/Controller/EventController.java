@@ -18,40 +18,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api/v1/event")
-//@CrossOrigin("*")
+@RequestMapping("/api/v1/event")
+@CrossOrigin("http://localhost:3000")
 public class EventController {
 
     @Autowired
     EventService eventService;
 
-    @RequestMapping(value = "/allevent", method = RequestMethod.GET)
-    public ResponseEntity<Event> getAllEvents() {
-        return new ResponseEntity(eventService.getAllEvent(), HttpStatus.OK);
-
-    }
-
-
+@GetMapping("/getAllEvent")
+public List<Event> getAllEvent()
+{
+    return eventService.getAllEvent();
+}
 //    @PostMapping("/createEvent")
-//    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-//        Event updated = eventService.createEvent(event);
-//        return new ResponseEntity(updated, HttpStatus.OK);
+//    public ResponseEntity<?> createEvent(@RequestBody EventDto eventsent) {
+//        String responseReturned = String.valueOf(eventService.createEvent(eventsent));
+//        return new ResponseEntity<>(responseReturned,HttpStatus.OK);
 //    }
 
-    @RequestMapping(value = "/createEvent", method = RequestMethod.POST)
-    public ResponseEntity<?> createEvent(@RequestBody EventDto eventsent) {
-        String responseReturned = String.valueOf(eventService.createEvent(eventsent));
-        return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+    @PostMapping("/createEvent")
+    public Event createEvent(@RequestBody Event event){
+    return eventService.createEvent(event);
     }
 
-
-    
-    @RequestMapping(value = "/deleteEventById", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteAnEvent( @RequestParam (name="eventId" , required = true) Long eventId) throws JsonProcessingException {
-    String responseReturned = eventService.deleteAnEvent(eventId);
-    return new ResponseEntity(responseReturned,HttpStatus.OK);
+    @DeleteMapping("/deleteEventById/{id}")
+        public HttpStatus deleteEvent(@PathVariable("id") Long eventId) {
+        eventService.deleteAnEvent(eventId);
+        return HttpStatus.OK;
+        }
 }
 
-}
+
 
 
