@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -65,7 +63,7 @@ public class Article {
 //    private List<Comment> articlecomments;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> articlecomments;
+    private List<Comment> articleComments;
 
 
 

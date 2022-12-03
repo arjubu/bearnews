@@ -1,14 +1,8 @@
 package com.baylor.se.project.bearnews.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -28,11 +22,11 @@ public class Comment {
 
     @CreatedDate
     @Column
-    private LocalDateTime createdcomment = LocalDateTime.now();
+    private LocalDateTime createdComment = LocalDateTime.now();
 
     @LastModifiedDate
     @Column
-    private LocalDateTime updatedcomment =LocalDateTime.now();
+    private LocalDateTime updatedComment =LocalDateTime.now();
     //make relationship later
 //    @Column
 //    private long userId;
