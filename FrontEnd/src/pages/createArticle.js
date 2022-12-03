@@ -106,11 +106,11 @@ function handleTag(input){
     
 if(input.__isNew__){
     //fetch --------------------------------------------------
-    console.log(input.label);
+    //console.log(typeof input.label);
     fetch('http://localhost:8080/createTag', {
       method: 'POST',
       body: JSON.stringify({
-        tagText: input.lable,
+        tagText: input.label,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
