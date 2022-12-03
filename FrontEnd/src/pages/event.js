@@ -7,6 +7,9 @@ import { useRef } from "react";
 import { INITIAL_EVENTS, createEventId } from './eventFunction'
 import moment from 'moment'
 import eventService from '../services/event-service';
+import Image from "next/image";
+import Link from "next/link";
+
 
 export default class Event extends React.Component {
  constructor() {
@@ -40,6 +43,18 @@ async getEvent(){
     return (
       <div className='demo-app'>
         {this.renderSidebar()}
+        <div className='BackIconEvent'>
+                <Link href="/">
+                          <a>
+                            <Image
+                              src="/images/Bear_Mark_1_Color_01.jpg"
+                              alt="brand-logo"
+                              width={50}
+                              height={40}
+                            />
+                          </a>
+                        </Link>
+                </div>
         <div className='demo-app-main'>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -103,6 +118,7 @@ async getEvent(){
           start: selectInfo.startStr,
         }
         eventService.saveEvent(event).then((res) => {
+        window.location.reload(false);
          alert("Event save success");
         })
       }
