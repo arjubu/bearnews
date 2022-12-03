@@ -37,7 +37,7 @@ const [DATASET, setDataset] = useState();
   
     function handlerChange(input){
     //setsearchValue(input);
-        fetch('http://localhost:8080/getTagByLetter', {
+        fetch('http://137.184.37.205:8080/getTagByLetter', {
     method: 'POST',
     body: JSON.stringify({
         suggString : input,
@@ -106,7 +106,7 @@ function handleTag(input){
     
 if(input.__isNew__){
     //fetch --------------------------------------------------
-    // fetch('http://137.184.37.205:8080/createTag', {
+    // fetch('http://localhost:8080/createTag', {
     //   method: 'POST',
     //   body: JSON.stringify({
     //     tagText: input.lable,
@@ -151,7 +151,7 @@ console.log(input.label);
         console.log(cookies.username)
        // console.log()
 
-        fetch('http://localhost:8080/createArticle', {
+        fetch('http://137.184.37.205:8080/createArticle', {
             mode: 'cors',
             method: 'POST',
             body: JSON.stringify({
