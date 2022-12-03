@@ -309,8 +309,10 @@ public class ArticleService {
         }
         else{
             for(Article a: articleList){
-                titles=a.getId();
-                titlesList.add(titles);
+                if(a.getArticleType().toString().equals("SYSTEM")) {
+                    titles = a.getId();
+                    titlesList.add(titles);
+                }
             }
         }
         return titlesList;
