@@ -138,4 +138,12 @@ public class UsersController {
 
         }
     }
+
+
+    /*@RequestMapping(value = "/updateUserProfile", method = RequestMethod.POST)
+    public ResponseEntity<?> updatingUserProfile(@RequestBody Map<String,String> requestBody) throws JsonProcessingException{
+
+
+    }*/
+
 }

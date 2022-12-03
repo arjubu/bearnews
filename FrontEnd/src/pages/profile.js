@@ -43,6 +43,8 @@ export default function PersonalProfile() {
     const [respStatus, setrespStatus] = useState("");
     const [cookies, setCookie, removeCookie] = useCookies(['username']);
     var tags = [];
+    const [selectedOption, setselectedOption] = useState([]);
+    const [newarray, setarray] = useState([]);
 
     console.log("--profile page cookie--");
     console.log(cookies.username);
@@ -132,8 +134,7 @@ export default function PersonalProfile() {
           //const resultItems = this.props.data;
        
             <div className="upload-tag">
-              {console.log("DATASET")}
-              {console.log(DATASET)}
+  
               <Creatable
               isMulti
               onInputChange = {(event) => handlerChange(event) }
@@ -149,20 +150,51 @@ export default function PersonalProfile() {
    
 
     function saveTags(input) {
-        console.log("--save tags calling--");
+       /* console.log("--save tags calling--");
         console.log(input)
+        console.log(cookies.username);*/
         tags.push(input);
+
+
 
     }
     function sayHello() {
-        const obj = {};
+       
         console.log("--on click calling--");
-      /*  for (var i = 0; i < tags.length; i++) {
-            console.log("--tags array--");
-            console.log(tags[i]);
-        }*/
-        /*tags.label.forEach(tags => obj[tags] = tags);
-        console.log(obj);*/
+        console.log(typeof (tags));
+       // tags.forEach((val) => console.log(val));
+        let tagsConsole = Object.keys(tags);
+        let numbers = Object.values(tags);
+
+        numbers.forEach((number) => console.log(number));
+        //console.log(tagsConsole)
+        /*fetch('http://localhost:8080/createArticle', {
+            mode: 'cors',
+            method: 'PUT',
+            body: JSON.stringify({
+                tagsContaining: tags,
+                createdUsersEmail: cookies.username,
+            }),
+            headers: {
+                'Content-type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then((response) => {
+                console.log('response', response);
+                if (response.status == 500) {
+                    error_login({ name: 'ID', message: "Creating empty object is not allowed" });
+
+                }
+                else if (response.hasError == false) {
+                    console.log('goes to backend');
+                }
+                else {
+                    console.log(response)
+                    setErr(response.responseMessage);
+                    error_login({ name: 'ID', message: response.responseMessage.message });
+                }
+            })*/
     }
     
 
