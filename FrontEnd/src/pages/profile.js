@@ -42,6 +42,8 @@ export default function PersonalProfile() {
     const [name, setName] = useState("");
     const [respStatus, setrespStatus] = useState("");
     const [cookies, setCookie, removeCookie] = useCookies(['username']);
+    var tags = [];
+
     console.log("--profile page cookie--");
     console.log(cookies.username);
     useEffect(() => {
@@ -137,14 +139,32 @@ export default function PersonalProfile() {
               onInputChange = {(event) => handlerChange(event) }
               options={DATASET}
               getOptionValue={(option) => option.label}
-              //inputValue={this.state.searchKey}
-              onChange={opt => (opt.label)}
+              onChange={opt => (saveTags(opt))}
               
               />
             </div>
           
         );
-      }
+    }
+   
+
+    function saveTags(input) {
+        console.log("--save tags calling--");
+        console.log(input)
+        tags.push(input);
+
+    }
+    function sayHello() {
+        const obj = {};
+        console.log("--on click calling--");
+      /*  for (var i = 0; i < tags.length; i++) {
+            console.log("--tags array--");
+            console.log(tags[i]);
+        }*/
+        /*tags.label.forEach(tags => obj[tags] = tags);
+        console.log(obj);*/
+    }
+    
 
 
   return (
@@ -260,7 +280,7 @@ export default function PersonalProfile() {
             <SearchResultList></SearchResultList>
             </MDBCol>
             <MDBCol md="6">
-            <Button className="mybutton" content="Submit" variant="green" />            </MDBCol>
+                                  <Button className="mybutton" content="Submit" variant="green" onClick={sayHello}/>            </MDBCol>
             </MDBRow>
 
 
