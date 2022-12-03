@@ -21,8 +21,13 @@ const HomeOne = ({allPosts}) => {
     console.log(cookies.username);
   return ( 
     <>
-    <HeadMeta metaTitle="Home One"/>
-          <HeaderOne />
+          <HeadMeta metaTitle="Home One" />
+          {cookies.username ==undefined  && (
+              <HeaderOne/>
+          )}
+          {cookies.username != undefined && (
+              <HeaderLogged />
+          )}
           
     <PostSectionOne postData={allPosts} />
     {/* {console.log(allPosts)} */}
