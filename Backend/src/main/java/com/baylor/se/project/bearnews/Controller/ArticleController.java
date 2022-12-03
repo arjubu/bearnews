@@ -39,13 +39,16 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/fetchSystemArticles", method = RequestMethod.GET)
-    public ResponseEntity<?> getArticles(){
-    List<ArticleWithUsersObjectMapper> responseReturned = articleService.getAllArticles();
-    if(responseReturned.isEmpty()){
-        return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
-    }
+    public ResponseEntity<?> getArticles() throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper= articleService.getAllArticles();
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
      else{
-        return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
      }
     }
 

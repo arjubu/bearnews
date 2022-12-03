@@ -255,52 +255,45 @@ public class ArticleService {
         return articleDetails;
 
     }
-    public List<ArticleWithUsersObjectMapper> getAllArticles(){
+    public ServiceResponseHelper getAllArticles(){
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+
         List<Article> articleList = articleRepository.findAll();
-        if(articleList.isEmpty()){
-            return null;
-        }
         List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
 
-        for(Article a: articleList) {
-            if (a.getArticleType().toString().equals("SYSTEM")) {
-                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
-                article.setTitleOfArticle(a.getTitle());
-                article.setContentOfArticle(a.getContent());
-                article.setIdOfArticle(a.getId());
-                article.setTimeOfArticleCretion(a.getCreatedAt());
-
-                List<Users> author = usersService.findingArticlesByUser(a.getId());
-                if (author.isEmpty() == false) {
-                    article.setIdOfCreator(author.get(0).getId());
-                    article.setNameofCreator(author.get(0).getFirstName());
-                }
-
-        for(Article a: articleList){
-            ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
-            article.setTitleOfArticle(a.getTitle());
-            article.setContentOfArticle(a.getContent());
-            article.setIdOfArticle(a.getId());
-            article.setTimeOfArticleCretion(a.getCreatedAt());
-
-            List<Users> author= usersService.findingArticlesByUser(a.getId());
-            if(author.isEmpty()==false) {
-                article.setIdOfCreator(author.get(0).getId());
-                article.setNameofCreator(author.get(0).getFirstName());
-            }
-
-
-            article.setIdOfTag(a.getContains().getId());
-            article.setTextOfTag(a.getContains().getTagText());
-
-
-                articleDetails.add(article);
-            }
-
-            articleDetails.add(article);
-
+        if(articleList.isEmpty()){
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "no article");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
         }
-        return articleDetails;
+
+        else{
+            for (Article a : articleList) {
+                if (a.getArticleType().toString().equals("SYSTEM")) {
+                    ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+                    article.setTitleOfArticle(a.getTitle());
+                    article.setContentOfArticle(a.getContent());
+                    article.setIdOfArticle(a.getId());
+                    article.setTimeOfArticleCretion(a.getCreatedAt());
+
+                    List<Users> author = usersService.findingArticlesByUser(a.getId());
+                    if (author.isEmpty() == false) {
+                        article.setIdOfCreator(author.get(0).getId());
+                        article.setNameofCreator(author.get(0).getFirstName());
+                    }
+                    articleDetails.add(article);
+
+                }
+            }
+            serviceResponseHelper.setHasError(false);
+            successResponse.put("message", "login successful");
+            serviceResponseHelper.setResponseMessage(successResponse);
+            serviceResponseHelper.setContent(articleDetails);
+        }
+        return serviceResponseHelper;
 
     }
     public List<Article> getAll(){
