@@ -1,15 +1,12 @@
 package com.baylor.se.project.bearnews.Service;
 
 import com.baylor.se.project.bearnews.Controller.ServiceResponseHelper;
+import com.baylor.se.project.bearnews.Controller.dto.ArticleCommentDto;
 import com.baylor.se.project.bearnews.Controller.dto.ArticleDto;
 import com.baylor.se.project.bearnews.Controller.dto.ArticleResponseDto;
-import com.baylor.se.project.bearnews.Models.Article;
+import com.baylor.se.project.bearnews.Controller.dto.CommentUserDto;
+import com.baylor.se.project.bearnews.Models.*;
 
-import com.baylor.se.project.bearnews.Models.Tag;
-
-import com.baylor.se.project.bearnews.Models.ArticleType;
-
-import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.ArticleRepository;
 import com.baylor.se.project.bearnews.Repository.TagRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
@@ -36,6 +33,9 @@ public class ArticleService {
 
     @Autowired
     TagRepository tagRepository;
+
+    @Autowired
+    UsersRepository usersRepository;
 
 
     public ServiceResponseHelper createArticle(ArticleDto articleDto){
@@ -346,5 +346,51 @@ public class ArticleService {
             return serviceResponseHelper;
         }
 
+    }
+
+    public ServiceResponseHelper getArticleComment(Long id){
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        Optional<Article> article = articleRepository.findById(id);
+        if(article.isPresent()){
+            ArticleCommentDto articleCommentDto = new ArticleCommentDto();
+            articleCommentDto.setId(article.get().getId());
+            articleCommentDto.setTitle(article.get().getTitle());
+            articleCommentDto.setContent(article.get().getContent());
+            articleCommentDto.setContains(article.get().getContains());
+            articleCommentDto.setDetailLink(article.get().getDetailLink());
+            articleCommentDto.setThumbLink(article.get().getThumbLink());
+            articleCommentDto.setArticleType(article.get().getArticleType());
+            articleCommentDto.setBaylorNewsId(articleCommentDto.getBaylorNewsId());
+            articleCommentDto.setCreatedAt(article.get().getCreatedAt());
+            articleCommentDto.setUpdatedAt(article.get().getUpdatedAt());
+
+            List<CommentUserDto> commentUsers = new ArrayList<>();
+            for(Comment c: article.get().getArticleComments()){
+                List<Users> users = usersRepository.findByCommentsIsNotNullAndCommentsIdEquals(c.getId());
+                CommentUserDto commentUserDto = new CommentUserDto();
+                commentUserDto.setId(c.getId());
+                commentUserDto.setText(c.getText());
+                commentUserDto.setCreatedComment(c.getCreatedComment());
+                commentUserDto.setUpdatedComment(c.getUpdatedComment());
+                commentUserDto.setUsers( users.size()>0 ? users.get(0) : null);
+                commentUsers.add(commentUserDto);
+                //commentUserDto.set
+
+            }
+            articleCommentDto.setCommentUsers(commentUsers);
+            serviceResponseHelper.setHasError(false);
+            successResponse.put("message", "Article comments!");
+            serviceResponseHelper.setResponseMessage(successResponse);
+            serviceResponseHelper.setContent(articleCommentDto);
+            return serviceResponseHelper;
+        }else{
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "No article found");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
     }
 }

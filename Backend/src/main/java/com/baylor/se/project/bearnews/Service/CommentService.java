@@ -4,7 +4,6 @@ import com.baylor.se.project.bearnews.Controller.ServiceResponseHelper;
 import com.baylor.se.project.bearnews.Controller.dto.CommentDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Comment;
-import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.Repository.ArticleRepository;
 import com.baylor.se.project.bearnews.Repository.CommentRepository;
@@ -81,14 +80,14 @@ public class CommentService {
                 Users commentor =commentorOpt.get();
                 Comment comment = new Comment();
                 comment.setText(commentdto.getCommentText());
-                comment.setCreatedcomment(LocalDateTime.now());
+                comment.setCreatedComment(LocalDateTime.now());
                 commentRepository.save(comment);
 
                 List<Comment> commentList= commentor.getComments();
                 commentList.add(comment);
                 usersRepository.save(commentor);
 
-                List<Comment> articleComments = foundArticle.getArticlecomments();
+                List<Comment> articleComments = foundArticle.getArticleComments();
                 articleComments.add(comment);
                 articleRepository.save(foundArticle);
 
@@ -120,9 +119,9 @@ public void deleteComment(Long id){
 
         List<Article> articleList = articleRepository.findAll();
         for(Article a: articleList){
-            for(Comment c1: a.getArticlecomments()){
+            for(Comment c1: a.getArticleComments()){
                 if(c1.getId()==id){
-                    a.getArticlecomments().remove(c1);
+                    a.getArticleComments().remove(c1);
                     break;
                 }
             }
@@ -141,21 +140,23 @@ public void deleteComment(Long id){
 
 
 
-//    public void findArticleComment(Long articleid){
-//        Optional<Article> findarticle= articleRepository.findById(articleid);
-//        if(findarticle.isPresent()){
-//            List<Comment> articlecomment = findarticle.get().getArticlecomments();
-//            if(articlecomment.isEmpty()==false){
-//                for(Comment c: articlecomment){
-//                    long commentId = c.getId();
-//                    System.out.println(commentId);
-//                    List<Users> findUsers = usersRepository.findByCommentsIsNotNullAndCommentsIdEquals(commentId);
-//
-//                    for(Users us: findUsers){
-//                        System.out.println(us.getFirstName());
-//                    }
-//                }
-//            }
-//        }
-//    }
+    public void findArticleComment(Long articleid){
+        Optional<Article> findarticle= articleRepository.findById(articleid);
+        if(findarticle.isPresent()){
+            List<Comment> articlecomment = findarticle.get().getArticleComments();
+            if(articlecomment.isEmpty()==false){
+                for(Comment c: articlecomment){
+                    long commentId = c.getId();
+                    System.out.println(commentId);
+                    List<Users> findUsers = usersRepository.findByCommentsIsNotNullAndCommentsIdEquals(commentId);
+
+                    for(Users us: findUsers){
+                        System.out.println(us.getFirstName());
+                    }
+                }
+            }
+        }
+    }
+
+
 }

@@ -49,14 +49,4 @@ public class CommentController {
 
     }
 
-
-//    @RequestMapping(value = "/fetchArticlcomment", method = RequestMethod.GET)
-//    public ResponseEntity<?> getArticlesByCommnet(@RequestParam (name="articleId" , required = false) Long articleId){
-//        commentService.findArticleComment(articleId);
-//       /* if(commentlist.isEmpty()==false)
-//            return new ResponseEntity(commentlist,HttpStatus.OK);*/
-//
-//        return new ResponseEntity<>("doesn't contains any article with id",HttpStatus.BAD_REQUEST);
-//
-//    }
 }
