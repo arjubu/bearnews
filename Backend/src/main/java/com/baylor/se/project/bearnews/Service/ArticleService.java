@@ -284,6 +284,8 @@ public class ArticleService {
                         article.setIdOfCreator(author.get(0).getId());
                         article.setNameofCreator(author.get(0).getFirstName());
                     }
+                    article.setIdOfTag(a.getContains().getId());
+                    article.setTextOfTag(a.getContains().getTagText());
                     articleDetails.add(article);
 
                 }

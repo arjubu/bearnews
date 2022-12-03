@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 
 
 function Login() {
-    const [errorMessages, error_login] = useState({});
+    const [errorMessages, error_login] = useState('');
     const [islogin, login_set_true] = useState(false);
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
@@ -21,9 +21,9 @@ function Login() {
       username: "This user Id does not exit or invalid password",
      
     };
+    const [err, setErr] = useState('');
 
     useEffect(() => {
-        console.log('password', password)
     }, [password]);
 
     const test = (event) => {
@@ -41,25 +41,23 @@ function Login() {
                 'Content-type': 'application/json',
             },
         })
+            .then(response => response.json())
             .then((response) => {
                 console.log('response', response);
-                if (response.status == 200) {
+                if (response.hasError == false) {
                     console.log('login-working');
+                    setCookie('username', username);
                     login_set_true(true);
-                    return response.json();
                 } else {
-                    error_login({ name: 'ID', message: errors.username });
-                    throw new Error('Something went wrong ...');
+                    console.log(response)
+                    setErr(response.responseMessage);
+                    console.log(err);
+                    error_login({ name: 'ID', message: response.responseMessage.message });
                 }
             })
             .then((data) => {
-                console.log('data', data);
-                if (!data?.hasError) {
-                    setCookie('username', username);
-                    console.log(cookies.username);
-                } else {
-                    console.log("error");
-                }
+                console.log('---data---',);
+             
             });
     }
 
@@ -133,7 +131,7 @@ function Login() {
                   </Link>
           {(() => {
                         if (islogin) {
-                            window.location.href = "/createArticle";
+                            window.location.href = "/userHome";
                         } else {
           return (
             renderForm
@@ -146,6 +144,4 @@ function Login() {
     );
   }
   
- // const rootElement = document.getElementById("root");
-  //ReactDOM.render(<App />, rootElement);
   export default Login;

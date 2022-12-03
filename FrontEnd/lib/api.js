@@ -39,13 +39,16 @@ export async function getPostSlugs() {
 
 export async function getPostBySlug(slug, fields = []) {
   const realSlug = slug.toString();
+  // console.log("realSlug");
+  // console.log(realSlug);
+
   //console.log(typeof realSlug);
     let article = await fetch('http://localhost:8080/fetchArticleById?articleId='+realSlug
   )
     .then(response => {
        
       if (response.status == 200) {
-        //console.log('go'); 
+        console.log("go"); 
         return response.json();
         
       } else {
@@ -62,7 +65,9 @@ export async function getPostBySlug(slug, fields = []) {
       //console.log(article.contains.tagText);
 
   const items = {}
+  //console.log("article");
 
+      //console.log(article);
   // Ensure only the minimal needed data is exposed
   // fields.forEach((field) => {
   //   if (field === 'slug') {

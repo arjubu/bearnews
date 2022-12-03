@@ -16,52 +16,49 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useCookies } from 'react-cookie';
 
-const HomeOne = ({allPosts}) => {
+const HomeOne = ({ allPosts }) => {
     const [cookies, setCookie] = useCookies(['username'])
     console.log(cookies.username);
-  return ( 
-    <>
-          <HeadMeta metaTitle="Home One" />
-          {cookies.username ==undefined  && (
-              <HeaderOne/>
-          )}
-          {cookies.username != undefined && (
-              <HeaderLogged />
-          )}
+    return (
+        <>
+            <HeadMeta metaTitle="Home One" />
           
-    <PostSectionOne postData={allPosts} />
-    {/* {console.log(allPosts)} */}
-    <PostSectionTwo postData={allPosts} />
-    <PostSectionThree postData={allPosts} />
-    <PostSectionFour postData={allPosts} />
+            {cookies.username != "undefined" && (
+                <HeaderLogged />
+            )}
+            <PostSectionOne postData={allPosts} />
+            {/* {console.log(allPosts)} */}
+            <PostSectionTwo postData={allPosts} />
+            <PostSectionThree postData={allPosts} />
+            <PostSectionFour postData={allPosts} />
 
-    {/* <PostSectionSix postData={allPosts}/> */}
-    <FooterOne />
-    </>
-   );
+            {/* <PostSectionSix postData={allPosts}/> */}
+            <FooterOne />
+        </>
+    );
 }
- 
+
 export default HomeOne;
 
 
 export async function getStaticProps() {
-  const allPosts = await getAllPosts([
-    'postFormat',
-    'trending',
-    'story',
-    'slug',
-    'title',
-    'excerpt',
-    'featureImg',
-    'cate',
-    'cate_bg',
-    'cate_img',
-    'author_name',
-    'date'
-  ])
-  
-  return {
-    props: { allPosts }
-  }
+    const allPosts = await getAllPosts([
+        'postFormat',
+        'trending',
+        'story',
+        'slug',
+        'title',
+        'excerpt',
+        'featureImg',
+        'cate',
+        'cate_bg',
+        'cate_img',
+        'author_name',
+        'date'
+    ])
+
+    return {
+        props: { allPosts }
+    }
 }
 

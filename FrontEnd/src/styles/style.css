@@ -8681,6 +8681,12 @@ Date Created: July 26, 2019
     background-color: var(--grey-dark-one);
     border-color: var(--grey-dark-one);
   }
+
+  .BackIconEvent{
+    position:relative;
+    margin-left:5%;
+    margin-top:2%;
+  }
   
   
   /* Splash Page Style  */
