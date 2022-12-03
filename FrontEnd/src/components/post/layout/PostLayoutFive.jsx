@@ -3,19 +3,23 @@ import Link from "next/link";
 import { slugify } from "../../../utils";
 
 const PostLayoutFive = ({ data, index }) => {
+	function renderforme(){
+		if(data.featureImg!=null){
+		return(<Link href={`/post/${data.slug}`}>
+		<a className="align-self-center w-100">
+			<Image  
+			src={data.featureImg}
+			alt={data.title}
+			width={600}
+			height={90}
+			/>
+		</a>
+	</Link>);}
+	return;
+	}
   return (
     <div className="media post-block post-block__fluid post-block__mid flex-column m-b-xs-30 m-b-md-40 m-b-lg-40">
-		<Link href={`/post/${data.slug}`}>
-			<a className="align-self-center w-100">
-				<Image  
-				className="w-100 m-b-xs-30"
-				src={data.featureImg}
-				alt={data.title}
-				width={528}
-				height={(index % 2 == 1) ? 782 : 586}
-				/>
-			</a>
-		</Link>
+		{renderforme()}
       <div className="media-body">
         <div className="post-cat-group m-b-xs-15">
 			<Link href={`/category/${slugify(data.cate)}`}>
@@ -31,6 +35,7 @@ const PostLayoutFive = ({ data, index }) => {
           {data.excerpt}
         </p>
       </div>
+	  <div class="border-bottom"></div>
     </div>
   );
 };

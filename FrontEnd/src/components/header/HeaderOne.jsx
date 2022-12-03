@@ -1,5 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import {
+  MDBCol,
+  MDBContainer,
+  MDBRow,
+  MDBCard,
+  MDBCardText,
+  MDBCardBody,
+  MDBCardImage,
+  MDBBtn,
+  MDBBreadcrumb,
+  MDBBreadcrumbItem,
+  MDBProgress,
+  MDBProgressBar,
+  MDBIcon,
+  MDBListGroup,
+  MDBListGroupItem
+} from 'mdb-react-ui-kit';
 import Image from "next/image";
 import { dateFormate } from "../../utils";
 import SocialLink from "../../data/social/SocialLink.json";
@@ -9,7 +26,22 @@ import Select from 'react-select';
 
 
  
+class Button extends React.Component {
 
+  render() {
+    const { 
+      variant,
+      content,
+      ...others
+    } = this.props;
+    
+    return (
+      <button className={variant} {...others}>
+        {content}
+      </button>
+    )
+  }
+}
 
 const HeaderOne = () => {
   // Main Menu Toggle
@@ -138,6 +170,10 @@ function SearchResultList (){
   };
   const headerSearchClose = () => {
     setSearchShow(false);
+  };
+
+  const changew = () => {
+    window.location.href = "/otp";
   };
 
   // const searchTag = () =>{

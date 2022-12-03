@@ -6970,6 +6970,16 @@ Date Created: July 26, 2019
     box-shadow: none;
     color: #fff;
   }
+  .border-bottom:after {
+    position: absolute;
+    left: 18px;
+    top: auto;
+    bottom: 0;
+    right: auto;
+    height: 6px;
+    width: 105px;
+    background-color: #32b66b;
+}
 
   .mybutton{
     background: rgb(69, 247, 69);

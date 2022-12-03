@@ -2,6 +2,11 @@ import { SortingByDate } from "../../utils";
 import SectionTitle from "../elements/SectionTitle";
 import PostLayoutOne from "./layout/PostLayoutOne";
 import PostLayoutTwo from "./layout/PostLayoutTwo";
+import PostLayoutThree from "./layout/PostLayoutThree";
+import PostLayoutFour from "./layout/PostLayoutFour";
+import PostLayoutFive from "./layout/PostLayoutFive";
+import PostLayoutSix from "./layout/PostLayoutSix";
+
 
 const PostSectionOne = ({postData}) => {
     SortingByDate(postData);
@@ -23,7 +28,7 @@ const PostSectionOne = ({postData}) => {
                 />
                 <div className="axil-content">
                 	{postData.slice(1, 5).map((data) =>(
-                    	<PostLayoutTwo data={data} key={data.slug} />
+                    	<PostLayoutFive data={data} key={data.slug} />
                   	))}
                 </div>
               </div>

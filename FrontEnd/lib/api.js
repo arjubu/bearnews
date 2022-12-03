@@ -85,7 +85,11 @@ export async function getPostBySlug(slug, fields = []) {
   items['cate_bg'] = 'bg-color-purple-one';
   items['date'] = article.data.timeOfCreation;
   items['cate_img'] = '/images/category/travel.png';
-  items['featureImg'] =  '/images/posts/post_2.jpg';
+  if(article.data.image==null){
+    items['featureImg'] =  '/images/posts/download.png';
+    }else{
+      items['featureImg'] = article.data.image;
+    }
   items['author_img'] = '/images/author/amachea_jajah.png';
   items['author_social'] =     
   [

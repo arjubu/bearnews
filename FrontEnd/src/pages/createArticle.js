@@ -81,14 +81,53 @@ function CreateArticle() {
           <Creatable
           onInputChange = {(event) => handlerChange(event) }
           options={DATASET}
+          placeholder="Choose only one tag please"
           getOptionValue={(option) => option.label}
           //inputValue={this.state.searchKey}
-          onChange={opt => (opt.label)}
+          onChange={(opt) => handleTag(opt)}
+
           
+
           />
         </div>
       
     );
+  }
+
+  function handleTag(input){
+    
+    if(input.__isNew__){
+      //fetch --------------------------------------------------
+      // fetch('http://137.184.37.205:8080/createTag', {
+      //   method: 'POST',
+      //   body: JSON.stringify({
+      //     tagText: input.lable,
+
+      //   }),
+      //   headers: {
+      //     "Content-type": "application/json; charset=UTF-8"
+      //   }
+      // })
+      //   .then(response => {
+           
+      //     if (response.status == 200) {
+      //       console.log('go'); 
+      //       return response.json();
+            
+      //     } else {
+      //       error_login({ name: "ID", message: errors.username});
+      //       throw new Error('Something went wrong ...');
+  
+      //     }
+            
+      //     }).then(data=>{
+      //     });
+      //end fetch -------------------------------------------
+      console.log(input.label);
+    }
+    setTags(input.label);
+    console.log(input.label);
+
   }
     return ( 
       <>

@@ -5,7 +5,7 @@ import HeaderOne from "../components/header/HeaderOne";
 import PostSectionFive from "../components/post/PostSectionFive";
 import PostSectionFour from "../components/post/PostSectionFour";
 import PostSectionOne from "../components/post/PostSectionOne";
-import PostSectionSix from "../components/post/PostSectionSix";
+import PostSectionSeven from "../components/post/PostSectionSix";
 import PostSectionThree from "../components/post/PostSectionThree";
 import PostSectionTwo from "../components/post/PostSectionTwo";
 
