@@ -44,7 +44,7 @@ function Login() {
             .then(response => response.json())
             .then((response) => {
                 console.log('response', response);
-                if (response.status == 200) {
+                if (response.hasError == false) {
                     console.log('login-working');
                     setCookie('username', username);
                     login_set_true(true);

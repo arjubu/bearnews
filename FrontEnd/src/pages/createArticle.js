@@ -3,7 +3,7 @@ import React, { useState , Component} from "react";
 import HeadMeta from "../components/elements/HeadMeta";
 import logo from '../../public/images/Bear_Mark_1_Color_01.jpg';
 import backgroundImage from '../../public/images/Background.jpg';
-import HeaderOne from "../components/header/HeaderOne";
+import HeaderLogged from "../components/header/HeaderLogged";
 import Image from "next/image";
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
@@ -27,13 +27,15 @@ const [Context, setContext] = useState();
 const [Files, setFiles] = useState();
 const [cookies, setCookie] = useCookies(['username'])
 const [errorMessages, error_login] = useState({});
+const [err, setErr] = useState('');
 const renderErrorMessage = (name) =>
 name === errorMessages.name && (
   <div className="error">{errorMessages.message}</div>
 );
 
 function SearchResultList (){
-const [DATASET, setDataset] = useState();
+    const [DATASET, setDataset] = useState();
+   
   
     function handlerChange(input){
     //setsearchValue(input);
@@ -164,14 +166,15 @@ console.log(input.label);
                 'Content-type': 'application/json',
             },
         })
+            .then(response => response.json())
             .then((response) => {
                 console.log('response', response);
-                if (response.status == 201) {
+                if (response.hasError == false) {
                     console.log('goes to backend');
-                    return response.json();
                 } else {
-                    error_login({ name: 'ID', message:"Create article fail" });
-                   // throw new Error('Something went wrong ...');
+                    console.log(response)
+                    setErr(response.responseMessage);
+                    error_login({ name: 'ID', message: response.responseMessage.message });
                 }
             })
       }}
@@ -181,7 +184,7 @@ return (
     <>
       
     <HeadMeta metaTitle="Home One"/>
-    <HeaderOne />
+    <HeaderLogged />
 
     {/* <div className="appcreate">
     <div className="create_frame">
