@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -118,6 +119,23 @@ public class UsersController {
         }
         else {
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.OK);
+        }
+    }
+    @RequestMapping(value = "/displayUserProfile", method = RequestMethod.POST)
+    public ResponseEntity<?> findUserProfile(@RequestBody Map<String,String> requestBody) throws JsonProcessingException{
+
+        String userEmail = requestBody.get("username");
+        ServiceResponseHelper serviceResponseHelper = usersService.findUserProfile(userEmail);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
+
         }
     }
 }

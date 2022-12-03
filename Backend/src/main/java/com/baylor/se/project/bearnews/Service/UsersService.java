@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Service;
 
 import com.baylor.se.project.bearnews.Controller.ServiceResponseHelper;
+import com.baylor.se.project.bearnews.Controller.dto.UserProfileDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.Models.UserType;
@@ -285,6 +286,52 @@ public class UsersService {
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
         }
+    }
+
+    public ServiceResponseHelper findUserProfile(String userEmail){
+
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+
+        Optional<Users> userQueryOpt = userRepo.findByEmail(userEmail);
+        if(userQueryOpt.isPresent()){
+            UserProfileDto userProfileDto = new UserProfileDto();
+            Users userQuery = userQueryOpt.get();
+
+            userProfileDto.setReqUserEmail(userQuery.getEmail());
+            userProfileDto.setReqFirstName(userQuery.getFirstName());
+            userProfileDto.setReqLastName(userQuery.getLastName());
+            if(userQuery.getSocialMediaLink()==null)
+                userProfileDto.setReqSocialLink("no url found");
+            if(userQuery.getIsLiked().isEmpty()==false){
+                List<Tag> interestTags = userQuery.getIsLiked();
+                List<String> interestTagsToShow = new ArrayList<>();
+                for(Tag t: interestTags){
+                    interestTagsToShow.add(t.getTagText());
+                }
+                userProfileDto.setReqInterestList(interestTagsToShow);
+            }
+            else{
+                List<String> interestTagsToShow = new ArrayList<>();
+                interestTagsToShow.add("select tags to interest list");
+                userProfileDto.setReqInterestList(interestTagsToShow);
+            }
+            serviceResponseHelper.setHasError(false);
+            successResponse.put("message", "desired contents found");
+            serviceResponseHelper.setResponseMessage(successResponse);
+            serviceResponseHelper.setContent(userProfileDto);
+            return serviceResponseHelper;
+
+        }
+        else{
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "No such user is there");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+
     }
 
 }
