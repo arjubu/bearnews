@@ -123,5 +123,16 @@ public class ArticleController {
         }
     }
 
+    @RequestMapping("/fetchArticleAndComments/{id}")
+    public ResponseEntity<?> getArticleComment(@PathVariable Long id){
+        ServiceResponseHelper serviceResponseHelper = articleService.getArticleComment(id);
+
+        if(serviceResponseHelper.hasError){
+            return new ResponseEntity<>(serviceResponseHelper, HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<>(serviceResponseHelper, HttpStatus.OK);
+        }
+    }
+
 
 }
