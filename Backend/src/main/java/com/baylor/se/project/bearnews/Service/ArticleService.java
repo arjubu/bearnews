@@ -29,6 +29,9 @@ public class ArticleService {
     ArticleRepository articleRepository;
 
     @Autowired
+    UsersRepository usersRepository;
+
+    @Autowired
     UsersService usersService;
 
     @Autowired
@@ -45,10 +48,10 @@ public class ArticleService {
         Map errorResponse = new HashMap<>();
         Map successResponse = new HashMap<>();
 
-        long tagId = articleDto.getTagContaiedId();
-        Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
-        long usersId = articleDto.getCreatedUsersId();
-        Users usersWhoCreated = usersService.foundUserById(usersId);
+        String tagContainingText = articleDto.getTagContainingText();
+        Tag tagsToAttach = tagRepository.findTagsByTagText(tagContainingText);
+        String userSentEmail = articleDto.getCreatedUsersEmail();
+        Optional<Users> usersQueryopt = usersRepository.findByEmail(userSentEmail);
 
         if(articleDto.getArticleTitle()==""){
             serviceResponseHelper.setHasError(true);
@@ -72,7 +75,7 @@ public class ArticleService {
             serviceResponseHelper.setContent(null);
              return serviceResponseHelper;
         }
-        if(articleDto.getTagContaiedId()==0){
+        if(articleDto.getTagContainingText()==""){
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article must contain a tag");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -80,7 +83,7 @@ public class ArticleService {
              return serviceResponseHelper;
         }
 
-        if(articleDto.getCreatedUsersId()==0){
+        if(articleDto.getCreatedUsersEmail()==""){
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article must have a user");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -88,9 +91,9 @@ public class ArticleService {
             return serviceResponseHelper;
         }
 
-        if(usersWhoCreated==null){
+        if(usersQueryopt.isPresent()==false){
             serviceResponseHelper.setHasError(true);
-            errorResponse.put("message", "valid user id isn't provided");
+            errorResponse.put("message", "valid user email isn't provided");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
@@ -107,13 +110,12 @@ public class ArticleService {
             article.setTitle(articleDto.getArticleTitle());
             article.setContent(articleDto.getArticleContent());
             article.setCreatedAt(articleCreatedAt);
-//            article.setDetailLink(articleDto.getArticleDetailLink());
-//            article.setThumbLink(articleDto.getArticleThumbLink());
             article.setContains(tagsToAttach);
 
             articleRepository.save(article);
             long articleId = article.getId();
             if(articleId!=0){
+                Users usersWhoCreated = usersQueryopt.get();
                 List<Article> listInserted = new ArrayList<>();
                 listInserted.add(article);
                 usersService.usersArticleAttach(usersWhoCreated.getId(),article);
