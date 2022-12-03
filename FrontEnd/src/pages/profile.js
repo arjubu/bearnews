@@ -1,6 +1,7 @@
 import React, { useState , Component, useEffect} from "react";
 import Creatable from 'react-select/creatable';
-import {EasyButton} from 'react-easy-button';
+import { EasyButton } from 'react-easy-button';
+import { useCookies } from 'react-cookie';
 
 import {
     MDBCol,
@@ -19,7 +20,7 @@ import {
     MDBListGroup,
     MDBListGroupItem
   } from 'mdb-react-ui-kit';import FooterOne from "../components/footer/FooterOne";
-import HeaderOne from "../components/header/HeaderOne";
+import HeaderLogged from "../components/header/HeaderLogged";
 class Button extends React.Component {
 
     render() {
@@ -38,7 +39,10 @@ class Button extends React.Component {
   }
 
 export default function PersonalProfile() {
-    const [name,setName] = useState("");
+    const [name, setName] = useState("");
+    const [cookies, setCookie] = useCookies(['username']);
+    console.log("--profile page cookie--");
+    console.log(cookies.username);
     useEffect(() => {
         
       });
@@ -46,8 +50,7 @@ export default function PersonalProfile() {
         const [DATASET, setDataset] = useState();
       
          function handlerChange(input){
-          //setsearchValue(input);
-             fetch('http://137.184.37.205:8080/getTagByLetter', {
+             fetch('http://localhost:8080/getTagByLetter', {
             method: 'POST',
             body: JSON.stringify({
               suggString : input,
@@ -65,7 +68,7 @@ export default function PersonalProfile() {
                 
               } else {
                 
-                throw new Error('Something went wrong ...');
+               // throw new Error('Something went wrong ...');
         
               }
                 
@@ -113,7 +116,7 @@ export default function PersonalProfile() {
 
   return (
     <>
-    <HeaderOne />
+    <HeaderLogged />
 
     <section style={{ backgroundColor: '#eee' }}>
       <MDBContainer className="py-5">

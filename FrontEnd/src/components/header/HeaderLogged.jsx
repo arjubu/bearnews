@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useCookies } from 'react-cookie';
+
 import {
     MDBCol,
     MDBContainer,
@@ -87,6 +89,7 @@ const HeaderLogged = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [cookies, setCookie] = useCookies(['username']);
 
     const handlerSearchChange = (e) => {
         setsearchValue(e);
@@ -243,7 +246,7 @@ const HeaderLogged = () => {
                                         </a>
                                     </li>
                                     <li>
-                                        <Link href="#">
+                                        <Link href="/profile">
                                             <a>Profile</a>
                                         </Link>
                                     </li>
