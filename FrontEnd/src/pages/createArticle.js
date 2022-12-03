@@ -37,7 +37,7 @@ const [DATASET, setDataset] = useState();
   
     function handlerChange(input){
     //setsearchValue(input);
-        fetch('http://137.184.37.205:8080/getTagByLetter', {
+        fetch('http://localhost:8080/getTagByLetter', {
     method: 'POST',
     body: JSON.stringify({
         suggString : input,
@@ -151,7 +151,7 @@ console.log(input.label);
         console.log(cookies.username)
        // console.log()
 
-        fetch('http://137.184.37.205:8080/createArticle', {
+        fetch('http://localhost:8080/createArticle', {
             mode: 'cors',
             method: 'POST',
             body: JSON.stringify({
@@ -170,7 +170,7 @@ console.log(input.label);
                     console.log('goes to backend');
                     return response.json();
                 } else {
-                    error_login({ name: 'ID', message:response.json().responseMessage.message });
+                    error_login({ name: 'ID', message:"Create article fail" });
                    // throw new Error('Something went wrong ...');
                 }
             })
