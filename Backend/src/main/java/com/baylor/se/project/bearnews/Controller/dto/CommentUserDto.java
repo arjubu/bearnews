@@ -1,23 +1,21 @@
 package com.baylor.se.project.bearnews.Controller.dto;
 
-import com.baylor.se.project.bearnews.Models.Users;
-
 import java.time.LocalDateTime;
 
 public class CommentUserDto {
 
     long id;
-    Users users;
+    String user;
     private String text;
     private LocalDateTime createdComment;
     private LocalDateTime updatedComment;
 
-    public Users getUsers() {
-        return users;
+    public String getUser() {
+        return user;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getText() {

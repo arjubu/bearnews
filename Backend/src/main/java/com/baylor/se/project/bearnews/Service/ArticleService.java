@@ -13,7 +13,6 @@ import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -409,7 +408,7 @@ public class ArticleService {
                 commentUserDto.setText(c.getText());
                 commentUserDto.setCreatedComment(c.getCreatedComment());
                 commentUserDto.setUpdatedComment(c.getUpdatedComment());
-                commentUserDto.setUsers( users.size()>0 ? users.get(0) : null);
+                commentUserDto.setUser( users.size()>0 ? users.get(0).getFirstName()+" "+users.get(0).getLastName() : null);
                 commentUsers.add(commentUserDto);
                 //commentUserDto.set
 
