@@ -106,30 +106,30 @@ function handleTag(input){
     
 if(input.__isNew__){
     //fetch --------------------------------------------------
-    // fetch('http://localhost:8080/createTag', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     tagText: input.lable,
-
-    //   }),
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8"
-    //   }
-    // })
-    //   .then(response => {
+    console.log(input.label);
+    fetch('http://localhost:8080/createTag', {
+      method: 'POST',
+      body: JSON.stringify({
+        tagText: input.lable,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+      .then(response => {
            
-    //     if (response.status == 200) {
-    //       console.log('go'); 
-    //       return response.json();
+        if (response.status == 200) {
+          console.log('go'); 
+          return response.json();
             
-    //     } else {
-    //       error_login({ name: "ID", message: errors.username});
-    //       throw new Error('Something went wrong ...');
+        } else {
+          error_login({ name: "ID", message: "fail"});
+          throw new Error('Something went wrong ...');
   
-    //     }
+        }
             
-    //     }).then(data=>{
-    //     });
+        }).then(data=>{
+        });
     //end fetch -------------------------------------------
     console.log(input.label);
 }
