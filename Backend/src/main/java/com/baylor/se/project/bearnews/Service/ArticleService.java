@@ -36,9 +36,7 @@ public class ArticleService {
 
     @Autowired
     TagRepository tagRepository;
-
-    @Autowired
-    UsersRepository usersRepository;
+    
 
 
     public ServiceResponseHelper createArticle(ArticleDto articleDto){
