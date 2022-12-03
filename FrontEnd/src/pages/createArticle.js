@@ -26,7 +26,11 @@ const [Tags, setTags] = useState();
 const [Context, setContext] = useState();
 const [Files, setFiles] = useState();
 const [cookies, setCookie] = useCookies(['username'])
-
+const [errorMessages, error_login] = useState({});
+const renderErrorMessage = (name) =>
+name === errorMessages.name && (
+  <div className="error">{errorMessages.message}</div>
+);
 
 function SearchResultList (){
 const [DATASET, setDataset] = useState();
@@ -134,7 +138,12 @@ console.log(input.label);
 
     }
     const handleDangerConsole = (event) => {
-        event.preventDefault();
+      event.preventDefault();
+      if(cookies.username=='undefined'){
+        console.log("not login")
+        error_login({ name: 'ID', message: "You have to login first" });
+      }else{
+        console.log("do the fetch")
         console.log("---danger button calling--");
         console.log(Title);
         console.log(Context);
@@ -161,11 +170,13 @@ console.log(input.label);
                     console.log('goes to backend');
                     return response.json();
                 } else {
-                    error_login({ name: 'ID', message: errors.username });
+                    error_login({ name: 'ID', message:response.json().responseMessage.message });
                    // throw new Error('Something went wrong ...');
                 }
             })
-    }
+      }}
+
+
 return ( 
     <>
       
@@ -242,10 +253,12 @@ return (
 
     <hr className="mx-n3" />
 
-<button type="submit" className="btn btn-danger">Danger</button>
+<button type="submit" className="btn btn-danger">Submit</button>
 
 </MDBCardBody>
-                             
+<hr className="mx-n3" />
+
+            {renderErrorMessage("ID")}                 
 </MDBCard>
 </form>
 </MDBCol>
