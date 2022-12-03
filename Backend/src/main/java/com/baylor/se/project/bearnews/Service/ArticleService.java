@@ -11,9 +11,11 @@ import com.baylor.se.project.bearnews.Repository.ArticleRepository;
 import com.baylor.se.project.bearnews.Repository.TagRepository;
 import com.baylor.se.project.bearnews.Repository.UsersRepository;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,6 +39,9 @@ public class ArticleService {
     @Autowired
     TagRepository tagRepository;
     
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
 
     public ServiceResponseHelper createArticle(ArticleDto articleDto){
@@ -63,7 +68,7 @@ public class ArticleService {
             errorResponse.put("message", "article content cannot be empty");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
-             return serviceResponseHelper;
+            return serviceResponseHelper;
         }
 
         if(articleDto.getArticleContent().length()<=0 || articleDto.getArticleContent().length()>5000){
@@ -71,14 +76,14 @@ public class ArticleService {
             errorResponse.put("message", "content size excedeed");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
-             return serviceResponseHelper;
+            return serviceResponseHelper;
         }
         if(articleDto.getTagContainingText()==""){
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article must contain a tag");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
-             return serviceResponseHelper;
+            return serviceResponseHelper;
         }
 
         if(articleDto.getCreatedUsersEmail()==""){
@@ -95,14 +100,14 @@ public class ArticleService {
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
-            }
+        }
         if(tagsToAttach==null) {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "the given tag is not valid");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
-            }
+        }
         else {
             LocalDateTime articleCreatedAt = LocalDateTime.now();
             article.setTitle(articleDto.getArticleTitle());
@@ -146,14 +151,14 @@ public class ArticleService {
 
 
     public Article fetchArticle(Long id){
-         Optional<Article> articleQueryOpt= articleRepository.findById(id);
-         if(articleQueryOpt.isPresent())
+        Optional<Article> articleQueryOpt= articleRepository.findById(id);
+        if(articleQueryOpt.isPresent())
             return articleQueryOpt.get();
-         return null;
+        return null;
     }
 
 
-    public void saveBaylorNews(List<Map> baylorNews){
+    public void saveBaylorNews(List<Map> baylorNews) throws JsonProcessingException {
         List<Article> articles = new ArrayList<>();
         List<Integer> bearNewsIds = new ArrayList<>();
 
@@ -177,29 +182,40 @@ public class ArticleService {
         }
 
         articleRepository.saveAll(articles);
+        for (Article a: articles){
+            ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,a,null);
+            simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
+        }
 
     }
 
-    public  void saveBaylorTweet(Map baylorTweet){
+    public  void saveBaylorTweet(Map baylorTweet) throws JsonProcessingException {
 
-        List<String> tags = (List)baylorTweet.get("thumbLink");
+        List<String> tags = (List)baylorTweet.get("hashTags");
         List<Tag> savedTags = new ArrayList<>();
         for(String s : tags){
             Tag tag = new Tag();
             tag.setTagText(s);
             tag = tagService.createTag(tag);
+            if(tag == null){
+                List<Tag> tags1 = tagRepository.findByTagText(s);
+                tag = tags1.size()>0 ? tags1.get(0) : null;
+            }
             savedTags.add(tag);
         }
 
         Article article = new Article();
         article.setArticleType(ArticleType.TWITTER);
         article.setContent(baylorTweet.get("description").toString());
-        article.setDetailLink(baylorTweet.get("detailLink").toString());
-        article.setThumbLink(baylorTweet.get("thumbLink").toString());
+        article.setDetailLink(baylorTweet.get("detailLink") != null ? baylorTweet.get("detailLink").toString() : null);
+        article.setThumbLink(baylorTweet.get("thumbLink") != null ? baylorTweet.get("thumbLink").toString() : null);
         if(savedTags.size()>0){
             article.setContains(savedTags.get(0));
         }
         articleRepository.save(article);
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,article,null);
+        simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
+
     }
 
     public String deleteAnArticle(Long id){
@@ -212,8 +228,8 @@ public class ArticleService {
     }
 
     public List<ArticleWithUsersObjectMapper> findArtcilesByTags(Long tagId){
-       List<Article> allArticles = articleRepository.findArticlesByContains_Id(tagId);
-       List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
+        List<Article> allArticles = articleRepository.findArticlesByContains_Id(tagId);
+        List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
 
         if(allArticles.isEmpty()==false){
             for(Article a: allArticles){
@@ -245,6 +261,7 @@ public class ArticleService {
             return null;
         }
         List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
+
         for(Article a: articleList) {
             if (a.getArticleType().toString().equals("SYSTEM")) {
                 ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
@@ -259,17 +276,35 @@ public class ArticleService {
                     article.setNameofCreator(author.get(0).getFirstName());
                 }
 
-                article.setIdOfTag(a.getContains().getId());
-                article.setTextOfTag(a.getContains().getTagText());
+        for(Article a: articleList){
+            ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+            article.setTitleOfArticle(a.getTitle());
+            article.setContentOfArticle(a.getContent());
+            article.setIdOfArticle(a.getId());
+            article.setTimeOfArticleCretion(a.getCreatedAt());
+
+            List<Users> author= usersService.findingArticlesByUser(a.getId());
+            if(author.isEmpty()==false) {
+                article.setIdOfCreator(author.get(0).getId());
+                article.setNameofCreator(author.get(0).getFirstName());
+            }
+
+
+            article.setIdOfTag(a.getContains().getId());
+            article.setTextOfTag(a.getContains().getTagText());
+
 
                 articleDetails.add(article);
             }
+
+            articleDetails.add(article);
+
         }
         return articleDetails;
 
     }
     public List<Article> getAll(){
-      return   articleRepository.findAll();
+        return   articleRepository.findAll();
     }
 
     public List<Long> getAllTitles(){
@@ -296,7 +331,7 @@ public class ArticleService {
         }
         else
             return null;
-        }
+    }
     public ServiceResponseHelper findArticleById(long articleId){
         Optional<Article> queryArticleOpt = articleRepository.findById(articleId);
         Article queryArticle = new Article();
