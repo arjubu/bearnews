@@ -30,7 +30,7 @@ function Login() {
         event.preventDefault();
         console.log('Test')
 
-        fetch('http://137.184.37.205:8080/userLogin', {
+        fetch('http://localhost:8080/userLogin', {
             mode: 'cors',
             method: 'POST',
             body: JSON.stringify({
@@ -49,7 +49,7 @@ function Login() {
                     return response.json();
                 } else {
                     error_login({ name: 'ID', message: errors.username });
-                    throw new Error('Something went wrong ...');
+                    //throw new Error('Something went wrong ...');
                 }
             })
             .then((data) => {
@@ -133,7 +133,7 @@ function Login() {
                   </Link>
           {(() => {
                         if (islogin) {
-                            window.location.href = "/createArticle";
+                            window.location.href = "/userHome";
                         } else {
           return (
             renderForm
