@@ -89,12 +89,19 @@ const HeaderLogged = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [cookies, setCookie] = useCookies(['username']);
+    const [cookies, setCookie,removeCookie] = useCookies(['username']);
 
     const handlerSearchChange = (e) => {
         setsearchValue(e);
         window.location.href = "http://localhost:3000/category/" + e;
     };
+    function logOutClick() {
+        console.log("--logout button clicked---")
+        removeCookie(['username']);
+        console.log("--cookie value after logout--")
+        console.log(cookies.username);
+        window.location.href = "/";
+    }
 
 
     function SearchResultList() {
@@ -248,6 +255,11 @@ const HeaderLogged = () => {
                                     <li>
                                         <Link href="/profile">
                                             <a>Profile</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="#">
+                                            <a onClick={() =>logOutClick()}>Logout</a>
                                         </Link>
                                     </li>
                                 </ul>

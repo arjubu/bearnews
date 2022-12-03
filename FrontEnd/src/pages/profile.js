@@ -41,7 +41,7 @@ class Button extends React.Component {
 export default function PersonalProfile() {
     const [name, setName] = useState("");
     const [respStatus, setrespStatus] = useState("");
-    const [cookies, setCookie] = useCookies(['username']);
+    const [cookies, setCookie, removeCookie] = useCookies(['username']);
     console.log("--profile page cookie--");
     console.log(cookies.username);
     useEffect(() => {
