@@ -169,9 +169,14 @@ console.log(input.label);
             .then(response => response.json())
             .then((response) => {
                 console.log('response', response);
-                if (response.hasError == false) {
+                if (response.status == 500) {
+                    error_login({ name: 'ID', message: "Creating empty object is not allowed" });
+
+                }
+                else if (response.hasError == false) {
                     console.log('goes to backend');
-                } else {
+                } 
+                else {
                     console.log(response)
                     setErr(response.responseMessage);
                     error_login({ name: 'ID', message: response.responseMessage.message });
