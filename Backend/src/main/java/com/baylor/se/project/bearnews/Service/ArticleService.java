@@ -318,12 +318,14 @@ public class ArticleService {
 
     public Article getArticlesByTitle(String titleSent){
         List<Article> foundArticle = articleRepository.findArticlesByTitle(titleSent);
+        Article sentTitleArticle = new Article();
         if(foundArticle.isEmpty()==false) {
             System.out.println(foundArticle.get(0).getId());
-            return foundArticle.get(0);
+            if(foundArticle.get(0).getArticleType().toString().equals("SYSTEM")) {
+                sentTitleArticle=foundArticle.get(0);
+            }
         }
-        else
-            return null;
+       return sentTitleArticle;
     }
     public ServiceResponseHelper findArticleById(long articleId){
         Optional<Article> queryArticleOpt = articleRepository.findById(articleId);
