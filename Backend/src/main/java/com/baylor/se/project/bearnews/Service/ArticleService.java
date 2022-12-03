@@ -130,7 +130,6 @@ public class ArticleService {
                 articleResponse.setTextOfTag(article.getContains().getTagText());
                 articleResponse.setTitleOfArticle(article.getTitle());
                 articleResponse.setContentOfArticle(article.getContent());
-                //articleResponse.setTimeOfArticleCreation(article.getCreatedAt());
                 articleResponse.setIdOfCreator(usersWhoCreated.getId());
                 articleResponse.setFirstNameofCreator(usersWhoCreated.getFirstName());
                 articleResponse.setLastNameofCreator(usersWhoCreated.getLastName());
