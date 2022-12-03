@@ -1,14 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\lib",
     "\\src",
     "\\src\\components",
     "\\src\\components\\header",
     "\\src\\pages",
     "\\src\\pages\\author",
     "\\src\\pages\\category",
+    "\\src\\pages\\post",
     "\\src\\services"
   ],
-  "SelectedNode": "\\src\\pages\\login.js",
+  "SelectedNode": "\\src\\components\\header\\HeaderOne.jsx",
   "PreviewInSolutionExplorer": false
 }
