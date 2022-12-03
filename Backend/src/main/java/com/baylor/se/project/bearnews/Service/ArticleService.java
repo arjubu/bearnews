@@ -248,15 +248,16 @@ public class ArticleService {
             return null;
         }
         List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
-        for(Article a: articleList){
-            ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+        for(Article a: articleList) {
+            if (a.getArticleType().toString().equals("SYSTEM")) {
+                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
                 article.setTitleOfArticle(a.getTitle());
                 article.setContentOfArticle(a.getContent());
                 article.setIdOfArticle(a.getId());
                 article.setTimeOfArticleCretion(a.getCreatedAt());
 
-                List<Users> author= usersService.findingArticlesByUser(a.getId());
-                if(author.isEmpty()==false) {
+                List<Users> author = usersService.findingArticlesByUser(a.getId());
+                if (author.isEmpty() == false) {
                     article.setIdOfCreator(author.get(0).getId());
                     article.setNameofCreator(author.get(0).getFirstName());
                 }
@@ -265,6 +266,7 @@ public class ArticleService {
                 article.setTextOfTag(a.getContains().getTagText());
 
                 articleDetails.add(article);
+            }
         }
         return articleDetails;
 

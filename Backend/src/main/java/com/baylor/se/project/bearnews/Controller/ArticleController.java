@@ -41,7 +41,7 @@ public class ArticleController {
     @RequestMapping(value = "/fetchSystemArticles", method = RequestMethod.GET)
     public ResponseEntity<?> getArticles(){
     List<ArticleWithUsersObjectMapper> responseReturned = articleService.getAllArticles();
-    if(responseReturned==null){
+    if(responseReturned.isEmpty()){
         return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
     }
      else{
