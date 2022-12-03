@@ -1,6 +1,7 @@
 import React, { useState , Component, useEffect} from "react";
 import Creatable from 'react-select/creatable';
-import {EasyButton} from 'react-easy-button';
+import { EasyButton } from 'react-easy-button';
+import { useCookies } from 'react-cookie';
 
 import {
     MDBCol,
@@ -19,7 +20,7 @@ import {
     MDBListGroup,
     MDBListGroupItem
   } from 'mdb-react-ui-kit';import FooterOne from "../components/footer/FooterOne";
-import HeaderOne from "../components/header/HeaderOne";
+import HeaderLogged from "../components/header/HeaderLogged";
 class Button extends React.Component {
 
     render() {
@@ -38,16 +39,51 @@ class Button extends React.Component {
   }
 
 export default function PersonalProfile() {
-    const [name,setName] = useState("");
+    const [name, setName] = useState("");
+    const [respStatus, setrespStatus] = useState("");
+    const [cookies, setCookie, removeCookie] = useCookies(['username']);
+    console.log("--profile page cookie--");
+    console.log(cookies.username);
     useEffect(() => {
-        
-      });
+        getProfileData();
+    },[]);
+  
+    const getProfileData = async () => {
+        const response = await fetch(
+            "http://localhost:8080/displayUserProfile", {
+            method: 'POST',
+            body: JSON.stringify({
+                username: cookies.username,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }
+        ).then(response => {
+            setrespStatus = response.status;
+            console.log("--response status--");
+            console.log(response.status);
+            if (response.status==200)
+            return response.json();
+        })
+            .then((response) => {
+                console.log("--api calling status--");
+                console.log('response', response);
+                console.log("--response fields--");
+                console.log(response.data.reqLastName);
+                console.log(response.data.reqInterestList);
+                      
+                    })
+        .then((data) => {
+            console.log('---not using data after profile api calling---',);
+
+        });
+    };
     function SearchResultList (){
         const [DATASET, setDataset] = useState();
       
          function handlerChange(input){
-          //setsearchValue(input);
-             fetch('http://137.184.37.205:8080/getTagByLetter', {
+             fetch('http://localhost:8080/getTagByLetter', {
             method: 'POST',
             body: JSON.stringify({
               suggString : input,
@@ -65,7 +101,7 @@ export default function PersonalProfile() {
                 
               } else {
                 
-                throw new Error('Something went wrong ...');
+               // throw new Error('Something went wrong ...');
         
               }
                 
@@ -113,7 +149,7 @@ export default function PersonalProfile() {
 
   return (
     <>
-    <HeaderOne />
+    <HeaderLogged />
 
     <section style={{ backgroundColor: '#eee' }}>
       <MDBContainer className="py-5">
