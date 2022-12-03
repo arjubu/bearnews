@@ -1,4 +1,4 @@
-import React, { useState , Component} from "react";
+import React, { useState , Component, useEffect} from "react";
 import Creatable from 'react-select/creatable';
 import {EasyButton} from 'react-easy-button';
 
@@ -38,6 +38,10 @@ class Button extends React.Component {
   }
 
 export default function PersonalProfile() {
+    const [name,setName] = useState("");
+    useEffect(() => {
+        
+      });
     function SearchResultList (){
         const [DATASET, setDataset] = useState();
       
