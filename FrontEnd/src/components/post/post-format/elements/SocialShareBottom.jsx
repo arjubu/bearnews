@@ -1,4 +1,5 @@
 import Like from "./Like"
+
 const SocialShareBottom = () => {
   return (
     <div className="post-shares m-t-xs-60">
@@ -7,11 +8,8 @@ const SocialShareBottom = () => {
         <li>
         <Like/>
         </li>
-        <li>
-          <a href="#" className="btn bg-color-linkedin">
-            <i className="fab fa-linkedin-in" />
-          </a>
-        </li>
+
+        <li> <a href="#" className="btn bg-color-linkedin"> <i class="fa-sharp fa-solid fa-heart"></i> </a> </li>
       </ul>
     </div>
   );
