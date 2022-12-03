@@ -17,14 +17,10 @@ public class ArticleDto {
     private String articleContent;
 
 
-    private long tagContaiedId;
+    private String tagContainingText;
 
-    private long createdUsersId;
+    private String createdUsersEmail;
 
-
-//    private String articleDetailLink;
-//
-//    private String articleThumbLink;
 
     public String getArticleTitle() {
         return articleTitle;
@@ -42,36 +38,22 @@ public class ArticleDto {
         this.articleContent = articleContent;
     }
 
-    public long getTagContaiedId() {
-        return tagContaiedId;
+    public String getTagContainingText() {
+        return tagContainingText;
     }
 
-    public void setTagContaiedId(long tagContaiedId) {
-        this.tagContaiedId = tagContaiedId;
+    public void setTagContainingText(String tagContainingText) {
+        this.tagContainingText = tagContainingText;
     }
 
-    public long getCreatedUsersId() {
-        return createdUsersId;
+    public String getCreatedUsersEmail() {
+        return createdUsersEmail;
     }
 
-    public void setCreatedUsersId(long createdUsersId) {
-        this.createdUsersId = createdUsersId;
+    public void setCreatedUsersEmail(String createdUsersEmail) {
+        this.createdUsersEmail = createdUsersEmail;
     }
-    //    public String getArticleDetailLink() {
-//        return articleDetailLink;
-//    }
-//
-//    public void setArticleDetailLink(String articleDetailLink) {
-//        this.articleDetailLink = articleDetailLink;
-//    }
-//
-//    public String getArticleThumbLink() {
-//        return articleThumbLink;
-//    }
-//
-//    public void setArticleThumbLink(String articleThumbLink) {
-//        this.articleThumbLink = articleThumbLink;
-//    }
+
 
 
 }

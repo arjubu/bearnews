@@ -26,49 +26,11 @@ function Login() {
         console.log('password', password)
     }, [password]);
 
-    //const login_handle = async (event) => {
-     // event.preventDefault();
-  
-       /* fetch('http://137.184.37.205:8080/user-login', {
-        method: 'POST',
-        body: JSON.stringify({
-          email : username,
-          password : password
-        }),
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-        .then(response => {
-           
-           /* if (response.status == 200) {
-                console.log(response);
-            return response.json();
-            
-          } else {
-            error_login({ name: "ID", message: errors.username});
-            throw new Error('Something went wrong ...');
-  
-          }
-            console.log("---------");
-            console.log(response.json());
-            
-          }).then(data=>{
-
- /*           if(data.list[0].isManager==0){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }
-            else if(data.list[0].isManager==1){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }*/
-         // });
     const test = (event) => {
         event.preventDefault();
         console.log('Test')
 
-        fetch('http://localhost:8080/user-login', {
+        fetch('http://137.184.37.205:8080/userLogin', {
             mode: 'cors',
             method: 'POST',
             body: JSON.stringify({
@@ -82,7 +44,8 @@ function Login() {
             .then((response) => {
                 console.log('response', response);
                 if (response.status == 200) {
-                    console.log('go');
+                    console.log('login-working');
+                    login_set_true(true);
                     return response.json();
                 } else {
                     error_login({ name: 'ID', message: errors.username });
@@ -92,8 +55,6 @@ function Login() {
             .then((data) => {
                 console.log('data', data);
                 if (!data?.hasError) {
-                    // console.log('username', username);
-                    // console.log('password', password);
                     setCookie('username', username);
                     console.log(cookies.username);
                 } else {
@@ -171,9 +132,9 @@ function Login() {
                   </a>
                   </Link>
           {(() => {
-        if (islogin) {
-        //  navigate('/User/'+id, { state: { id: id}});
-        } else {
+                        if (islogin) {
+                            window.location.href = "/createArticle";
+                        } else {
           return (
             renderForm
           )

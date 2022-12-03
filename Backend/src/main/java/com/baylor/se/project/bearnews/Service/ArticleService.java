@@ -28,6 +28,9 @@ public class ArticleService {
     ArticleRepository articleRepository;
 
     @Autowired
+    UsersRepository usersRepository;
+
+    @Autowired
     UsersService usersService;
 
     @Autowired
@@ -35,9 +38,7 @@ public class ArticleService {
 
     @Autowired
     TagRepository tagRepository;
-
-    @Autowired
-    UsersRepository usersRepository;
+    
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
@@ -50,10 +51,10 @@ public class ArticleService {
         Map errorResponse = new HashMap<>();
         Map successResponse = new HashMap<>();
 
-        long tagId = articleDto.getTagContaiedId();
-        Tag tagsToAttach = tagService.findTagByIdForArticle(tagId);
-        long usersId = articleDto.getCreatedUsersId();
-        Users usersWhoCreated = usersService.foundUserById(usersId);
+        String tagContainingText = articleDto.getTagContainingText();
+        Tag tagsToAttach = tagRepository.findTagsByTagText(tagContainingText);
+        String userSentEmail = articleDto.getCreatedUsersEmail();
+        Optional<Users> usersQueryopt = usersRepository.findByEmail(userSentEmail);
 
         if(articleDto.getArticleTitle()==""){
             serviceResponseHelper.setHasError(true);
@@ -77,7 +78,7 @@ public class ArticleService {
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
         }
-        if(articleDto.getTagContaiedId()==0){
+        if(articleDto.getTagContainingText()==""){
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article must contain a tag");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -85,7 +86,7 @@ public class ArticleService {
             return serviceResponseHelper;
         }
 
-        if(articleDto.getCreatedUsersId()==0){
+        if(articleDto.getCreatedUsersEmail()==""){
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article must have a user");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -93,9 +94,9 @@ public class ArticleService {
             return serviceResponseHelper;
         }
 
-        if(usersWhoCreated==null){
+        if(usersQueryopt.isPresent()==false){
             serviceResponseHelper.setHasError(true);
-            errorResponse.put("message", "valid user id isn't provided");
+            errorResponse.put("message", "valid user email isn't provided");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
@@ -112,13 +113,12 @@ public class ArticleService {
             article.setTitle(articleDto.getArticleTitle());
             article.setContent(articleDto.getArticleContent());
             article.setCreatedAt(articleCreatedAt);
-//            article.setDetailLink(articleDto.getArticleDetailLink());
-//            article.setThumbLink(articleDto.getArticleThumbLink());
             article.setContains(tagsToAttach);
 
             articleRepository.save(article);
             long articleId = article.getId();
             if(articleId!=0){
+                Users usersWhoCreated = usersQueryopt.get();
                 List<Article> listInserted = new ArrayList<>();
                 listInserted.add(article);
                 usersService.usersArticleAttach(usersWhoCreated.getId(),article);
@@ -133,7 +133,6 @@ public class ArticleService {
                 articleResponse.setTextOfTag(article.getContains().getTagText());
                 articleResponse.setTitleOfArticle(article.getTitle());
                 articleResponse.setContentOfArticle(article.getContent());
-                //articleResponse.setTimeOfArticleCreation(article.getCreatedAt());
                 articleResponse.setIdOfCreator(usersWhoCreated.getId());
                 articleResponse.setFirstNameofCreator(usersWhoCreated.getFirstName());
                 articleResponse.setLastNameofCreator(usersWhoCreated.getLastName());
@@ -262,6 +261,21 @@ public class ArticleService {
             return null;
         }
         List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
+
+        for(Article a: articleList) {
+            if (a.getArticleType().toString().equals("SYSTEM")) {
+                ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
+                article.setTitleOfArticle(a.getTitle());
+                article.setContentOfArticle(a.getContent());
+                article.setIdOfArticle(a.getId());
+                article.setTimeOfArticleCretion(a.getCreatedAt());
+
+                List<Users> author = usersService.findingArticlesByUser(a.getId());
+                if (author.isEmpty() == false) {
+                    article.setIdOfCreator(author.get(0).getId());
+                    article.setNameofCreator(author.get(0).getFirstName());
+                }
+
         for(Article a: articleList){
             ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
             article.setTitleOfArticle(a.getTitle());
@@ -275,10 +289,16 @@ public class ArticleService {
                 article.setNameofCreator(author.get(0).getFirstName());
             }
 
+
             article.setIdOfTag(a.getContains().getId());
             article.setTextOfTag(a.getContains().getTagText());
 
+
+                articleDetails.add(article);
+            }
+
             articleDetails.add(article);
+
         }
         return articleDetails;
 
