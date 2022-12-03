@@ -8691,4 +8691,21 @@ Date Created: July 26, 2019
   
   /* Splash Page Style  */
   
+  @import url("https://fonts.googleapis.com/css?family=Muli&display=swap");
+
+
+
+
+
+  .btn-primary {
+    background-color: #23aa4e;
+    border-color: #177d37;
+  }
   
+  #example {
+    margin: 3rem;
+  }
+  
+  .customContainer {
+    border: 1px solid black;
+  }

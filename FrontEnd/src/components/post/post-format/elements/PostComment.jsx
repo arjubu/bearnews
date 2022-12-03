@@ -1,6 +1,6 @@
 import FormGroup from "../../../contact/FormGroup";
 
-const PostComment = () => {
+function PostComment () {
 
   return (
     <div className="post-comment-area">
