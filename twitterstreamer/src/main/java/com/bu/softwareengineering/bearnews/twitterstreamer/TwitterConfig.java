@@ -48,7 +48,7 @@ public class TwitterConfig<T> {
     TwitterMessageProducer twitterMessageProducer =
         new TwitterMessageProducer(twitterStream, outputChannel);
 
-    twitterMessageProducer.setTerms(Arrays.asList("Baylor", "bearFeed"));
+    twitterMessageProducer.setTerms(Arrays.asList("#bearFeed", "bearFeed"));
 
     return twitterMessageProducer;
   }
