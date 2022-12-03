@@ -45,7 +45,9 @@ export default function PersonalProfile() {
     console.log(cookies.username);
     useEffect(() => {
         
-      });
+    });
+  
+
     function SearchResultList (){
         const [DATASET, setDataset] = useState();
       
