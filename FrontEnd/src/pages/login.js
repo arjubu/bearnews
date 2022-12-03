@@ -30,7 +30,7 @@ function Login() {
         event.preventDefault();
         console.log('Test')
 
-        fetch('http://137.184.37.205:8080/userLogin', {
+        fetch('http://localhost:8080/userLogin', {
             mode: 'cors',
             method: 'POST',
             body: JSON.stringify({
