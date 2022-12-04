@@ -475,4 +475,25 @@ public class ArticleService {
             return likeArticle.getLikecount();
         }
     }
-}
+
+    public void favAnArticle(String userEmail,Long id) {
+      Optional<Users> usersQueryOpt = usersRepository.findByEmail(userEmail);
+      Optional<Article> articleQueyOpt = articleRepository.findById(id);
+      if(usersQueryOpt.isPresent()&& articleQueyOpt.isPresent()) {
+          Users usersQuey = usersQueryOpt.get();
+          Long favouriteList = usersQuey.getLikedArticleId();
+          if(favouriteList!=id) {
+              usersQuey.setLikedArticleId(id);
+              usersRepository.save(usersQuey);
+          }
+          else{
+              //write condition of equal
+          }
+      }
+      else{
+          //invalid ids
+      }
+
+       }
+    }
+
