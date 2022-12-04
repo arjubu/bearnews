@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://137.184.37.205:8080";
 const API_URL = "/api/v1/";
 const EVENT_API = "event"
 

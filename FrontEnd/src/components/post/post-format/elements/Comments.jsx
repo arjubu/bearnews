@@ -20,7 +20,7 @@ import {
   } from 'mdb-react-ui-kit';
 
   function DeleteComment(id) {
-    fetch('http://localhost:8080/deleteComment?commentId='+id, {
+    fetch('http://137.184.37.205:8080/deleteComment?commentId='+id, {
         method: 'DELETE',
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -66,7 +66,7 @@ function CommentList({slug}) {
     //   {username: 'Tomy', content: 'World'},
     //   {username: 'Lucy', content: "window.location.href"}
     console.log("slug for the comment reveiving: "+slug);  
-    fetch('http://localhost:8080/fetchArticleAndComments/'+slug
+    fetch('http://137.184.37.205:8080/fetchArticleAndComments/'+slug
   )
     .then(response => {
        

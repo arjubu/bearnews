@@ -8,7 +8,7 @@ const postsDirectory = join(process.cwd(), 'posts')
 export async function getPostSlugs() {
   //console.log(fs.readdirSync(postsDirectory));
   let Mylist = {};
-    Mylist = await fetch('http://localhost:8080/fetchArticleTitles'
+    Mylist = await fetch('http://137.184.37.205:8080/fetchArticleTitles'
   )
     .then(response => {
        
@@ -18,7 +18,8 @@ export async function getPostSlugs() {
         
       } else {
         
-        throw new Error('Something went wrong ...');
+        //throw new Error('Something went wrong ...');
+        console.log("Something went wrong ...");
 
       }
         
@@ -50,7 +51,7 @@ export async function getBaylorPostSlugs() {
         
       } else {
         
-        throw new Error('Something went wrong ...');
+        console.log("Something went wrong ...");
 
       }
         
@@ -75,7 +76,7 @@ export async function getPostBySlug(slug, fields = []) {
   // console.log(realSlug);
 
   //console.log(typeof realSlug);
-    let article = await fetch('http://localhost:8080/fetchArticleById?articleId='+realSlug
+    let article = await fetch('http://137.184.37.205:8080/fetchArticleById?articleId='+realSlug
   )
     .then(response => {
        
