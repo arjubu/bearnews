@@ -6,16 +6,45 @@ const LikeButton = ({slug}) => {
   const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
-    
+    fetch('http://localhost:8080/likecount?articleId='+slug
+  )
+    .then(response => {
+       
+      if (response.status == 200) {
+        console.log('go'); 
+        return response.json();
+        
+      } else {
+        
+        console.log("Something went wrong ...");
+
+      }
+        
+      }).then(data=>{
+            setLikes(data);
+            return data;
+        //console.log(Mylist);
+      });
   });
 
   const handleClick = () => {
-    if (isClicked) {
-      setLikes(likes - 1);
-    } else {
-      setLikes(likes + 1);
-    }
-    setIsClicked(!isClicked);
+    window.location.reload(false);
+
+    fetch('http://localhost:8080/addlike?articleId='+slug
+    )
+      .then(response => {
+         
+        if (response.status == 200) {
+          console.log('go'); 
+         
+          
+        } else {
+          setLikes(likes+1);
+          console.log("Something went wrong ...");
+  
+        }
+          
+        });
   };
 
   return (
