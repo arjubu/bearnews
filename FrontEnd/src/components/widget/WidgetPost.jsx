@@ -11,12 +11,7 @@ const WidgetPost = ({dataPost}) => {
                 <Nav.Item className="col">
                 <Nav.Link eventKey="recent">RECENT</Nav.Link>
                 </Nav.Item>
-                <Nav.Item className="col">
-                <Nav.Link eventKey="popular">POPULAR</Nav.Link>
-                </Nav.Item>
-                <Nav.Item className="col">
-                <Nav.Link eventKey="comments">COMMENTS</Nav.Link>
-                </Nav.Item>
+ 
             </Nav>
             
             <Tab.Content>
@@ -25,16 +20,7 @@ const WidgetPost = ({dataPost}) => {
                     <PostVideoTwo data={data} pClass="" key={data.slug} />
                 ))}
                 </Tab.Pane>
-                <Tab.Pane eventKey="popular">
-                {dataPost.slice(0, 4).map((data) => (
-                    <PostVideoTwo data={data} pClass="" key={data.slug} />
-                ))}
-                </Tab.Pane>
-                <Tab.Pane eventKey="comments">
-                {dataPost.slice(0, 4).map((data) => (
-                    <PostVideoTwo data={data} pClass="" key={data.slug} />
-                ))}
-                </Tab.Pane>
+
             </Tab.Content>
             
         </Tab.Container>
