@@ -330,7 +330,7 @@ public class ArticleService {
         }
         else{
             for(Article a: articleList){
-                if(a.getArticleType().toString().equals(articleType)) {
+                if(a.getArticleType().toString().equals(articleType.toString())) {
                     titles = a.getId();
                     titlesList.add(titles);
                 }
