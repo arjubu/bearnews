@@ -14,7 +14,7 @@ import PostSectionSix from "../../components/post/PostSectionSix";
 
 const PostDetails = ({postContent, allPosts}) => {
 	
-
+console.log(postContent)
 
 	const PostFormatHandler = () => {
 		

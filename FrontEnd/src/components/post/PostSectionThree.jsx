@@ -8,7 +8,7 @@ const trendingPost = postData.filter(post => post.trending === true);
   return (
     <div className="section-gap section-gap-top__with-text trending-stories">
       <div className="container">
-        <SectionTitle title="Trending Stories" btnText="ALL TRENDING STORIES" />
+        <SectionTitle title="Baylor News" btnText="ALL Baylor News"/>
       <div className="row">
         {trendingPost.slice(0, 6).map((data) => (
           <div className="col-lg-6" key={data.slug}>

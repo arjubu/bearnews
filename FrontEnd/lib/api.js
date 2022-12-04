@@ -87,13 +87,24 @@ export async function getPostBySlug(slug, fields = []) {
   items['cate'] = article.data.textOfTag;
   items['author_name'] = article.data.firstNameofCreator +" "+article.data.lastNameofCreator;
   items['postFormat'] = 'standard';
-  items['cate_bg'] = 'bg-color-purple-one';
+  if(article.data.nameofCreator == "BAYLORNEWS"){
+    items['cate_bg'] = 'bg-color-green-one';
+  }else{
+    items['cate_bg'] = 'bg-color-purple-one';
+  }
   items['date'] = article.data.timeOfCreation;
   items['cate_img'] = '/images/category/travel.png';
-  if(article.data.image==null){
+    if(article.data.image==null|| article.data.image==undefined ||article.data.image=="undefined"){
+      
     items['featureImg'] =  '/images/posts/download.png';
+   
     }else{
       items['featureImg'] = article.data.image;
+    }
+
+    if(article.data.thumbLink!=null && article.data.thumbLink!=undefined && article.data.thumbLink!="undefined" ){
+       console.log(article.data.thumbLink);
+      items['featureImg'] = article.data.thumbLink;
     }
   items['author_img'] = '/images/author/amachea_jajah.png';
   items['author_social'] =     
