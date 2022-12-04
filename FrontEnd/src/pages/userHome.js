@@ -8,7 +8,9 @@ import PostSectionOne from "../components/post/PostSectionOne";
 import PostSectionSeven from "../components/post/PostSectionSix";
 import PostSectionThree from "../components/post/PostSectionThree";
 import PostSectionTwo from "../components/post/PostSectionTwo";
+import PostInterest from "../components/post/PostInteredt"
 import HeaderLogged from "../components/header/HeaderLogged";
+import React, { useEffect } from 'react';
 
 import FullCalendar from "@fullcalendar/react";
 // The import order DOES MATTER here. If you change it, you'll get an error!
@@ -19,6 +21,11 @@ import { useCookies } from 'react-cookie';
 const HomeOne = ({ allPosts }) => {
     const [cookies, setCookie] = useCookies(['username'])
     console.log(cookies.username);
+    useEffect(() => {
+        if(cookies.username ==undefined){
+            window.location.href = '/';
+        }
+    });
     return (
         <>
             <HeadMeta metaTitle="Home One" />
@@ -30,8 +37,7 @@ const HomeOne = ({ allPosts }) => {
             {/* {console.log(allPosts)} */}
             <PostSectionTwo postData={allPosts} />
             <PostSectionThree postData={allPosts} />
-            <PostSectionFour postData={allPosts} />
-
+            <PostInterest postData={allPosts}/>
             {/* <PostSectionSix postData={allPosts}/> */}
             <FooterOne />
         </>

@@ -21,6 +21,7 @@ const MetaDataOne = ({metaData}) => {
                         <Link href={`/author/${slugify(metaData.author_name)}`}>
                             <a className="post-author post-author-with-img">
                                 <Image 
+                                    loader={() => metaData.featureImg}
                                     src={metaData.author_img}
                                     alt={metaData.author_name}
                                     width={30}
@@ -41,6 +42,7 @@ const MetaDataOne = ({metaData}) => {
             <div className="col-lg-6">
                 <div className="post-main-thumbnail">
                     <Image 
+                    loader={() => metaData.featureImg}
                     src={metaData.featureImg}
                     alt={metaData.title}
                     width={540}

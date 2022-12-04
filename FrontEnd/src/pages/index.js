@@ -16,6 +16,9 @@ import { useCookies } from 'react-cookie';
 const HomeOne = ({allPosts}) => {
     const [cookies, setCookie] = useCookies(['username'])
     console.log(cookies.username);
+    if(cookies.username !=undefined){
+      window.location.href = '/userHome';
+    }
   return ( 
     <>
           <HeadMeta metaTitle="Home One" />

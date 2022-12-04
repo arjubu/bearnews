@@ -3,7 +3,7 @@ import PostLayoutThree from "./layout/PostLayoutThree";
 
 const PostSectionTwo = ({ postData }) => {
 
-  const storyPost = postData.filter(post => post.story === true);
+  const storyPost = postData.filter(post => post.articleType === "TWITTER");
 
   return (
     <div className="section-gap section-gap-top__with-text top-stories bg-grey-light-three">
