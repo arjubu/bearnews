@@ -19,10 +19,10 @@ public class Tag {
     @Column
     private String tagText;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "users_id")
     @JsonIgnore
-    private Users users;*/
+    private Users users;
 
 //    @OneToMany(cascade=CascadeType.ALL)
 //   // @JoinColumn(name="ARTICLE_ID")
