@@ -369,4 +369,42 @@ public class UsersService {
 
     }
 
+    public ServiceResponseHelper displayUserTagsLiked(String userEmail){
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+
+        Optional<Users> userQueryOpt = userRepo.findByEmail(userEmail);
+        if(userQueryOpt.isPresent()){
+            Users userQuery = userQueryOpt.get();
+            List<String> tagsLiked = new ArrayList<>();
+               if(userQuery.getIsLiked().isEmpty()==false){
+                   for(Tag t: userQuery.getIsLiked()){
+                       tagsLiked.add(t.getTagText());
+                   }
+                   serviceResponseHelper.setHasError(false);
+                   successResponse.put("message", "No Found Tags");
+                   serviceResponseHelper.setResponseMessage(successResponse);
+                   serviceResponseHelper.setContent(tagsLiked);
+                   return serviceResponseHelper;
+               }
+
+            else{
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "No Interest list found");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }
+        }
+        else {
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "No such user is there");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+
+    }
+
 }

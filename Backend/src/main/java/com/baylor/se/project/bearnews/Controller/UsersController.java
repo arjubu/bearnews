@@ -158,4 +158,19 @@ public class UsersController {
 
     }
 
+    @RequestMapping(value = "/showUserInterest", method = RequestMethod.POST)
+    public ResponseEntity<?> updatingUserProfile(@RequestBody Map<String,String> requestBody) throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper = usersService.displayUserTagsLiked(requestBody.get("useremail"));
+        System.out.println(requestBody);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper.getContent()),HttpStatus.OK);
+
+        }
+
+    }
+
 }
