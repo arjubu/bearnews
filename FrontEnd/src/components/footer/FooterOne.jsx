@@ -41,21 +41,21 @@ const FooterOne = () => {
             {/* End of .col-lg-2 */}
             <div className="col-lg-2 col-md-4 col-6">
               <div className="footer-widget">
-                <h2 className="footer-widget-title">Some</h2>
+                <h2 className="footer-widget-title">Baylor</h2>
                 <ul className="footer-nav">
                   <li>
                     <Link href="/">
-                        <a>Some1</a>
+                        <a>Baylor1</a>
                     </Link>
                   </li>
                   <li>
                     <Link href="/">
-                        <a>Some2</a>
+                        <a>Baylor2</a>
                     </Link>
                   </li>
                   <li>
                     <Link href="/">
-                        <a>Some3</a>
+                        <a>Baylor3</a>
                     </Link>
                   </li>
                   
@@ -67,21 +67,21 @@ const FooterOne = () => {
             {/* End of .col-lg-2 */}
             <div className="col-lg-2 col-md-4 col-6">
               <div className="footer-widget">
-                <h2 className="footer-widget-title">Bala</h2>
+                <h2 className="footer-widget-title">VR</h2>
                 <ul className="footer-nav">
                   <li>
                   <Link href="/">
-                    <a>Bala</a>
+                    <a>VR1</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>Bala</a>
+                    <a>VR2</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>Bala</a>
+                    <a>VR3</a>
                     </Link>
                   </li>
                  
@@ -93,21 +93,21 @@ const FooterOne = () => {
             {/* End of .col-lg-2 */}
             <div className="col-lg-2 col-md-4 col-6">
               <div className="footer-widget">
-                <h2 className="footer-widget-title">LOLOLOL</h2>
+                <h2 className="footer-widget-title">CSE</h2>
                 <ul className="footer-nav">
                   <li>
                   <Link href="/">
-                    <a>LOLOLOL</a>
+                    <a>CSE1</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>LOLOLOL</a>
+                    <a>CSE2</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>LOLOLOL</a>
+                    <a>CSE3</a>
                     </Link>
                   </li>
                   
@@ -123,17 +123,17 @@ const FooterOne = () => {
                 <ul className="footer-nav">
                   <li>
                   <Link href="/">
-                    <a>TaG</a>
+                    <a>TaG1</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>TaG</a>
+                    <a>TaG2</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>TaG</a>
+                    <a>TaG3</a>
                     </Link>
                   </li>
                   
@@ -149,12 +149,12 @@ const FooterOne = () => {
                 <ul className="footer-nav">
                   <li>
                   <Link href="/">
-                    <a>We</a>
+                    <a>Contact Us</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>Jo</a>
+                    <a>News</a>
                     </Link>
                   </li>
                   
@@ -264,7 +264,7 @@ const FooterOne = () => {
           </ul> */}
           {/* End of .footer-bottom-links */}
           <p className="axil-copyright-txt">
-            © {new Date().getFullYear()}. All rights reserved by BearWeb.
+            © {new Date().getFullYear()}. All rights reserved by BearNews.
           </p>
         </div>
         {/* End of .footer-bottom */}
