@@ -3,7 +3,7 @@ import PostLayoutTwo from "./layout/PostLayoutTwo";
 
 const PostSectionThree = ({ postData }) => {
 //console.log(postData);
-const trendingPost = postData.filter(post => post.cate === "baylornews");
+const trendingPost = postData.filter(post => post.articleType === "BAYLORNEWS");
 
   return (
     <div className="section-gap section-gap-top__with-text trending-stories">
