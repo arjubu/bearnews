@@ -123,7 +123,11 @@ public class UsersService {
             return true;
     }
 
-    public void interestListAttach(UserInterestDto userInterestDto){
+    public ServiceResponseHelper interestListAttach(UserInterestDto userInterestDto){
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+
        Optional<Users>usersQueryOpt = userRepo.findByEmail(userInterestDto.getUsername());
        if(usersQueryOpt.isPresent()) {
            Users usersQuery = usersQueryOpt.get();
@@ -133,15 +137,35 @@ public class UsersService {
                List<Tag> isLikedTags = new ArrayList<>();
                for(String s: iL){
                    Tag queryTag = tagService.findTagsByText(s);
-                   if(queryTag!=null)
+                   if(queryTag!=null) {
                        usersQuery.getIsLiked().add(queryTag);
+                   }
                      //usersQuery.setIsLiked();
                }
                //usersQuery.setIsLiked(isLikedTags);
                userRepo.save(usersQuery);
+               serviceResponseHelper.setHasError(false);
+               successResponse.put("message", "updated successfully");
+               serviceResponseHelper.setResponseMessage(successResponse);
+               serviceResponseHelper.setContent(null);
 
            }
+           else{
+               serviceResponseHelper.setHasError(true);
+               errorResponse.put("message", "give valid tags");
+               serviceResponseHelper.setResponseMessage(errorResponse);
+               serviceResponseHelper.setContent(null);
+               return serviceResponseHelper;
+           }
        }
+       else {
+           serviceResponseHelper.setHasError(true);
+           errorResponse.put("message", "No such users exsists");
+           serviceResponseHelper.setResponseMessage(errorResponse);
+           serviceResponseHelper.setContent(null);
+           return serviceResponseHelper;
+       }
+        return serviceResponseHelper;
 
 
     }

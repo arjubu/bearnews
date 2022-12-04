@@ -142,12 +142,19 @@ public class UsersController {
 
 
     @RequestMapping(value = "/updateUserProfile", method = RequestMethod.PUT)
-    public ResponseEntity<?> updatingUserProfile(@RequestBody UserInterestDto requestBody){
-        //System.out.println("calling from frontend");
+    public ResponseEntity<?> updatingUserProfile(@RequestBody UserInterestDto requestBody) throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper = usersService.interestListAttach(requestBody);
+
+        ObjectMapper objectMapper = new ObjectMapper();
         System.out.println(requestBody.getTagsContaining());
         System.out.println(requestBody.getUsername());
-        usersService.interestListAttach(requestBody);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.OK);
+
+        }
 
     }
 
