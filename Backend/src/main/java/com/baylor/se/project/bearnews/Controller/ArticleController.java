@@ -244,5 +244,12 @@ public class ArticleController {
 
     }
 
+    @RequestMapping(value = "/addfav", method = RequestMethod.GET)
+    public ResponseEntity<?> favAnArticle( @RequestParam (name="articleId" , required = true) Long articleId) throws JsonProcessingException{
+        String responseReturned = articleService.favAnArticle(articleId);
+        return new ResponseEntity(responseReturned,HttpStatus.OK);
+
+    }
+
 
 }
