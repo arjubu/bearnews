@@ -475,4 +475,17 @@ public class ArticleService {
             return likeArticle.getLikecount();
         }
     }
-}
+
+    public String favAnArticle(Long id) {
+        Article favArticle = articleRepository.findById(id).orElse(null);
+        List<Long> favId= new ArrayList<>();
+        if (favArticle == null) {
+            return "article id doesn't exsists";
+        } else {
+            favId.add(favArticle.getId());
+            }
+            articleRepository.save(favArticle);
+            return "favorite added";
+        }
+    }
+
