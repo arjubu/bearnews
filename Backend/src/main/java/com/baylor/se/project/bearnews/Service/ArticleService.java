@@ -254,7 +254,7 @@ public class ArticleService {
         return articleDetails;
 
     }
-    public ServiceResponseHelper getAllArticles(){
+    public ServiceResponseHelper getAllArticles(ArticleType articleType){
         ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
         Map errorResponse = new HashMap<>();
         Map successResponse = new HashMap<>();
@@ -271,7 +271,7 @@ public class ArticleService {
 
         else{
             for (Article a : articleList) {
-                if (a.getArticleType().toString().equals("SYSTEM")) {
+                if (a.getArticleType().toString().equals(articleType.toString())) {
                     ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
                     article.setTitleOfArticle(a.getTitle());
                     article.setContentOfArticle(a.getContent());
@@ -283,8 +283,8 @@ public class ArticleService {
                         article.setIdOfCreator(author.get(0).getId());
                         article.setNameofCreator(author.get(0).getFirstName());
                     }
-                    article.setIdOfTag(a.getContains().getId());
-                    article.setTextOfTag(a.getContains().getTagText());
+                    article.setIdOfTag(a.getContains() == null ?  0L : a.getContains().getId() );
+                    article.setTextOfTag(a.getContains() == null ? ""  : a.getContains().getTagText());
                     articleDetails.add(article);
 
                 }
