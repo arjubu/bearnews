@@ -123,7 +123,7 @@ public class ArticleService {
                 usersService.usersArticleAttach(usersWhoCreated.getId(),article);
 
                 serviceResponseHelper.setHasError(false);
-                successResponse.put("message", "article created sucessfully");
+                successResponse.put("message", usersWhoCreated.getFirstName()+" "+usersWhoCreated.getLastName()+" created article");
                 serviceResponseHelper.setResponseMessage(successResponse);
 
                 ArticleResponseDto articleResponse = new ArticleResponseDto();;

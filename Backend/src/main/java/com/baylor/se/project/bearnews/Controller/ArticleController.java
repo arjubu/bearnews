@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Controller;
 import java.util.ArrayList;
 import com.baylor.se.project.bearnews.Controller.dto.ArticleDto;
+import com.baylor.se.project.bearnews.Controller.dto.WebMsgDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.ArticleType;
 import com.baylor.se.project.bearnews.Models.Users;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,17 +27,22 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+    @Autowired
+    SimpMessagingTemplate template;
 
     @RequestMapping(value = "/createArticle", method = RequestMethod.POST)
     public ResponseEntity<?> createArticles(@RequestBody ArticleDto articleSent) throws JsonProcessingException {
-
+       WebMsgDto webMsgDto = new WebMsgDto();
        ServiceResponseHelper serviceResponseHelper= articleService.createArticle(articleSent);
        ObjectMapper objectMapper = new ObjectMapper();
         if(serviceResponseHelper.getHasError()){
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
         }
         else {
+            webMsgDto.setMessage(objectMapper.writeValueAsString(serviceResponseHelper.getResponseMessage()));
+            template.convertAndSend("/topic/newPost", webMsgDto);
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.CREATED);
+
         }
     }
 

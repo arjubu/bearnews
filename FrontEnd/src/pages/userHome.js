@@ -9,16 +9,33 @@ import PostSectionSeven from "../components/post/PostSectionSix";
 import PostSectionThree from "../components/post/PostSectionThree";
 import PostSectionTwo from "../components/post/PostSectionTwo";
 import HeaderLogged from "../components/header/HeaderLogged";
-
+import SockJsClient from 'react-stomp';
 import FullCalendar from "@fullcalendar/react";
 // The import order DOES MATTER here. If you change it, you'll get an error!
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useCookies } from 'react-cookie';
+import React, { useState, Component } from "react";
 
 const HomeOne = ({ allPosts }) => {
     const [cookies, setCookie] = useCookies(['username'])
     console.log(cookies.username);
+    const SOCKET_URL = 'http://localhost:8080/ws';
+    const [message, setMessage] = useState(' ');
+
+    let onConnected = () => {
+        console.log("Connected!!")
+    }
+
+    const onMessageReceived = (msg) => {
+        console.log("--message recieved function--");
+        setMessage(msg.message);
+        console.log(message);
+        console.log(msg)
+        window.location.reload(false);
+        alert(msg.message);
+    }
+
     return (
         <>
             <HeadMeta metaTitle="Home One" />
@@ -34,6 +51,13 @@ const HomeOne = ({ allPosts }) => {
 
             {/* <PostSectionSix postData={allPosts}/> */}
             <FooterOne />
+            <SockJsClient
+                url={SOCKET_URL}
+                topics={['/topic/newPost']}
+                onConnect={console.log("Connected!")}
+                onMessage={msg => onMessageReceived(msg)}
+                debug={false}
+            />
         </>
     );
 }
