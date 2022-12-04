@@ -376,6 +376,9 @@ public class ArticleService {
                 sentArticleResp.setTextOfTag(queryArticle.getContains().getTagText());
 
                 sentArticleResp.setTimeOfCreation(queryArticle.getCreatedAt());
+                sentArticleResp.setArticleType(queryArticle.getArticleType());
+                sentArticleResp.setDetailLink(queryArticle.getDetailLink());
+                sentArticleResp.setThumbLink(queryArticle.getThumbLink());
 
                 serviceResponseHelper.setHasError(false);
                 successResponse.put("message", "article found in this id");
