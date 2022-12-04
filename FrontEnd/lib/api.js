@@ -18,7 +18,8 @@ export async function getPostSlugs() {
         
       } else {
         
-        throw new Error('Something went wrong ...');
+        //throw new Error('Something went wrong ...');
+        console.log("Something went wrong ...");
 
       }
         
@@ -50,7 +51,7 @@ export async function getBaylorPostSlugs() {
         
       } else {
         
-        throw new Error('Something went wrong ...');
+        console.log("Something went wrong ...");
 
       }
         
