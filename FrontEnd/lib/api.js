@@ -18,7 +18,40 @@ export async function getPostSlugs() {
         
       } else {
         
-        throw new Error('Something went wrong ...');
+        //throw new Error('Something went wrong ...');
+        console.log("Something went wrong ...");
+
+      }
+        
+      }).then(data=>{
+
+        return data;
+        //console.log(Mylist);
+      });
+      let a = [];
+      Mylist.forEach(myfunction)
+      function myfunction(item){
+        a.push(item);
+      }
+      //console.log(a);
+      //console.log(JSON.parse(Mylist));
+  return a;
+}
+
+export async function getBaylorPostSlugs() {
+  //console.log(fs.readdirSync(postsDirectory));
+  let Mylist = {};
+    Mylist = await fetch('http://localhost:8080/fetchBaylorNewsArticleTitles'
+  )
+    .then(response => {
+       
+      if (response.status == 200) {
+        console.log('go'); 
+        return response.json();
+        
+      } else {
+        
+        console.log("Something went wrong ...");
 
       }
         
@@ -81,19 +114,31 @@ export async function getPostBySlug(slug, fields = []) {
   //     items[field] = data[field]
   //   }
   // })
+  //console.log(article);
   items['title'] = article.data.titleOfArticle;
   items['content'] = article.data.contentOfArticle;
   items['slug'] = article.data.idOfArticle.toString();
   items['cate'] = article.data.textOfTag;
   items['author_name'] = article.data.firstNameofCreator +" "+article.data.lastNameofCreator;
   items['postFormat'] = 'standard';
-  items['cate_bg'] = 'bg-color-purple-one';
+  if(article.data.nameofCreator == "BAYLORNEWS"){
+    items['cate_bg'] = 'bg-color-green-one';
+  }else{
+    items['cate_bg'] = 'bg-color-purple-one';
+  }
   items['date'] = article.data.timeOfCreation;
   items['cate_img'] = '/images/category/travel.png';
-  if(article.data.image==null){
+    if(article.data.image==null|| article.data.image==undefined ||article.data.image=="undefined"){
+      
     items['featureImg'] =  '/images/posts/download.png';
+   
     }else{
       items['featureImg'] = article.data.image;
+    }
+
+    if(article.data.thumbLink!=null && article.data.thumbLink!=undefined && article.data.thumbLink!="undefined" ){
+       console.log(article.data.thumbLink);
+      items['featureImg'] = article.data.thumbLink;
     }
   items['author_img'] = '/images/author/amachea_jajah.png';
   items['author_social'] =     
@@ -121,6 +166,18 @@ export async function getPostBySlug(slug, fields = []) {
 
 export async function getAllPosts(fields = []) {
   const slugs = await getPostSlugs();
+  const baylorslugs = await getBaylorPostSlugs();
+  baylorslugs.forEach((slug)=>slugs.push(slug));
+  //console.log(slugs);
+  
+   const posts = await Promise.all(slugs.map( async(slug) => getPostBySlug(slug, fields)))
+     //console.log("posts");
+     //console.log(posts);
+
+  return posts;
+}
+export async function getAllBaylorPosts(fields = []) {
+  const slugs = await getPostSlugs();
 
    const posts = await Promise.all(slugs.map( async(slug) => getPostBySlug(slug, fields)))
      //console.log("posts");
@@ -144,6 +201,7 @@ export function getFileContentBySlug(fileName, postsPath) {
       content
     }
 }
+
 
 
 

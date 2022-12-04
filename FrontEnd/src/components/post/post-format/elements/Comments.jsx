@@ -1,23 +1,96 @@
 import FormGroup from "../../../contact/FormGroup";
 import React, {Component} from "react";
+import { useState } from "react";
+import {
+    MDBCol,
+    MDBContainer,
+    MDBRow,
+    MDBCard,
+    MDBCardText,
+    MDBCardBody,
+    MDBCardImage,
+    MDBBtn,
+    MDBBreadcrumb,
+    MDBBreadcrumbItem,
+    MDBProgress,
+    MDBProgressBar,
+    MDBIcon,
+    MDBListGroup,
+    MDBListGroupItem
+  } from 'mdb-react-ui-kit';
+
+  function DeleteComment(id) {
+    fetch('http://localhost:8080/deleteComment?commentId='+id, {
+        method: 'DELETE',
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+        .then(response => {
+           
+          if (response.status == 200) {
+            console.log('deleted');             
+          } 
+            
+          });
+}
+
 class Comment extends Component {
     render () {
       return (
+        <>
         <div className='comment' >
           <div className='comment-user'>
-            <span>{this.props.comment.username} </span>：
+            <span>{this.props.comment.user} </span>：
           </div>
-          <p>{this.props.comment.content}</p>
+          <MDBRow>
+          <MDBCol sm="9">
+          <p>{this.props.comment.text}</p>
+          </MDBCol>
+          <MDBCol sm="2">
+          <button className="deleteComment" onClick={()=>DeleteComment(this.props.comment.id)}>Delete</button>
+          </MDBCol>
+          <div className="border-bottom"></div>
+          </MDBRow>
         </div>
+        	  
+              </>
+
       )
     }
   }
-function CommentList() {
-    const comments = [
-        {username: 'Jerry', content: 'Hello'},
-        {username: 'Tomy', content: 'World'},
-        {username: 'Lucy', content: 'Good'}
-      ]
+function CommentList({slug}) {
+   
+    const [comments,setComment] = useState([]);
+    //   {username: 'Jerry', content: 'Hello'},
+    //   {username: 'Tomy', content: 'World'},
+    //   {username: 'Lucy', content: "window.location.href"}
+    console.log("slug for the comment reveiving: "+slug);  
+    fetch('http://localhost:8080/fetchArticleAndComments/'+slug
+  )
+    .then(response => {
+       
+      if (response.status == 200) {
+        console.log('go'); 
+        return response.json();
+        
+      } else {
+        
+        throw new Error('Something went wrong ...');
+
+      }
+        
+      }).then(data=>{
+
+
+        setComment(data.content.commentUsers);
+        //console.log(Mylist);
+      });
+    
+      console.log(comments);
+
+      
+
     return(
       
   
@@ -28,7 +101,7 @@ function CommentList() {
     );
   }
 
-const Comments = () => {
+const Comments = ({slug}) => {
 
   return (
     <div className="comment-area">
@@ -41,7 +114,7 @@ const Comments = () => {
       {/* End of .comments-box */}
       <form action="#" className="comment-form row m-b-xs-60">
         <div className="col-12">
-        <CommentList></CommentList>        </div>
+        <CommentList slug= {slug}/>      </div>
         {/* <div className="col-md-4">
 			<FormGroup type="text" name="name" label="Name" />
         </div>

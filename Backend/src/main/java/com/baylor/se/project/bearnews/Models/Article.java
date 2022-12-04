@@ -50,6 +50,9 @@ public class Article {
     @Column
     private Integer baylorNewsId;
 
+    @Column
+    private Integer likecount;
+
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "users_articles",referencedColumnName = "id")
 //    @JsonBackReference

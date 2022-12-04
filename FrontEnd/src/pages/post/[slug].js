@@ -14,9 +14,10 @@ import PostSectionSix from "../../components/post/PostSectionSix";
 
 const PostDetails = ({postContent, allPosts}) => {
 	
-
+console.log(postContent)
 
 	const PostFormatHandler = () => {
+		
 		if (postContent.postFormat === 'video') {
 			return <PostFormatVideo postData={postContent} allData={allPosts}/>
 		} else if (postContent.postFormat === 'gallery') {
@@ -26,7 +27,7 @@ const PostDetails = ({postContent, allPosts}) => {
 		} else if (postContent.postFormat === 'text') {
 			return <PostFormatText postData={postContent} allData={allPosts} />
 		}else {
-			return <PostFormatStandard  postData={postContent} allData={allPosts} />
+			return <PostFormatStandard  postData={postContent} allData={allPosts} slug={postContent.slug}/>
 		}
 	}
 

@@ -2,6 +2,7 @@ package com.baylor.se.project.bearnews.Controller;
 import java.util.ArrayList;
 import com.baylor.se.project.bearnews.Controller.dto.ArticleDto;
 import com.baylor.se.project.bearnews.Models.Article;
+import com.baylor.se.project.bearnews.Models.ArticleType;
 import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
 import com.baylor.se.project.bearnews.Service.ArticleService;
@@ -40,7 +41,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/fetchSystemArticles", method = RequestMethod.GET)
     public ResponseEntity<?> getArticles() throws JsonProcessingException{
-        ServiceResponseHelper serviceResponseHelper= articleService.getAllArticles();
+        ServiceResponseHelper serviceResponseHelper= articleService.getAllArticles(ArticleType.SYSTEM);
         ObjectMapper objectMapper = new ObjectMapper();
         if(serviceResponseHelper.getHasError()){
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
@@ -52,9 +53,64 @@ public class ArticleController {
      }
     }
 
+    @RequestMapping(value = "/fetchBaylorNewsArticles", method = RequestMethod.GET)
+    public ResponseEntity<?> getBaylorNewsArticles() throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper= articleService.getAllArticles(ArticleType.BAYLORNEWS);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else{
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchTweeterArticles", method = RequestMethod.GET)
+    public ResponseEntity<?> getTweeterArticles() throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper= articleService.getAllArticles(ArticleType.TWITTER);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else{
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+    }
+
     @RequestMapping(value = "/fetchArticleById", method = RequestMethod.GET)
     public ResponseEntity<?> getArticlesById(@RequestParam (name="articleId" , required = false) Long articleId) throws JsonProcessingException{
-        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId);
+        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId, ArticleType.SYSTEM);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+    }
+    @RequestMapping(value = "/fetchBaylorNewsArticleById", method = RequestMethod.GET)
+    public ResponseEntity<?> getBaylorNewsArticlesById(@RequestParam (name="articleId" , required = false) Long articleId) throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId, ArticleType.BAYLORNEWS);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchTwitterArticleById", method = RequestMethod.GET)
+    public ResponseEntity<?> getTwitterArticlesById(@RequestParam (name="articleId" , required = false) Long articleId) throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId, ArticleType.TWITTER);
         ObjectMapper objectMapper = new ObjectMapper();
         if(serviceResponseHelper.getHasError()){
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
@@ -95,7 +151,45 @@ public class ArticleController {
 
     @RequestMapping(value = "/fetchArticleTitles", method = RequestMethod.GET)
     public ResponseEntity<?> getAllArticleTitlwa(){
-        List<Long> responseReturned = articleService.getAllTitles();
+        List<Long> responseReturned = articleService.getAllTitles(ArticleType.SYSTEM);
+
+
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+//            for (String i : responseReturned
+//            ) {
+//
+//                response.add(i.replace(" ","-"));
+//
+//            }
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchBaylorNewsArticleTitles", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllBaylorNewsArticleTitle(){
+        List<Long> responseReturned = articleService.getAllTitles(ArticleType.BAYLORNEWS);
+
+
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+//            for (String i : responseReturned
+//            ) {
+//
+//                response.add(i.replace(" ","-"));
+//
+//            }
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchTwitterArticleTitles", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllTwitterArticleTitle(){
+        List<Long> responseReturned = articleService.getAllTitles(ArticleType.TWITTER);
 
 
         if(responseReturned==null){
@@ -135,6 +229,19 @@ public class ArticleController {
         }else{
             return new ResponseEntity<>(serviceResponseHelper, HttpStatus.OK);
         }
+    }
+        @RequestMapping(value = "/addlike", method = RequestMethod.GET)
+    public ResponseEntity<?> LikeAnArticle( @RequestParam (name="articleId" , required = true) Long articleId) throws JsonProcessingException{
+        String responseReturned = articleService.LikeAnArticle(articleId);
+        return new ResponseEntity(responseReturned,HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/likecount", method = RequestMethod.GET)
+    public ResponseEntity<?> findlikeCount( @RequestParam (name="articleId" , required = true) Long articleId) throws JsonProcessingException{
+        Integer responseReturned = articleService.findlikeCount(articleId);
+        return new ResponseEntity(responseReturned,HttpStatus.OK);
+
     }
 
 
