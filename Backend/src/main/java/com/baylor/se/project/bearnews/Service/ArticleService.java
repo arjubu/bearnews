@@ -350,8 +350,8 @@ public class ArticleService {
         }
         return sentTitleArticle;
     }
-    public ServiceResponseHelper findArticleById(long articleId){
-        Optional<Article> queryArticleOpt = articleRepository.findById(articleId);
+    public ServiceResponseHelper findArticleById(long articleId, ArticleType articleType){
+        Optional<Article> queryArticleOpt = articleRepository.findByIdAndArticleType(articleId,articleType);
         Article queryArticle = new Article();
         ArticleResponseDto sentArticleResp = new ArticleResponseDto();
 

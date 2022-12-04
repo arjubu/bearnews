@@ -83,7 +83,34 @@ public class ArticleController {
 
     @RequestMapping(value = "/fetchArticleById", method = RequestMethod.GET)
     public ResponseEntity<?> getArticlesById(@RequestParam (name="articleId" , required = false) Long articleId) throws JsonProcessingException{
-        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId);
+        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId, ArticleType.SYSTEM);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+    }
+    @RequestMapping(value = "/fetchBaylorNewsArticleById", method = RequestMethod.GET)
+    public ResponseEntity<?> getBaylorNewsArticlesById(@RequestParam (name="articleId" , required = false) Long articleId) throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId, ArticleType.BAYLORNEWS);
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchTwitterArticleById", method = RequestMethod.GET)
+    public ResponseEntity<?> getTwitterArticlesById(@RequestParam (name="articleId" , required = false) Long articleId) throws JsonProcessingException{
+        ServiceResponseHelper serviceResponseHelper= articleService.findArticleById(articleId, ArticleType.TWITTER);
         ObjectMapper objectMapper = new ObjectMapper();
         if(serviceResponseHelper.getHasError()){
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
