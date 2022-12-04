@@ -27,7 +27,6 @@ const PostFormatStandard = ({postData, allData, slug}) => {
                 <main className="site-main">
                   <article className="post-details">
                     <div className="single-blog-wrapper">
-                      <SocialShareSide />
                       <div dangerouslySetInnerHTML={{__html: postContent}}></div>
                     </div>
                   </article>
