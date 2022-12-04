@@ -37,7 +37,7 @@ public class ArticleService {
 
     @Autowired
     TagRepository tagRepository;
-    
+
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
@@ -160,6 +160,9 @@ public class ArticleService {
     public void saveBaylorNews(List<Map> baylorNews) throws JsonProcessingException {
         List<Article> articles = new ArrayList<>();
         List<Integer> bearNewsIds = new ArrayList<>();
+        Users users = usersRepository.findByEmail("baylornews@baylornews.com").get();
+
+
 
         for(Map m : baylorNews){
             Integer baylorNewsId = Integer.parseInt(m.get("baylorNewsId").toString());
@@ -176,11 +179,15 @@ public class ArticleService {
                 article.setDetailLink(m.get("detailLink").toString());
                 article.setThumbLink(m.get("thumbnail").toString());
 
+                List<Tag> tags1 = tagRepository.findByTagText("BAYLORNEWS");
+
+
+                article.setContains(tags1.get(0));
                 articles.add(article);
             }
         }
-
-        articleRepository.saveAll(articles);
+        users.setArticles(articles);
+        usersRepository.save(users);
         for (Article a: articles){
             ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,a,null);
             simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
@@ -192,6 +199,8 @@ public class ArticleService {
 
         List<String> tags = (List)baylorTweet.get("hashTags");
         List<Tag> savedTags = new ArrayList<>();
+        Users users = usersRepository.findByEmail("twitter@baylornews.com").get();
+
         for(String s : tags){
             Tag tag = new Tag();
             tag.setTagText(s);
@@ -210,8 +219,14 @@ public class ArticleService {
         article.setThumbLink(baylorTweet.get("thumbLink") != null ? baylorTweet.get("thumbLink").toString() : null);
         if(savedTags.size()>0){
             article.setContains(savedTags.get(0));
+        }else{
+            List<Tag> tags1 = tagRepository.findByTagText("BEARFEED");
+            article.setContains(tags1.get(0));
         }
-        articleRepository.save(article);
+        List<Article> articles = new ArrayList<>();
+        articles.add(article);
+        users.setArticles(articles);
+        usersRepository.save(users);
         ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,article,null);
         simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
 
@@ -281,7 +296,7 @@ public class ArticleService {
                     List<Users> author = usersService.findingArticlesByUser(a.getId());
                     if (author.isEmpty() == false) {
                         article.setIdOfCreator(author.get(0).getId());
-                        article.setNameofCreator(author.get(0).getFirstName());
+                        article.setNameofCreator(author.get(0).getFirstName()+" "+author.get(0).getLastName());
                     }else{
                         article.setIdOfCreator(0L);
                         article.setNameofCreator(articleType.toString());
@@ -333,7 +348,7 @@ public class ArticleService {
                 sentTitleArticle=foundArticle.get(0);
             }
         }
-       return sentTitleArticle;
+        return sentTitleArticle;
     }
     public ServiceResponseHelper findArticleById(long articleId){
         Optional<Article> queryArticleOpt = articleRepository.findById(articleId);
@@ -432,14 +447,4 @@ public class ArticleService {
             return serviceResponseHelper;
         }
     }
-
-//    public String LikeAnArticle(Long id){
-//        Article like = articleRepository.findById(id);
-//        if(like==null)
-//            return "article id doesn't exsists";
-//        else{
-//            like.getLikecount()+=1;
-//            return "like added";
-//        }
-//    }
 }
