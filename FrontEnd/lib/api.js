@@ -37,6 +37,38 @@ export async function getPostSlugs() {
   return a;
 }
 
+export async function getBaylorPostSlugs() {
+  //console.log(fs.readdirSync(postsDirectory));
+  let Mylist = {};
+    Mylist = await fetch('http://localhost:8080/fetchBaylorNewsArticleTitles'
+  )
+    .then(response => {
+       
+      if (response.status == 200) {
+        console.log('go'); 
+        return response.json();
+        
+      } else {
+        
+        throw new Error('Something went wrong ...');
+
+      }
+        
+      }).then(data=>{
+
+        return data;
+        //console.log(Mylist);
+      });
+      let a = [];
+      Mylist.forEach(myfunction)
+      function myfunction(item){
+        a.push(item);
+      }
+      //console.log(a);
+      //console.log(JSON.parse(Mylist));
+  return a;
+}
+
 export async function getPostBySlug(slug, fields = []) {
   const realSlug = slug.toString();
   // console.log("realSlug");
@@ -81,6 +113,7 @@ export async function getPostBySlug(slug, fields = []) {
   //     items[field] = data[field]
   //   }
   // })
+  //console.log(article);
   items['title'] = article.data.titleOfArticle;
   items['content'] = article.data.contentOfArticle;
   items['slug'] = article.data.idOfArticle.toString();
@@ -131,6 +164,18 @@ export async function getPostBySlug(slug, fields = []) {
 }
 
 export async function getAllPosts(fields = []) {
+  const slugs = await getPostSlugs();
+  const baylorslugs = await getBaylorPostSlugs();
+  baylorslugs.forEach((slug)=>slugs.push(slug));
+  //console.log(slugs);
+  
+   const posts = await Promise.all(slugs.map( async(slug) => getPostBySlug(slug, fields)))
+     //console.log("posts");
+     //console.log(posts);
+
+  return posts;
+}
+export async function getAllBaylorPosts(fields = []) {
   const slugs = await getPostSlugs();
 
    const posts = await Promise.all(slugs.map( async(slug) => getPostBySlug(slug, fields)))
