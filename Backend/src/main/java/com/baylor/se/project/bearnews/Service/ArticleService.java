@@ -476,16 +476,24 @@ public class ArticleService {
         }
     }
 
-    public String favAnArticle(Long id) {
-        Article favArticle = articleRepository.findById(id).orElse(null);
-        List<Long> favId= new ArrayList<>();
-        if (favArticle == null) {
-            return "article id doesn't exsists";
-        } else {
-            favId.add(favArticle.getId());
-            }
-            articleRepository.save(favArticle);
-            return "favorite added";
-        }
+    public void favAnArticle(String userEmail,Long id) {
+      Optional<Users> usersQueryOpt = usersRepository.findByEmail(userEmail);
+      Optional<Article> articleQueyOpt = articleRepository.findById(id);
+      if(usersQueryOpt.isPresent()&& articleQueyOpt.isPresent()) {
+          Users usersQuey = usersQueryOpt.get();
+          Long favouriteList = usersQuey.getLikedArticleId();
+          if(favouriteList!=id) {
+              usersQuey.setLikedArticleId(id);
+              usersRepository.save(usersQuey);
+          }
+          else{
+              //write condition of equal
+          }
+      }
+      else{
+          //invalid ids
+      }
+
+       }
     }
 

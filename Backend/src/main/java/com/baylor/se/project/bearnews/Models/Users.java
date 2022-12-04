@@ -69,5 +69,8 @@ public class Users {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
+    @Column
+    private Long likedArticleId;
+
 
 }
