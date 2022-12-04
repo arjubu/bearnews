@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 
-const LikeButton = () => {
+const LikeButton = ({slug}) => {
   const [likes, setLikes] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
+
+  useEffect(() => {
+    
+  });
 
   const handleClick = () => {
     if (isClicked) {

@@ -1,11 +1,12 @@
 import WidgetInstagram from "../../widget/WidgetInstagram";
 import WidgetPost from "../../widget/WidgetPost";
+import Notification from "../Notification";
 import WidgetSocialShare from "../../widget/WidgetSocialShare";
 import MetaDataOne from "./elements/meta/MetaDataOne";
 import PostAuthor from "./elements/PostAuthor";
 import PostComment from "./elements/PostComment";
 import Comments from "./elements/Comments";
-
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import SocialShareBottom from "./elements/SocialShareBottom";
 import SocialShareSide from "./elements/SocialShareSide";
 
@@ -30,12 +31,12 @@ const PostFormatStandard = ({postData, allData, slug}) => {
                       <div dangerouslySetInnerHTML={{__html: postContent}}></div>
                     </div>
                   </article>
-				  <SocialShareBottom />
+				  <SocialShareBottom slug={slug}/>
 				  <hr className="m-t-xs-50 m-b-xs-60" />
 				  <PostAuthor authorData={postData}/>
 				  <PostComment slug = {slug}/>
           <Comments slug = {slug}/>
-
+         
                 </main>
               </div>
               <div className="col-lg-4">
