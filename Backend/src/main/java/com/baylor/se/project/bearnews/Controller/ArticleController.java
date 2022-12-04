@@ -187,7 +187,7 @@ public class ArticleController {
         }
     }
 
-    @RequestMapping(value = "/fetchBaylorNewsArticleTitles", method = RequestMethod.GET)
+    @RequestMapping(value = "/fetchTwitterArticleTitles", method = RequestMethod.GET)
     public ResponseEntity<?> getAllTwitterArticleTitle(){
         List<Long> responseReturned = articleService.getAllTitles(ArticleType.TWITTER);
 
