@@ -166,5 +166,19 @@ public class ArticleController {
         }
     }
 
+    @RequestMapping(value = "/addlike", method = RequestMethod.GET)
+    public ResponseEntity<?> LikeAnArticle( @RequestParam (name="articleId" , required = true) Long articleId) throws JsonProcessingException{
+        String responseReturned = articleService.LikeAnArticle(articleId);
+        return new ResponseEntity(responseReturned,HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/likecount", method = RequestMethod.GET)
+    public ResponseEntity<?> findlikeCount( @RequestParam (name="articleId" , required = true) Long articleId) throws JsonProcessingException{
+        Integer responseReturned = articleService.findlikeCount(articleId);
+        return new ResponseEntity(responseReturned,HttpStatus.OK);
+
+    }
+
 
 }

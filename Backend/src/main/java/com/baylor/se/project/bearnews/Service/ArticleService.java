@@ -37,16 +37,16 @@ public class ArticleService {
 
     @Autowired
     TagRepository tagRepository;
-    
+
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
 
-    public ServiceResponseHelper createArticle(ArticleDto articleDto){
+    public ServiceResponseHelper createArticle(ArticleDto articleDto) {
         Article article = new Article();
 
-        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false, null, null);
         Map errorResponse = new HashMap<>();
         Map successResponse = new HashMap<>();
 
@@ -55,14 +55,14 @@ public class ArticleService {
         String userSentEmail = articleDto.getCreatedUsersEmail();
         Optional<Users> usersQueryopt = usersRepository.findByEmail(userSentEmail);
 
-        if(articleDto.getArticleTitle()==""){
+        if (articleDto.getArticleTitle() == "") {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article title cannot be empty");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
         }
-        if(articleDto.getArticleContent()==""){
+        if (articleDto.getArticleContent() == "") {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article content cannot be empty");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -70,14 +70,14 @@ public class ArticleService {
             return serviceResponseHelper;
         }
 
-        if(articleDto.getArticleContent().length()<=0 || articleDto.getArticleContent().length()>5000){
+        if (articleDto.getArticleContent().length() <= 0 || articleDto.getArticleContent().length() > 5000) {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "content size excedeed");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
         }
-        if(articleDto.getTagContainingText()==""){
+        if (articleDto.getTagContainingText() == "") {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article must contain a tag");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -85,7 +85,7 @@ public class ArticleService {
             return serviceResponseHelper;
         }
 
-        if(articleDto.getCreatedUsersEmail()==""){
+        if (articleDto.getCreatedUsersEmail() == "") {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article must have a user");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -93,21 +93,20 @@ public class ArticleService {
             return serviceResponseHelper;
         }
 
-        if(usersQueryopt.isPresent()==false){
+        if (usersQueryopt.isPresent() == false) {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "valid user email isn't provided");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
         }
-        if(tagsToAttach==null) {
+        if (tagsToAttach == null) {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "the given tag is not valid");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
             return serviceResponseHelper;
-        }
-        else {
+        } else {
             LocalDateTime articleCreatedAt = LocalDateTime.now();
             article.setTitle(articleDto.getArticleTitle());
             article.setContent(articleDto.getArticleContent());
@@ -116,17 +115,18 @@ public class ArticleService {
 
             articleRepository.save(article);
             long articleId = article.getId();
-            if(articleId!=0){
+            if (articleId != 0) {
                 Users usersWhoCreated = usersQueryopt.get();
                 List<Article> listInserted = new ArrayList<>();
                 listInserted.add(article);
-                usersService.usersArticleAttach(usersWhoCreated.getId(),article);
+                usersService.usersArticleAttach(usersWhoCreated.getId(), article);
 
                 serviceResponseHelper.setHasError(false);
                 successResponse.put("message", "article created sucessfully");
                 serviceResponseHelper.setResponseMessage(successResponse);
 
-                ArticleResponseDto articleResponse = new ArticleResponseDto();;
+                ArticleResponseDto articleResponse = new ArticleResponseDto();
+                ;
                 articleResponse.setIdOfArticle(article.getId());
                 articleResponse.setIdOfTag(article.getContains().getId());
                 articleResponse.setTextOfTag(article.getContains().getTagText());
@@ -137,8 +137,7 @@ public class ArticleService {
                 articleResponse.setLastNameofCreator(usersWhoCreated.getLastName());
                 serviceResponseHelper.setContent(articleResponse);
                 return serviceResponseHelper;
-            }
-            else{
+            } else {
                 serviceResponseHelper.setHasError(true);
                 errorResponse.put("message", "article couldn't be created");
                 serviceResponseHelper.setResponseMessage(errorResponse);
@@ -149,9 +148,9 @@ public class ArticleService {
     }
 
 
-    public Article fetchArticle(Long id){
-        Optional<Article> articleQueryOpt= articleRepository.findById(id);
-        if(articleQueryOpt.isPresent())
+    public Article fetchArticle(Long id) {
+        Optional<Article> articleQueryOpt = articleRepository.findById(id);
+        if (articleQueryOpt.isPresent())
             return articleQueryOpt.get();
         return null;
     }
@@ -161,11 +160,11 @@ public class ArticleService {
         List<Article> articles = new ArrayList<>();
         List<Integer> bearNewsIds = new ArrayList<>();
 
-        for(Map m : baylorNews){
+        for (Map m : baylorNews) {
             Integer baylorNewsId = Integer.parseInt(m.get("baylorNewsId").toString());
             Optional<Article> existingBaylorNews = articleRepository.findByBaylorNewsId(baylorNewsId);
 
-            if(!existingBaylorNews.isPresent() && !bearNewsIds.contains(baylorNewsId)){
+            if (!existingBaylorNews.isPresent() && !bearNewsIds.contains(baylorNewsId)) {
                 bearNewsIds.add(baylorNewsId);
                 Article article = new Article();
 
@@ -181,24 +180,24 @@ public class ArticleService {
         }
 
         articleRepository.saveAll(articles);
-        for (Article a: articles){
-            ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,a,null);
-            simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
+        for (Article a : articles) {
+            ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true, a, null);
+            simpMessagingTemplate.convertAndSend("/topic/newPost", new ObjectMapper().writeValueAsString(serviceResponseHelper));
         }
 
     }
 
-    public  void saveBaylorTweet(Map baylorTweet) throws JsonProcessingException {
+    public void saveBaylorTweet(Map baylorTweet) throws JsonProcessingException {
 
-        List<String> tags = (List)baylorTweet.get("hashTags");
+        List<String> tags = (List) baylorTweet.get("hashTags");
         List<Tag> savedTags = new ArrayList<>();
-        for(String s : tags){
+        for (String s : tags) {
             Tag tag = new Tag();
             tag.setTagText(s);
             tag = tagService.createTag(tag);
-            if(tag == null){
+            if (tag == null) {
                 List<Tag> tags1 = tagRepository.findByTagText(s);
-                tag = tags1.size()>0 ? tags1.get(0) : null;
+                tag = tags1.size() > 0 ? tags1.get(0) : null;
             }
             savedTags.add(tag);
         }
@@ -208,30 +207,30 @@ public class ArticleService {
         article.setContent(baylorTweet.get("description").toString());
         article.setDetailLink(baylorTweet.get("detailLink") != null ? baylorTweet.get("detailLink").toString() : null);
         article.setThumbLink(baylorTweet.get("thumbLink") != null ? baylorTweet.get("thumbLink").toString() : null);
-        if(savedTags.size()>0){
+        if (savedTags.size() > 0) {
             article.setContains(savedTags.get(0));
         }
         articleRepository.save(article);
-        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,article,null);
-        simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true, article, null);
+        simpMessagingTemplate.convertAndSend("/topic/newPost", new ObjectMapper().writeValueAsString(serviceResponseHelper));
 
     }
 
-    public String deleteAnArticle(Long id){
-        if(fetchArticle(id)==null)
+    public String deleteAnArticle(Long id) {
+        if (fetchArticle(id) == null)
             return "article id doesn't exsists";
-        else{
+        else {
             articleRepository.deleteById(id);
             return "deleted successfully";
         }
     }
 
-    public List<ArticleWithUsersObjectMapper> findArtcilesByTags(Long tagId){
+    public List<ArticleWithUsersObjectMapper> findArtcilesByTags(Long tagId) {
         List<Article> allArticles = articleRepository.findArticlesByContains_Id(tagId);
         List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
 
-        if(allArticles.isEmpty()==false){
-            for(Article a: allArticles){
+        if (allArticles.isEmpty() == false) {
+            for (Article a : allArticles) {
                 ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
 
                 article.setIdOfArticle(a.getId());
@@ -239,8 +238,8 @@ public class ArticleService {
                 article.setContentOfArticle(a.getContent());
                 article.setTimeOfArticleCretion(a.getCreatedAt());
 
-                List<Users> author= usersService.findingArticlesByUser(a.getId());
-                if(author.isEmpty()==false) {
+                List<Users> author = usersService.findingArticlesByUser(a.getId());
+                if (author.isEmpty() == false) {
                     article.setIdOfCreator(author.get(0).getId());
                     article.setNameofCreator(author.get(0).getFirstName());
                 }
@@ -254,22 +253,21 @@ public class ArticleService {
         return articleDetails;
 
     }
-    public ServiceResponseHelper getAllArticles(ArticleType articleType){
-        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+
+    public ServiceResponseHelper getAllArticles(ArticleType articleType) {
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false, null, null);
         Map errorResponse = new HashMap<>();
         Map successResponse = new HashMap<>();
 
         List<Article> articleList = articleRepository.findAll();
         List<ArticleWithUsersObjectMapper> articleDetails = new ArrayList<>();
 
-        if(articleList.isEmpty()){
+        if (articleList.isEmpty()) {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "no article");
             serviceResponseHelper.setResponseMessage(errorResponse);
             serviceResponseHelper.setContent(null);
-        }
-
-        else{
+        } else {
             for (Article a : articleList) {
                 if (a.getArticleType().toString().equals(articleType.toString())) {
                     ArticleWithUsersObjectMapper article = new ArticleWithUsersObjectMapper();
@@ -282,12 +280,12 @@ public class ArticleService {
                     if (author.isEmpty() == false) {
                         article.setIdOfCreator(author.get(0).getId());
                         article.setNameofCreator(author.get(0).getFirstName());
-                    }else{
+                    } else {
                         article.setIdOfCreator(0L);
                         article.setNameofCreator(articleType.toString());
                     }
-                    article.setIdOfTag(a.getContains() == null ?  0L : a.getContains().getId() );
-                    article.setTextOfTag(a.getContains() == null ? ""  : a.getContains().getTagText());
+                    article.setIdOfTag(a.getContains() == null ? 0L : a.getContains().getId());
+                    article.setTextOfTag(a.getContains() == null ? "" : a.getContains().getTagText());
                     article.setDetailLink(a.getDetailLink() != null ? a.getDetailLink() : null);
                     article.setThumbLink(a.getThumbLink() != null ? a.getThumbLink() : null);
                     articleDetails.add(article);
@@ -302,20 +300,20 @@ public class ArticleService {
         return serviceResponseHelper;
 
     }
-    public List<Article> getAll(){
-        return   articleRepository.findAll();
+
+    public List<Article> getAll() {
+        return articleRepository.findAll();
     }
 
-    public List<Long> getAllTitles(){
+    public List<Long> getAllTitles() {
         Long titles;
         List<Article> articleList = articleRepository.findAll();
-        List<Long> titlesList =  new ArrayList<>();
-        if(articleList.isEmpty()){
+        List<Long> titlesList = new ArrayList<>();
+        if (articleList.isEmpty()) {
             return null;
-        }
-        else{
-            for(Article a: articleList){
-                if(a.getArticleType().toString().equals("SYSTEM")) {
+        } else {
+            for (Article a : articleList) {
+                if (a.getArticleType().toString().equals("SYSTEM")) {
                     titles = a.getId();
                     titlesList.add(titles);
                 }
@@ -324,30 +322,31 @@ public class ArticleService {
         return titlesList;
     }
 
-    public Article getArticlesByTitle(String titleSent){
+    public Article getArticlesByTitle(String titleSent) {
         List<Article> foundArticle = articleRepository.findArticlesByTitle(titleSent);
         Article sentTitleArticle = new Article();
-        if(foundArticle.isEmpty()==false) {
+        if (foundArticle.isEmpty() == false) {
             System.out.println(foundArticle.get(0).getId());
-            if(foundArticle.get(0).getArticleType().toString().equals("SYSTEM")) {
-                sentTitleArticle=foundArticle.get(0);
+            if (foundArticle.get(0).getArticleType().toString().equals("SYSTEM")) {
+                sentTitleArticle = foundArticle.get(0);
             }
         }
-       return sentTitleArticle;
+        return sentTitleArticle;
     }
-    public ServiceResponseHelper findArticleById(long articleId){
+
+    public ServiceResponseHelper findArticleById(long articleId) {
         Optional<Article> queryArticleOpt = articleRepository.findById(articleId);
         Article queryArticle = new Article();
         ArticleResponseDto sentArticleResp = new ArticleResponseDto();
 
-        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false, null, null);
         Map errorResponse = new HashMap<>();
         Map successResponse = new HashMap<>();
 
-        if(queryArticleOpt.isPresent()){
+        if (queryArticleOpt.isPresent()) {
             queryArticle = queryArticleOpt.get();
             List<Users> authorQuery = usersService.findingArticlesByUser(queryArticle.getId());
-            if(authorQuery.isEmpty()==false){
+            if (authorQuery.isEmpty() == false) {
 
                 sentArticleResp.setIdOfCreator(authorQuery.get(0).getId());
                 sentArticleResp.setFirstNameofCreator(authorQuery.get(0).getFirstName());
@@ -368,16 +367,14 @@ public class ArticleService {
                 serviceResponseHelper.setContent(sentArticleResp);
                 return serviceResponseHelper;
 
-            }
-            else{
+            } else {
                 serviceResponseHelper.setHasError(true);
                 errorResponse.put("message", "article author is empty");
                 serviceResponseHelper.setResponseMessage(errorResponse);
                 serviceResponseHelper.setContent(null);
                 return serviceResponseHelper;
             }
-        }
-        else{
+        } else {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "article id doesn't exsist");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -387,12 +384,12 @@ public class ArticleService {
 
     }
 
-    public ServiceResponseHelper getArticleComment(Long id){
+    public ServiceResponseHelper getArticleComment(Long id) {
         Map errorResponse = new HashMap<>();
         Map successResponse = new HashMap<>();
-        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false, null, null);
         Optional<Article> article = articleRepository.findById(id);
-        if(article.isPresent()){
+        if (article.isPresent()) {
             ArticleCommentDto articleCommentDto = new ArticleCommentDto();
             articleCommentDto.setId(article.get().getId());
             articleCommentDto.setTitle(article.get().getTitle());
@@ -406,14 +403,14 @@ public class ArticleService {
             articleCommentDto.setUpdatedAt(article.get().getUpdatedAt());
 
             List<CommentUserDto> commentUsers = new ArrayList<>();
-            for(Comment c: article.get().getArticleComments()){
+            for (Comment c : article.get().getArticleComments()) {
                 List<Users> users = usersRepository.findByCommentsIsNotNullAndCommentsIdEquals(c.getId());
                 CommentUserDto commentUserDto = new CommentUserDto();
                 commentUserDto.setId(c.getId());
                 commentUserDto.setText(c.getText());
                 commentUserDto.setCreatedComment(c.getCreatedComment());
                 commentUserDto.setUpdatedComment(c.getUpdatedComment());
-                commentUserDto.setUser( users.size()>0 ? users.get(0).getFirstName()+" "+users.get(0).getLastName() : null);
+                commentUserDto.setUser(users.size() > 0 ? users.get(0).getFirstName() + " " + users.get(0).getLastName() : null);
                 commentUsers.add(commentUserDto);
                 //commentUserDto.set
 
@@ -424,7 +421,7 @@ public class ArticleService {
             serviceResponseHelper.setResponseMessage(successResponse);
             serviceResponseHelper.setContent(articleCommentDto);
             return serviceResponseHelper;
-        }else{
+        } else {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "No article found");
             serviceResponseHelper.setResponseMessage(errorResponse);
@@ -433,13 +430,29 @@ public class ArticleService {
         }
     }
 
-//    public String LikeAnArticle(Long id){
-//        Article like = articleRepository.findById(id);
-//        if(like==null)
-//            return "article id doesn't exsists";
-//        else{
-//            like.getLikecount()+=1;
-//            return "like added";
-//        }
-//    }
+    public String LikeAnArticle(Long id) {
+        Article likeArticle = articleRepository.findById(id).orElse(null);
+        if (likeArticle == null) {
+            return "article id doesn't exsists";
+        } else {
+            if (likeArticle.getLikecount() == null) {
+                likeArticle.setLikecount(0);
+            }
+            likeArticle.setLikecount(likeArticle.getLikecount() + 1);
+            articleRepository.save(likeArticle);
+            return "like added";
+        }
+    }
+
+    public Integer findlikeCount(Long id) {
+        Article likeArticle = articleRepository.findById(id).orElse(null);
+        if (likeArticle == null) {
+            return 0;
+        } else {
+            if (likeArticle.getLikecount() == null) {
+                likeArticle.setLikecount(0);
+            }
+            return likeArticle.getLikecount();
+        }
+    }
 }

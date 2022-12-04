@@ -51,7 +51,7 @@ public class Article {
     private Integer baylorNewsId;
 
     @Column
-    private Integer likecount;
+    private Integer likecount = 0;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "users_articles",referencedColumnName = "id")
