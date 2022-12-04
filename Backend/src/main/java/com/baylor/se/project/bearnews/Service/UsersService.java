@@ -390,10 +390,10 @@ public class UsersService {
                }
 
             else{
-                serviceResponseHelper.setHasError(true);
-                errorResponse.put("message", "No Interest list found");
-                serviceResponseHelper.setResponseMessage(errorResponse);
-                serviceResponseHelper.setContent(null);
+                serviceResponseHelper.setHasError(false);
+                successResponse.put("message", "No Interest list found");
+                serviceResponseHelper.setResponseMessage(successResponse);
+                serviceResponseHelper.setContent(tagsLiked);
                 return serviceResponseHelper;
             }
         }

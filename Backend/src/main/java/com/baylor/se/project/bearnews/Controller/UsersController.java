@@ -164,7 +164,7 @@ public class UsersController {
         System.out.println(requestBody);
         ObjectMapper objectMapper = new ObjectMapper();
         if(serviceResponseHelper.getHasError()){
-            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper.getContent()),HttpStatus.BAD_REQUEST);
         }
         else {
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper.getContent()),HttpStatus.OK);
