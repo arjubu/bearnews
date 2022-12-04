@@ -436,6 +436,81 @@ fieldset[disabled] .pagination-ellipsis {
 .subtitle:not(:last-child), .block:not(:last-child), .breadcrumb:not(:last-child), .level:not(:last-child), .message:not(:last-child), .pagination:not(:last-child), .tabs:not(:last-child) {
   margin-bottom: 1.5rem;
 }
+.effeckt-page-transition-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  margin: -100px 0 0 -100px;
+  color: white; }
+
+.effeckt-off-screen-nav {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  background: #333;
+  visibility: hidden;
+  width: 12rem; }
+  .effeckt-off-screen-nav ul {
+    list-style: none; }
+  .effeckt-off-screen-nav li:first-child a {
+    border-top: 0; }
+  .effeckt-off-screen-nav li:last-child a {
+    border-bottom: 0; }
+  .effeckt-off-screen-nav li a {
+    display: block;
+    padding: 0.3rem 1rem;
+    color: white;
+    border-bottom: 1px solid #444; }
+    .effeckt-off-screen-nav li a:hover, .effeckt-off-screen-nav li a:focus {
+      background: #444; }
+    .effeckt-off-screen-nav li a:active {
+      background: #222; }
+  .effeckt-off-screen-nav header {
+    position: relative; }
+  .effeckt-off-screen-nav h4 {
+    color: white;
+    background: #333;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0.5rem 0.2rem 0;
+    margin: 0 1rem 1rem;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.1rem;
+    position: relative; }
+
+.effeckt-off-screen-nav-close {
+  position: absolute;
+  right: 1rem;
+  top: 0.65rem;
+  font-size: 100%;
+  z-index: 300; }
+  .effeckt-off-screen-nav-close:hover, .effeckt-off-screen-nav-close:focus {
+    color: red; }
+
+.effeckt-off-screen-nav-rotate.effeckt-off-screen-nav-show ~ .page-wrap .off-screen-nav-cover {
+  background: linear-gradient(left, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.9)); }
+
+.effeckt-off-screen-nav-top-card-deck, .effeckt-off-screen-nav-bottom-card-deck {
+  cursor: pointer;
+  background: transparent; }
+  .effeckt-off-screen-nav-top-card-deck h4, .effeckt-off-screen-nav-bottom-card-deck h4 {
+    margin: 0;
+    padding: 1rem;
+    border-bottom: 0; }
+  .effeckt-off-screen-nav-top-card-deck li, .effeckt-off-screen-nav-bottom-card-deck li {
+    background-color: #333;
+    border-bottom: 1px solid #eee; }
+  .effeckt-off-screen-nav-top-card-deck a, .effeckt-off-screen-nav-bottom-card-deck a {
+    height: 100%; }
+  .effeckt-off-screen-nav-top-card-deck .effeckt-off-screen-nav-close, .effeckt-off-screen-nav-bottom-card-deck .effeckt-off-screen-nav-close {
+    right: 1rem; }
+
+
+
 
 .delete, .modal-close {
   -webkit-touch-callout: none;

@@ -427,4 +427,14 @@ public class ArticleService {
             return serviceResponseHelper;
         }
     }
+
+//    public String LikeAnArticle(Long id){
+//        Article like = articleRepository.findById(id);
+//        if(like==null)
+//            return "article id doesn't exsists";
+//        else{
+//            like.getLikecount()+=1;
+//            return "like added";
+//        }
+//    }
 }
