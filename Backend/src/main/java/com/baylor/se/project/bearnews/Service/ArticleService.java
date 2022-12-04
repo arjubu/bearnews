@@ -447,4 +447,29 @@ public class ArticleService {
             return serviceResponseHelper;
         }
     }
+        public String LikeAnArticle(Long id) {
+        Article likeArticle = articleRepository.findById(id).orElse(null);
+        if (likeArticle == null) {
+            return "article id doesn't exsists";
+        } else {
+            if (likeArticle.getLikecount() == null) {
+                likeArticle.setLikecount(0);
+            }
+            likeArticle.setLikecount(likeArticle.getLikecount() + 1);
+            articleRepository.save(likeArticle);
+            return "like added";
+        }
+    }
+
+    public Integer findlikeCount(Long id) {
+        Article likeArticle = articleRepository.findById(id).orElse(null);
+        if (likeArticle == null) {
+            return 0;
+        } else {
+            if (likeArticle.getLikecount() == null) {
+                likeArticle.setLikecount(0);
+            }
+            return likeArticle.getLikecount();
+        }
+    }
 }
