@@ -10,9 +10,9 @@ import SocialShareBottom from "./elements/SocialShareBottom";
 import SocialShareSide from "./elements/SocialShareSide";
 
 
-const PostFormatStandard = ({postData, allData}) => {
-  console.log("postData");
-  console.log(postData);
+const PostFormatStandard = ({postData, allData, slug}) => {
+  // console.log("postData");
+  // console.log(postData);
   const basePathLink = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_BASEPATH ?? "" : "";
   
   const postContent = postData.content.replaceAll('/images/', basePathLink + '/images/');
@@ -34,8 +34,8 @@ const PostFormatStandard = ({postData, allData}) => {
 				  <SocialShareBottom />
 				  <hr className="m-t-xs-50 m-b-xs-60" />
 				  <PostAuthor authorData={postData}/>
-				  <PostComment />
-          <Comments />
+				  <PostComment slug = {slug}/>
+          <Comments slug = {slug}/>
 
                 </main>
               </div>

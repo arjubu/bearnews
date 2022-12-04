@@ -6791,9 +6791,7 @@ Date Created: July 26, 2019
     font-size: 1.6rem;
     line-height: 2.8rem;
   }
-  .comment{
-    outline: thick double #32a1ce;
-  }
+
   .comment-form textarea.form-control {
     min-height: 18rem;
   }
@@ -8706,6 +8704,19 @@ Date Created: July 26, 2019
     margin: 3rem;
   }
   
+  .deleteComment{
+    position: relative;
+    margin-right: 80%;
+    /* margin-bottom: 50%; */
+    border-radius: 20%;
+    background-color: #fff;
+  }
   .customContainer {
     border: 1px solid black;
+  }
+  .comment{
+    position: relative;
+  }
+  .deleteComment:hover{
+    background-color: #a0e9b7;
   }
