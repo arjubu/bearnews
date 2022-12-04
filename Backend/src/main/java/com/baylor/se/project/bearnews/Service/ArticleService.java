@@ -282,9 +282,14 @@ public class ArticleService {
                     if (author.isEmpty() == false) {
                         article.setIdOfCreator(author.get(0).getId());
                         article.setNameofCreator(author.get(0).getFirstName());
+                    }else{
+                        article.setIdOfCreator(0L);
+                        article.setNameofCreator(articleType.toString());
                     }
                     article.setIdOfTag(a.getContains() == null ?  0L : a.getContains().getId() );
                     article.setTextOfTag(a.getContains() == null ? ""  : a.getContains().getTagText());
+                    article.setDetailLink(a.getDetailLink() != null ? a.getDetailLink() : null);
+                    article.setThumbLink(a.getThumbLink() != null ? a.getThumbLink() : null);
                     articleDetails.add(article);
 
                 }
