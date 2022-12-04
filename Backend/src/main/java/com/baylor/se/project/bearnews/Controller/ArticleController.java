@@ -151,7 +151,45 @@ public class ArticleController {
 
     @RequestMapping(value = "/fetchArticleTitles", method = RequestMethod.GET)
     public ResponseEntity<?> getAllArticleTitlwa(){
-        List<Long> responseReturned = articleService.getAllTitles();
+        List<Long> responseReturned = articleService.getAllTitles(ArticleType.SYSTEM);
+
+
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+//            for (String i : responseReturned
+//            ) {
+//
+//                response.add(i.replace(" ","-"));
+//
+//            }
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchBaylorNewsArticleTitles", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllBaylorNewsArticleTitle(){
+        List<Long> responseReturned = articleService.getAllTitles(ArticleType.BAYLORNEWS);
+
+
+        if(responseReturned==null){
+            return new ResponseEntity<>(responseReturned,HttpStatus.BAD_REQUEST);
+        }
+        else{
+//            for (String i : responseReturned
+//            ) {
+//
+//                response.add(i.replace(" ","-"));
+//
+//            }
+            return new ResponseEntity<>(responseReturned,HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/fetchBaylorNewsArticleTitles", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllTwitterArticleTitle(){
+        List<Long> responseReturned = articleService.getAllTitles(ArticleType.TWITTER);
 
 
         if(responseReturned==null){

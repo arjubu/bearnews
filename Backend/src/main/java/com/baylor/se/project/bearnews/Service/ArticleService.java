@@ -321,7 +321,7 @@ public class ArticleService {
         return   articleRepository.findAll();
     }
 
-    public List<Long> getAllTitles(){
+    public List<Long> getAllTitles(ArticleType articleType){
         Long titles;
         List<Article> articleList = articleRepository.findAll();
         List<Long> titlesList =  new ArrayList<>();
@@ -330,7 +330,7 @@ public class ArticleService {
         }
         else{
             for(Article a: articleList){
-                if(a.getArticleType().toString().equals("SYSTEM")) {
+                if(a.getArticleType().toString().equals(articleType)) {
                     titles = a.getId();
                     titlesList.add(titles);
                 }
@@ -351,7 +351,7 @@ public class ArticleService {
         return sentTitleArticle;
     }
     public ServiceResponseHelper findArticleById(long articleId, ArticleType articleType){
-        Optional<Article> queryArticleOpt = articleRepository.findByIdAndArticleType(articleId,articleType);
+        Optional<Article> queryArticleOpt = articleRepository.findById(articleId);
         Article queryArticle = new Article();
         ArticleResponseDto sentArticleResp = new ArticleResponseDto();
 
