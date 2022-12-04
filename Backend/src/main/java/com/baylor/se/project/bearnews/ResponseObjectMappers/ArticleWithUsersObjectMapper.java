@@ -13,6 +13,10 @@ public class ArticleWithUsersObjectMapper {
     public String contentOfArticle;
     public LocalDateTime timeOfArticleCretion;
 
+    private String detailLink;
+
+    private String thumbLink;
+
     public long getIdOfArticle() {
         return idOfArticle;
     }
@@ -75,5 +79,21 @@ public class ArticleWithUsersObjectMapper {
 
     public void setTimeOfArticleCretion(LocalDateTime timeOfArticleCretion) {
         this.timeOfArticleCretion = timeOfArticleCretion;
+    }
+
+    public String getDetailLink() {
+        return detailLink;
+    }
+
+    public void setDetailLink(String detailLink) {
+        this.detailLink = detailLink;
+    }
+
+    public String getThumbLink() {
+        return thumbLink;
+    }
+
+    public void setThumbLink(String thumbLink) {
+        this.thumbLink = thumbLink;
     }
 }
