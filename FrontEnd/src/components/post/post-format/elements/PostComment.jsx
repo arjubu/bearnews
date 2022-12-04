@@ -50,40 +50,6 @@ function PostComment ({slug}) {
 
 
 
-  async function postcomment(){
-    console.log("commentEmail: "+ cookies.username);
-    console.log("commentText: "+ inputElement.current.value);
-      if(cookies.username == undefined || cookies.username == "undifine"){
-        error_login({ name: 'ID', message: "You need to login first to create a comment" });
-      }else{
-
-    fetch('http://localhost:8080/insertComment?articleId='+slug, {
-      method: 'POST',
-      body: JSON.stringify({
-        commentText: inputElement.current.value,
-        commentEmail: cookies.username
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-      .then(response => {
-         
-        if (response.status == 201) {
-          console.log('go'); 
-          return response.json();
-          
-        } else {
-          error_login({ name: "ID", message: "create comment is not successful"});
-          throw new Error('Something went wrong ...' + response.status);
-
-        }
-          
-        }).then(data=>{
-        });}
-      
-
-  }
     
   return (
     <div className="post-comment-area">
