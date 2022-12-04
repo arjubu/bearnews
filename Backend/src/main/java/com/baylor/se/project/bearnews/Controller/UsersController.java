@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Controller;
 
 import com.baylor.se.project.bearnews.Controller.dto.UserDto;
+import com.baylor.se.project.bearnews.Controller.dto.UserInterestDto;
 import com.baylor.se.project.bearnews.Models.Users;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleByUsersObjectMapper;
 import com.baylor.se.project.bearnews.Service.TagService;
@@ -53,7 +54,7 @@ public class UsersController {
         return new ResponseEntity<>(foundApplicants,HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/updateUserInterest", method = RequestMethod.PUT)
+   /* @RequestMapping(value = "/updateUserInterest", method = RequestMethod.PUT)
     public ResponseEntity<?> attachInterestList(@RequestBody Map<String, String> json,
                                                 @RequestParam (name="usersId" , required = false) Long usersId) {
         Users userFound = usersService.foundUserById(usersId);
@@ -70,7 +71,7 @@ public class UsersController {
             return new ResponseEntity<>(updateUsers, HttpStatus.OK);
         }
         return new ResponseEntity<>("doesn't exsist", HttpStatus.BAD_REQUEST);
-    }
+    }*/
 
     @PostMapping("/validateOtp")
     public ResponseEntity<?> validateOtp(@RequestBody Map<String,String> requestBody) throws JsonProcessingException {
@@ -140,10 +141,14 @@ public class UsersController {
     }
 
 
-    /*@RequestMapping(value = "/updateUserProfile", method = RequestMethod.POST)
-    public ResponseEntity<?> updatingUserProfile(@RequestBody Map<String,String> requestBody) throws JsonProcessingException{
+    @RequestMapping(value = "/updateUserProfile", method = RequestMethod.PUT)
+    public ResponseEntity<?> updatingUserProfile(@RequestBody UserInterestDto requestBody){
+        //System.out.println("calling from frontend");
+        System.out.println(requestBody.getTagsContaining());
+        System.out.println(requestBody.getUsername());
+        usersService.interestListAttach(requestBody);
+        return new ResponseEntity<>(HttpStatus.OK);
 
-
-    }*/
+    }
 
 }

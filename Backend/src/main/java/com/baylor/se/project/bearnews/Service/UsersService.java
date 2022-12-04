@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Service;
 
 import com.baylor.se.project.bearnews.Controller.ServiceResponseHelper;
+import com.baylor.se.project.bearnews.Controller.dto.UserInterestDto;
 import com.baylor.se.project.bearnews.Controller.dto.UserProfileDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Tag;
@@ -122,16 +123,26 @@ public class UsersService {
             return true;
     }
 
-    public Users interestListAttach(List<String> interestLists,Long id){
-        Users usersToUpdate = new Users();
-        List<Tag> tagsToAttach = tagService.ListOfTagsFound(interestLists);
-        Optional<Users> userQueryOpt = userRepo.findById(id);
-        if(userQueryOpt.isPresent()){
-            usersToUpdate = userQueryOpt.get();
-            usersToUpdate.setIsLiked(tagsToAttach);
-            userRepo.save(usersToUpdate);
-        }
-        return usersToUpdate;
+    public void interestListAttach(UserInterestDto userInterestDto){
+       Optional<Users>usersQueryOpt = userRepo.findByEmail(userInterestDto.getUsername());
+       if(usersQueryOpt.isPresent()) {
+           Users usersQuery = usersQueryOpt.get();
+           String interests = userInterestDto.getTagsContaining();
+           ArrayList<String> iL = new ArrayList<>(Arrays.asList(interests.split(",")));
+           if(iL.size()>0){
+               List<Tag> isLikedTags = new ArrayList<>();
+               for(String s: iL){
+                   Tag queryTag = tagService.findTagsByText(s);
+                   if(queryTag!=null)
+                       usersQuery.getIsLiked().add(queryTag);
+                     //usersQuery.setIsLiked();
+               }
+               //usersQuery.setIsLiked(isLikedTags);
+               userRepo.save(usersQuery);
+
+           }
+       }
+
 
     }
     public Users foundUserById(Long id){

@@ -21,6 +21,7 @@ import {
     MDBListGroupItem
   } from 'mdb-react-ui-kit';import FooterOne from "../components/footer/FooterOne";
 import HeaderLogged from "../components/header/HeaderLogged";
+
 class Button extends React.Component {
 
     render() {
@@ -42,9 +43,10 @@ export default function PersonalProfile() {
     const [name, setName] = useState("");
     const [respStatus, setrespStatus] = useState("");
     const [cookies, setCookie, removeCookie] = useCookies(['username']);
-    var tags = [];
     const [selectedOption, setselectedOption] = useState([]);
-    const [newarray, setarray] = useState([]);
+    var tags = [];
+    const [err, setErr] = useState('');
+    const [errorMessages, error_login] = useState('');
 
     console.log("--profile page cookie--");
     console.log(cookies.username);
@@ -54,7 +56,7 @@ export default function PersonalProfile() {
   
     const getProfileData = async () => {
         const response = await fetch(
-            "http://localhost:8080/displayUserProfile", {
+            "http://137.184.37.205:8080/displayUserProfile", {
             method: 'POST',
             body: JSON.stringify({
                 username: cookies.username,
@@ -87,7 +89,7 @@ export default function PersonalProfile() {
         const [DATASET, setDataset] = useState();
       
          function handlerChange(input){
-             fetch('http://localhost:8080/getTagByLetter', {
+             fetch('http://137.184.37.205:8080/getTagByLetter', {
             method: 'POST',
             body: JSON.stringify({
               suggString : input,
@@ -110,7 +112,8 @@ export default function PersonalProfile() {
               }
                 
               }).then(data=>{
-                let a = [];
+                  let a = [];
+                
                 console.log(data);
                 if(data.data == "doesn't exsist"){
                   setDataset(a);
@@ -118,15 +121,18 @@ export default function PersonalProfile() {
                 }
               data.data.forEach(myfunction)
               function myfunction(item){
-                let b = {label:item.toString()};
-                a.push(b);
+                  let b = { label: item.toString() };
+                 
+                  a.push(b);
+                  
               }
-              setDataset(a);
+                  setDataset(a);
+                  
               
                 return data;
                 //console.log(Mylist);
               });
-              //console.log(DATASET);
+             // console.log(DATASET);
       
         }
       
@@ -141,7 +147,9 @@ export default function PersonalProfile() {
               options={DATASET}
               getOptionValue={(option) => option.label}
               onChange={opt => (saveTags(opt))}
-              
+             // value={selectedOption}
+              //onChange={saveTags}
+            
               />
             </div>
           
@@ -150,9 +158,9 @@ export default function PersonalProfile() {
    
 
     function saveTags(input) {
-       /* console.log("--save tags calling--");
+        console.log("--save tags calling--");
         console.log(input)
-        console.log(cookies.username);*/
+        console.log(cookies.username);
         tags.push(input);
 
 
@@ -161,27 +169,31 @@ export default function PersonalProfile() {
     function sayHello() {
        
         console.log("--on click calling--");
-        console.log(typeof (tags));
-       // tags.forEach((val) => console.log(val));
-        let tagsConsole = Object.keys(tags);
-        let numbers = Object.values(tags);
-
-        numbers.forEach((number) => console.log(number));
+       // console.log(tags.at(tags.length - 1));
+        const myTags = tags.at(tags.length - 1);
+        const arr = [];
+        let numbers = Object.values(myTags);
+        let tagstring = "";
+        numbers.forEach((number) => tagstring = tagstring + number.label + ',');
+        tagstring = tagstring.slice(0, -1);
+        console.log(tagstring);
+        
         //console.log(tagsConsole)
-        /*fetch('http://localhost:8080/createArticle', {
+        fetch('http://localhost:8080/updateUserProfile', {
             mode: 'cors',
             method: 'PUT',
             body: JSON.stringify({
-                tagsContaining: tags,
-                createdUsersEmail: cookies.username,
+                username: cookies.username,
+                tagsContaining: tagstring,
             }),
             headers: {
                 'Content-type': 'application/json',
             },
         })
-            .then(response => response.json())
+            //.then(response => response.json())
             .then((response) => {
                 console.log('response', response);
+                //console.log(response.bodyUsed);
                 if (response.status == 500) {
                     error_login({ name: 'ID', message: "Creating empty object is not allowed" });
 
@@ -192,9 +204,9 @@ export default function PersonalProfile() {
                 else {
                     console.log(response)
                     setErr(response.responseMessage);
-                    error_login({ name: 'ID', message: response.responseMessage.message });
+                    error_login({ name: 'ID', message: response});
                 }
-            })*/
+            })
     }
     
 
