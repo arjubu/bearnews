@@ -47,7 +47,7 @@ class Button extends React.Component {
 const HeaderOne = () => {
   // Main Menu Toggle
   var menuRef = useRef();
-
+ 
   const toggleDropdownMenu = () => {
     const dropdownSelect = menuRef.current.childNodes;
     let dropdownList = [];
