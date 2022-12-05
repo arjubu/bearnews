@@ -41,7 +41,7 @@ function Login() {
              
             if (response.status == 200) {
               console.log('go'); 
-              window.location.href =  "/";
+              window.location.href =  "/login";
               
             } else if (response.status == 400) {
               error_login({ name: "ID", message: response.renderMessage});
@@ -78,9 +78,9 @@ function Login() {
             <label>Code</label>
             <input type="text" name="username" id="username" required onChange={e => setOtp(e.target.value)}/>
             <label>New password</label>
-            <input type="text" name="username" id="username" required onChange={e => setPassword(e.target.value)}/>
+            <input type="password" name="username" id="username" required onChange={e => setPassword(e.target.value)}/>
             <label>Retype password</label>
-            <input type="text" name="username" id="username" required onChange={e => setRepassword(e.target.value)}/>
+            <input type="password" name="username" id="username" required onChange={e => setRepassword(e.target.value)}/>
           </div>
 
           <div className="button-container">
