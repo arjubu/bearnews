@@ -91,5 +91,12 @@ public class TagService {
             return serviceResponseHelper;
         }
     }
+    public Tag findTagsByText(String textSent){
+        List<Tag> tagList = tagRepository.findByTagText(textSent);
+        if(tagList.isEmpty()==false)
+            return tagList.get(0);
+        else
+            return null;
+    }
 
 }

@@ -21,6 +21,7 @@ import {
     MDBListGroupItem
   } from 'mdb-react-ui-kit';import FooterOne from "../components/footer/FooterOne";
 import HeaderLogged from "../components/header/HeaderLogged";
+
 class Button extends React.Component {
 
     render() {
@@ -42,6 +43,11 @@ export default function PersonalProfile() {
     const [name, setName] = useState("");
     const [respStatus, setrespStatus] = useState("");
     const [cookies, setCookie, removeCookie] = useCookies(['username']);
+    const [selectedOption, setselectedOption] = useState([]);
+    var tags = [];
+    const [err, setErr] = useState('');
+    const [errorMessages, error_login] = useState('');
+
     console.log("--profile page cookie--");
     console.log(cookies.username);
     useEffect(() => {
@@ -106,7 +112,8 @@ export default function PersonalProfile() {
               }
                 
               }).then(data=>{
-                let a = [];
+                  let a = [];
+                
                 console.log(data);
                 if(data.data == "doesn't exsist"){
                   setDataset(a);
@@ -114,15 +121,18 @@ export default function PersonalProfile() {
                 }
               data.data.forEach(myfunction)
               function myfunction(item){
-                let b = {label:item.toString()};
-                a.push(b);
+                  let b = { label: item.toString() };
+                 
+                  a.push(b);
+                  
               }
-              setDataset(a);
+                  setDataset(a);
+                  
               
                 return data;
                 //console.log(Mylist);
               });
-              //console.log(DATASET);
+             // console.log(DATASET);
       
         }
       
@@ -130,21 +140,75 @@ export default function PersonalProfile() {
           //const resultItems = this.props.data;
        
             <div className="upload-tag">
-              {console.log("DATASET")}
-              {console.log(DATASET)}
+  
               <Creatable
               isMulti
               onInputChange = {(event) => handlerChange(event) }
               options={DATASET}
               getOptionValue={(option) => option.label}
-              //inputValue={this.state.searchKey}
-              onChange={opt => (opt.label)}
-              
+              onChange={opt => (saveTags(opt))}
+             // value={selectedOption}
+              //onChange={saveTags}
+            
               />
             </div>
           
         );
-      }
+    }
+   
+
+    function saveTags(input) {
+        console.log("--save tags calling--");
+        console.log(input)
+        console.log(cookies.username);
+        tags.push(input);
+
+
+
+    }
+    function sayHello() {
+       
+        console.log("--on click calling--");
+       // console.log(tags.at(tags.length - 1));
+        const myTags = tags.at(tags.length - 1);
+        const arr = [];
+        let numbers = Object.values(myTags);
+        let tagstring = "";
+        numbers.forEach((number) => tagstring = tagstring + number.label + ',');
+        tagstring = tagstring.slice(0, -1);
+        console.log(tagstring);
+        
+        //console.log(tagsConsole)
+        fetch('http://localhost:8080/updateUserProfile', {
+            mode: 'cors',
+            method: 'PUT',
+            body: JSON.stringify({
+                username: cookies.username,
+                tagsContaining: tagstring,
+            }),
+            headers: {
+                'Content-type': 'application/json',
+            },
+        })
+            //.then(response => response.json())
+            .then((response) => {
+                console.log('response', response);
+                //console.log(response.bodyUsed);
+                if (response.status == 500) {
+                    error_login({ name: 'ID', message: "Creating empty object is not allowed" });
+
+                }
+                else if (response.hasError == false) {
+                    console.log('goes to backend');
+                }
+                else {
+                    console.log(response)
+                    setErr(response.responseMessage);
+                    error_login({ name: 'ID', message: response});
+                }
+            })
+    }
+    
 
 
   return (
@@ -260,7 +324,7 @@ export default function PersonalProfile() {
             <SearchResultList></SearchResultList>
             </MDBCol>
             <MDBCol md="6">
-            <Button className="mybutton" content="Submit" variant="green" />            </MDBCol>
+                                  <Button className="mybutton" content="Submit" variant="green" onClick={sayHello}/>            </MDBCol>
             </MDBRow>
 
 
