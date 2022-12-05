@@ -40,7 +40,7 @@ function Login() {
             
           } else if (response.status == 400) {
             error_login({ name: "ID", message: "Email does not exist"});
-            throw new Error('Something went wrong ...');
+            //throw new Error('Something went wrong ...');
   
           }else{
             error_login({ name: "ID", message: "Send email fail"});
