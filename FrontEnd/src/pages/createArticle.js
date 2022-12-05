@@ -256,9 +256,6 @@ return (
 
     <MDBRow className='align-items-center pt-4 pb-3'>
 
-        <MDBCol md='3' className='ps-5'>
-        <h6 className="mb-0">Upload Picture or Media</h6>
-        </MDBCol>
 
         {/* <MDBCol md='9' className='pe-5'>
         <MDBFile size='lg' id='customFile' onChange={e => setFiles(e.target.files)} />
