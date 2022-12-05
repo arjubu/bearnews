@@ -160,7 +160,7 @@ export async function getPostBySlug(slug, fields = []) {
   }
   items['date'] = article.data.timeOfCreation;
   items['cate_img'] = '/images/category/travel.png';
-    if(article.data.image==null|| article.data.image==undefined ||article.data.image=="undefined"){
+    if(article.data.image==null|| article.data.image==undefined ||article.data.image=="undefined" || article.data.thumbLink==null){
       
     items['featureImg'] =  '/images/posts/download.png';
    
