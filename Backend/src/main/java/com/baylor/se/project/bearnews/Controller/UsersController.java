@@ -157,6 +157,22 @@ public class UsersController {
         }
 
     }
+    @PostMapping("/resetPasswordSendOtp")
+    public ResponseEntity<?> resetPasswordSendOtp(@RequestBody Map<String,String> requestBody) throws JsonProcessingException {
+        String userEmail = requestBody.get("username");
+        ServiceResponseHelper serviceResponseHelper = usersService.resetPasswordSendOtp(userEmail);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        if(serviceResponseHelper.getHasError()){
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.BAD_REQUEST);
+        }
+        else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        }
+    }
 
     @RequestMapping(value = "/showUserInterest", method = RequestMethod.POST)
     public ResponseEntity<?> updatingUserProfile(@RequestBody Map<String,String> requestBody) throws JsonProcessingException{
@@ -171,6 +187,21 @@ public class UsersController {
 
         }
 
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> requestBody) throws JsonProcessingException {
+        ServiceResponseHelper serviceResponseHelper = usersService.resetPassword(requestBody);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (serviceResponseHelper.getHasError()) {
+            return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper), HttpStatus.BAD_REQUEST);
+        } else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", serviceResponseHelper.getContent());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        }
     }
 
 }

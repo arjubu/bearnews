@@ -376,8 +376,37 @@ public class UsersService {
         }
 
     }
+    public ServiceResponseHelper resetPasswordSendOtp(String email) {
 
-    public ServiceResponseHelper displayUserTagsLiked(String userEmail){
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false, null, null);
+
+        Optional<Users> userQueryOpt = userRepo.findByEmail(email);
+        if (userQueryOpt.isPresent()) {
+            DefaultJedisClientConfig defaultJedisClientConfig = DefaultJedisClientConfig.builder().password(redisPassword).build();
+            Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort), defaultJedisClientConfig);
+            String OTP = RandomStringUtils.randomNumeric(6);
+            jedis.setex(email, 300, OTP);
+            EmailSenderService emailSenderService = new EmailSenderService();
+            emailSenderService.zohoSendMail(email, OTP);
+
+            serviceResponseHelper.setHasError(false);
+            successResponse.put("message", "desired contents found");
+            serviceResponseHelper.setResponseMessage(successResponse);
+            serviceResponseHelper.setContent(OTP);
+            return serviceResponseHelper;
+
+        } else {
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "No such user is there");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+
+        }
+    }
+        public ServiceResponseHelper displayUserTagsLiked(String userEmail){
         Map errorResponse = new HashMap<>();
         Map successResponse = new HashMap<>();
         ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
@@ -414,5 +443,59 @@ public class UsersService {
         }
 
     }
+
+    public ServiceResponseHelper resetPassword(Map<String,String> requestBody){
+
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+
+        Optional<Users> userQueryOpt = userRepo.findByEmail(requestBody.get("email"));
+        if(userQueryOpt.isPresent()){
+            if(requestBody.get("otp") == null){
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "OTP is required!");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }
+            if(!requestBody.get("newPassword").equals(requestBody.get("retypeNewPassword"))){
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "New password and retyped password mismatched!");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }
+
+            DefaultJedisClientConfig defaultJedisClientConfig = DefaultJedisClientConfig.builder().password(redisPassword).build();
+            Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort),defaultJedisClientConfig);
+            String otp = jedis.get(requestBody.get("email"));
+
+            if(otp == null || !otp.equals(requestBody.get("otp"))){
+                serviceResponseHelper.setHasError(true);
+                errorResponse.put("message", "OTP Mismatched or not found");
+                serviceResponseHelper.setResponseMessage(errorResponse);
+                serviceResponseHelper.setContent(null);
+                return serviceResponseHelper;
+            }
+            String passwordHash = Hashing.sha256().hashString(requestBody.get("otp"), StandardCharsets.UTF_8).toString();
+            userQueryOpt.get().setPassword(passwordHash);
+            userRepo.save(userQueryOpt.get());
+
+            serviceResponseHelper.setHasError(false);
+            successResponse.put("message", "Password reset successful!");
+            serviceResponseHelper.setResponseMessage(successResponse);
+            serviceResponseHelper.setContent(userQueryOpt);
+            return serviceResponseHelper;
+
+        }else{
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "No such user is there");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+    }
+
 
 }
