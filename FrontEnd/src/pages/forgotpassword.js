@@ -23,13 +23,10 @@ function Login() {
     const login_handle = (event) => {
       event.preventDefault();
   
-        fetch('http://137.184.37.205:8080/createUser', {
+        fetch('http://localhost:8080/resetPasswordSendOtp', {
         method: 'POST',
         body: JSON.stringify({
-          email : username,
-          password : password,
-          firstName : firstname,
-          lastName : lastname
+          username : username,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -47,7 +44,6 @@ function Login() {
   
           }else{
             error_login({ name: "ID", message: "Send email fail"});
-            throw new Error('Something went wrong ...');
   
           }
             
