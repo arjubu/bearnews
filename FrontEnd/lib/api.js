@@ -42,7 +42,7 @@ export async function getTwitterPostSlugs() {
   //console.log(fs.readdirSync(postsDirectory));
   let Mylist = {};
 
-    Mylist = await fetch('http://137.184.37.205:8080/getAllTwitterArticleTitle'
+    Mylist = await fetch('http://137.184.37.205:8080/fetchTwitterArticleTitles'
 
   
 
