@@ -71,7 +71,6 @@ const PostAuthor = ({postData, allPosts}) => {
                     </div>
                     <div className="col-lg-4">
                         <div className="post-sidebar">
-                            <WidgetCategory cateData={allPosts} />
                             <WidgetPost dataPost={allPosts} />
                         </div>
                     </div>
