@@ -4,6 +4,7 @@ import HeadMeta from "../components/elements/HeadMeta";
 import logo from '../../public/images/Bear_Mark_1_Color_01.jpg';
 import backgroundImage from '../../public/images/Background.jpg';
 import HeaderLogged from "../components/header/HeaderLogged";
+import HeaderOne from "../components/header/HeaderOne";
 import Image from "next/image";
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
@@ -25,7 +26,7 @@ const [Title, setTitle] = useState();
 const [Tags, setTags] = useState();
 const [Context, setContext] = useState();
 const [Files, setFiles] = useState();
-const [cookies, setCookie] = useCookies(['username'])
+const [cookies, setCookie, removeCookie] = useCookies(['username']);
 const [errorMessages, error_login] = useState({});
 const [err, setErr] = useState('');
 const renderErrorMessage = (name) =>
@@ -191,7 +192,12 @@ return (
     <>
       
     <HeadMeta metaTitle="Home One"/>
-    <HeaderLogged />
+    {cookies.username ==undefined  && (
+              <HeaderOne/>
+          )}
+          {cookies.username != undefined && (
+              <HeaderLogged />
+          )}
 
     {/* <div className="appcreate">
     <div className="create_frame">

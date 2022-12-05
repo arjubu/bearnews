@@ -14,7 +14,7 @@ function Login() {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     const [id, setID] = useState();
-    const [cookies, setCookie] = useCookies(['username'])
+    const [cookies, setCookie, removeCookie] = useCookies(['username']);
 
   
     const errors = {

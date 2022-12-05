@@ -23,7 +23,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 
 const HomeOne = ({ allPosts }) => {
-    const [cookies, setCookie] = useCookies(['username'])
+    const [cookies, setCookie, removeCookie] = useCookies(['username']);
     console.log(cookies.username);
     const SOCKET_URL = 'http://137.184.37.205:8080/ws';
     const [message, setMessage] = useState(' ');
