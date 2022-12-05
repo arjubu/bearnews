@@ -32,12 +32,7 @@ const PostAuthor = ({authorData}) => {
           </div>
           {/* End of .media-body-title */}
           <div className="media-body-content">
-            <p>{authorData.author_bio}</p>
-            <ul className="social-share social-share__with-bg">
-                {authorData.author_social.map((data, index)=> (
-                    <li key={index}><a href={data.url}><i className={data.icon} /></a></li>
-                ))}
-            </ul>
+
             {/* End of .social-share__no-bg */}
           </div>
           {/* End of .media-body-content */}
