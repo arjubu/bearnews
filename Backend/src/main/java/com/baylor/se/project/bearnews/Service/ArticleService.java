@@ -388,13 +388,13 @@ public class ArticleService {
                 return serviceResponseHelper;
 
             }
-            else{
+            /*else{
                 serviceResponseHelper.setHasError(true);
                 errorResponse.put("message", "article author is empty");
                 serviceResponseHelper.setResponseMessage(errorResponse);
                 serviceResponseHelper.setContent(null);
                 return serviceResponseHelper;
-            }
+            }*/
         }
         else{
             serviceResponseHelper.setHasError(true);
