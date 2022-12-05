@@ -27,7 +27,7 @@ import MenuData from "../../data/menu/HeaderMenu.json";
 import OffcanvasMenu from "./OffcanvasMenu";
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 class Button extends React.Component {
 
     render() {
@@ -93,7 +93,8 @@ const HeaderLogged = () => {
         console.log(msg)
         
         window.location.reload(false);
-        alert(msg.message);
+        //alert(msg.message);
+        NotificationManager.info("notification: "+msg.message);
     }
 
     const handlerSearchChange = (e) => {
@@ -264,13 +265,7 @@ const HeaderLogged = () => {
                                             <i className={SocialLink.linked.icon} />
                                         </a>
                                     </li>
-                                    <li>
-                                        <Button
-                                            variant="default"
-                                            style={{background: bgClr}}
-                                        >
-                                        </Button>
-                                    </li>
+                     
                                     <li>
                                         <Link href="/profile">
                                             <a>Profile</a>
@@ -383,6 +378,7 @@ const HeaderLogged = () => {
                     </div>
                 </nav>
             </header>
+            <NotificationContainer />
         </>
     );
 };

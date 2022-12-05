@@ -336,6 +336,7 @@ public class ArticleService {
                 }
             }
         }
+        Collections.reverse(titlesList);
         return titlesList;
     }
 
