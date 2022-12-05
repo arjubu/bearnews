@@ -1,4 +1,4 @@
-import React, { useState , Component} from "react";
+import React, { useState , Component,useEffect } from "react";
 //import ReactDOM from "react-dom";
 import HeadMeta from "../components/elements/HeadMeta";
 import logo from '../../public/images/Bear_Mark_1_Color_01.jpg';
@@ -33,6 +33,10 @@ const renderErrorMessage = (name) =>
 name === errorMessages.name && (
   <div className="error">{errorMessages.message}</div>
 );
+
+useEffect(() => {
+    setCookie('username',cookies.username);
+  });
 
 function SearchResultList (){
     const [DATASET, setDataset] = useState();
