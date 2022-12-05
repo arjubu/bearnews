@@ -1,15 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\lib",
     "\\src",
     "\\src\\components",
     "\\src\\components\\elements",
-    "\\src\\components\\header",
+    "\\src\\components\\post",
+    "\\src\\components\\post\\post-format",
+    "\\src\\components\\post\\post-format\\elements",
     "\\src\\pages",
-    "\\src\\pages\\author",
-    "\\src\\pages\\category",
-    "\\src\\services"
+    "\\src\\styles"
   ],
-  "SelectedNode": "\\src\\pages\\profile.js",
+  "SelectedNode": "\\src\\pages\\userHome.js",
   "PreviewInSolutionExplorer": false
 }
