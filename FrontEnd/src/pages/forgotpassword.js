@@ -23,11 +23,13 @@ function Login() {
     const login_handle = (event) => {
       event.preventDefault();
   
-      fetch('http://localhost', {
+        fetch('http://137.184.37.205:8080/createUser', {
         method: 'POST',
         body: JSON.stringify({
           email : username,
-          password : password
+          password : password,
+          firstName : firstname,
+          lastName : lastname
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -37,28 +39,23 @@ function Login() {
            
           if (response.status == 200) {
             console.log('go'); 
-            return response.json();
+            window.location.href =  "/resetpassword";
             
-          } else {
-            error_login({ name: "ID", message: errors.username});
+          } else if (response.status == 400) {
+            error_login({ name: "ID", message: "Email does not exist"});
+            throw new Error('Something went wrong ...');
+  
+          }else{
+            error_login({ name: "ID", message: "Send email fail"});
             throw new Error('Something went wrong ...');
   
           }
             
-          }).then(data=>{
-
-            if(data.list[0].isManager==0){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }
-            else if(data.list[0].isManager==1){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }
           });
         
         
     };
+  
   
     const renderErrorMessage = (name) =>
       name === errorMessages.name && (
@@ -77,7 +74,7 @@ function Login() {
           <div className="input-container">
             <label>Your email address</label>
             <input type="text" name="username" id="username" required onChange={e => setUserName(e.target.value)}/>
-            {renderErrorMessage("username")}
+            {renderErrorMessage("ID")}
           </div>
 
           <div className="button-container">
@@ -118,13 +115,11 @@ function Login() {
                   </a>
                   </Link>
           {(() => {
-        if (islogin) {
-          navigate('/User/'+id, { state: { id: id}});
-        } else {
+
           return (
             renderForm
           )
-        }
+        
       })()}   
         </div>
         </div>
