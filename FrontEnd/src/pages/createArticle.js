@@ -175,6 +175,8 @@ console.log(input.label);
                 }
                 else if (response.hasError == false) {
                     console.log('goes to backend');
+                    window.location.reload(false);
+                    alert('successfully created article');
                 } 
                 else {
                     console.log(response)
