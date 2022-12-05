@@ -10,15 +10,15 @@ import PostSectionThree from "../components/post/PostSectionThree";
 import PostSectionTwo from "../components/post/PostSectionTwo";
 import HeaderLogged from "../components/header/HeaderLogged";
 
-import FullCalendar from "@fullcalendar/react";
-// The import order DOES MATTER here. If you change it, you'll get an error!
-import interactionPlugin from "@fullcalendar/interaction";
-import timeGridPlugin from "@fullcalendar/timegrid";
+
 import { useCookies } from 'react-cookie';
 
 const HomeOne = ({allPosts}) => {
     const [cookies, setCookie] = useCookies(['username'])
     console.log(cookies.username);
+    if(cookies.username !=undefined){
+      window.location.href = '/userHome';
+    }
   return ( 
     <>
           <HeadMeta metaTitle="Home One" />
@@ -33,7 +33,7 @@ const HomeOne = ({allPosts}) => {
     {/* {console.log(allPosts)} */}
     <PostSectionTwo postData={allPosts} />
     <PostSectionThree postData={allPosts} />
-    <PostSectionFour postData={allPosts} />
+    {/* <PostSectionFour postData={allPosts} /> */}
 
     {/* <PostSectionSix postData={allPosts}/> */}
     <FooterOne />

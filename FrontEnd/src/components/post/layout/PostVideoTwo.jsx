@@ -8,6 +8,7 @@ const PostVideoTwo = ({ data, pClass, videoIcon }) => {
       <Link href={`/post/${data.slug}`}>
             <a className="align-self-center">
             <Image
+            loader={() => data.featureImg}
             src={data.featureImg}
             alt={data.title}
             width={100}

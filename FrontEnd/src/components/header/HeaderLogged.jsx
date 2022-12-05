@@ -109,7 +109,7 @@ const HeaderLogged = () => {
 
         function handlerChange(input) {
             //setsearchValue(input);
-            fetch('http://localhost:8080/getTagByLetter', {
+            fetch('http://137.184.37.205:8080/getTagByLetter', {
                 mode: 'cors',
                 method: 'POST',
                 body: JSON.stringify({

@@ -8,8 +8,8 @@ const FooterOne = () => {
       <div className="container">
         <div className="footer-top">
           <div className="row">
-            <div className="col-lg-2 col-md-4 col-6">
-              <div className="footer-widget">
+            {/* <div className="col-lg-2 col-md-4 col-6"> */}
+              {/* <div className="footer-widget">
                 <h2 className="footer-widget-title">Something</h2>
                 <ul className="footer-nav">
                   <li>
@@ -34,135 +34,62 @@ const FooterOne = () => {
                   </li>
                   
                 </ul>
-                {/* End of .footer-nav */}
-              </div>
+              </div> */}
               {/* End of .footer-widget */}
-            </div>
+            {/* </div> */}
             {/* End of .col-lg-2 */}
-            <div className="col-lg-2 col-md-4 col-6">
+            {/* <div className="col-lg-2 col-md-4 col-6">
               <div className="footer-widget">
-                <h2 className="footer-widget-title">Some</h2>
+                <h2 className="footer-widget-title">Baylor</h2>
                 <ul className="footer-nav">
                   <li>
                     <Link href="/">
-                        <a>Some1</a>
+                        <a>Baylor1</a>
                     </Link>
                   </li>
                   <li>
                     <Link href="/">
-                        <a>Some2</a>
+                        <a>Baylor2</a>
                     </Link>
                   </li>
                   <li>
                     <Link href="/">
-                        <a>Some3</a>
+                        <a>Baylor3</a>
                     </Link>
                   </li>
                   
                 </ul>
-                {/* End of .footer-nav */}
+                {/* End of .footer-nav 
               </div>
-              {/* End of .footer-widget */}
             </div>
-            {/* End of .col-lg-2 */}
             <div className="col-lg-2 col-md-4 col-6">
               <div className="footer-widget">
-                <h2 className="footer-widget-title">Bala</h2>
+                <h2 className="footer-widget-title">VR</h2>
                 <ul className="footer-nav">
                   <li>
                   <Link href="/">
-                    <a>Bala</a>
+                    <a>VR1</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>Bala</a>
+                    <a>VR2</a>
                     </Link>
                   </li>
                   <li>
                   <Link href="/">
-                    <a>Bala</a>
+                    <a>VR3</a>
                     </Link>
                   </li>
                  
                 </ul>
-                {/* End of .footer-nav */}
+                 End of .footer-nav 
               </div>
-              {/* End of .footer-widget */}
+               End of .footer-widget 
             </div>
-            {/* End of .col-lg-2 */}
-            <div className="col-lg-2 col-md-4 col-6">
-              <div className="footer-widget">
-                <h2 className="footer-widget-title">LOLOLOL</h2>
-                <ul className="footer-nav">
-                  <li>
-                  <Link href="/">
-                    <a>LOLOLOL</a>
-                    </Link>
-                  </li>
-                  <li>
-                  <Link href="/">
-                    <a>LOLOLOL</a>
-                    </Link>
-                  </li>
-                  <li>
-                  <Link href="/">
-                    <a>LOLOLOL</a>
-                    </Link>
-                  </li>
-                  
-                </ul>
-                {/* End of .footer-nav */}
-              </div>
-              {/* End of .footer-widget */}
-            </div>
-            {/* End of .col-lg-2 */}
-            <div className="col-lg-2 col-md-4 col-6">
-              <div className="footer-widget">
-                <h2 className="footer-widget-title">TaG</h2>
-                <ul className="footer-nav">
-                  <li>
-                  <Link href="/">
-                    <a>TaG</a>
-                    </Link>
-                  </li>
-                  <li>
-                  <Link href="/">
-                    <a>TaG</a>
-                    </Link>
-                  </li>
-                  <li>
-                  <Link href="/">
-                    <a>TaG</a>
-                    </Link>
-                  </li>
-                  
-                </ul>
-                {/* End of .footer-nav */}
-              </div>
-              {/* End of .footer-widget */}
-            </div>
-            {/* End of .col-lg-2 */}
-            <div className="col-lg-2 col-md-4 col-6">
-              <div className="footer-widget">
-                <h2 className="footer-widget-title">About</h2>
-                <ul className="footer-nav">
-                  <li>
-                  <Link href="/">
-                    <a>We</a>
-                    </Link>
-                  </li>
-                  <li>
-                  <Link href="/">
-                    <a>Jo</a>
-                    </Link>
-                  </li>
-                  
-                </ul>
-                {/* End of .footer-nav */}
-              </div>
-              {/* End of .footer-widget */}
-            </div>
+            End of .col-lg-2 */}
+            
+
             {/* End of .col-lg-2 */}
           </div>
           {/* End of .row */}
@@ -172,7 +99,7 @@ const FooterOne = () => {
           <div className="row align-items-center">
             <div className="col-md">
               <div className="footer-logo-container">
-                <Link href="/">
+                {/* <Link href="/">
                     <a> 
                         <Image 
                          src="/images/Bear_Mark_1_Color_01.jpg"
@@ -182,12 +109,25 @@ const FooterOne = () => {
                          height={50}
                         />
                     </a>
-                </Link>
+                </Link> */}
               </div>
               {/* End of .brand-logo-container */}
             </div>
+            <div className="col-md-9">
+            <Link href="/">
+            <Image 
+                         src="/images/GoBear.png"
+                         alt="footer logo"
+                         className="footer-logo"
+                         width={500}
+                         height={250}
+                        />
+                        </Link>
+                                        </div>
+                                        
+
             {/* End of .col-md-6 */}
-            <div className="col-md-auto">
+            {/* <div className="col-md-auto">
               <div className="footer-social-share-wrapper">
                 <div className="footer-social-share">
                   <div className="axil-social-title">Find us here</div>
@@ -219,9 +159,9 @@ const FooterOne = () => {
                   </li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
               {/* End of .footer-social-share-wrapper */}
-            </div>
+            {/* </div> */}
             {/* End of .col-md-6 */}
           </div>
           {/* End of .row */}
@@ -264,7 +204,7 @@ const FooterOne = () => {
           </ul> */}
           {/* End of .footer-bottom-links */}
           <p className="axil-copyright-txt">
-            © {new Date().getFullYear()}. All rights reserved by BearWeb.
+            © {new Date().getFullYear()}. All rights reserved by BearNews.
           </p>
         </div>
         {/* End of .footer-bottom */}

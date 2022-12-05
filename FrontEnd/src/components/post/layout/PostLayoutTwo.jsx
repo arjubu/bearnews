@@ -8,6 +8,7 @@ const PostLayoutTwo = ({data, postSizeMd, postBgDark}) => {
             <Link href={`/post/${data.slug}`}>
                 <a className="align-self-center">
                 <Image
+                loader={() => data.featureImg}
                 src={data.featureImg}
                 alt={data.title}
                 width={postSizeMd === true ? 285 : 150}

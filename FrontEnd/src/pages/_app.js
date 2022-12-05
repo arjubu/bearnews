@@ -5,6 +5,7 @@ import "../styles/App.css";
 // import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
+import 'react-notifications/lib/notifications.css';
 
 function MyApp({ Component, pageProps }) {
   return (

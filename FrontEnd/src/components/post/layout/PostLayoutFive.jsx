@@ -35,7 +35,7 @@ const PostLayoutFive = ({ data, index }) => {
           {data.excerpt}
         </p>
       </div>
-	  <div class="border-bottom"></div>
+	  <div className="border-bottom"></div>
     </div>
   );
 };

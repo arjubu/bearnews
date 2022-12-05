@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef ,useState} from 'react';
 
 const FormGroup = ({pClass, label, type, name, rows }) => {
+    const [comment, setComment] = useState("");
 
     const inputElement = useRef();
 
@@ -26,8 +27,8 @@ const FormGroup = ({pClass, label, type, name, rows }) => {
         <div className={`form-group ${pClass}`}>
             {label ? <label>{label}</label> : ""}
             {type === "textarea" ? 
-            <textarea type={type} name={name} ref={inputElement} rows={rows ?? 3} required />: 
-            <input type={type} name={name} ref={inputElement} required /> 
+            <textarea type={type} name={name} ref={inputElement} rows={rows ?? 3} required onChange={(e)=>{console.log(e.target.value)}} />: 
+            <input type={type} name={name} ref={inputElement} required/> 
             }
         </div>
     );
