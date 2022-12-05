@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "react-share": "^4.4.1",
     "react-stomp": "^5.1.0",
     "sockjs": "^0.3.24"
   }
