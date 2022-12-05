@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "BearWebGitHub",
+			"path": "../../../.."
+		},
+		{
+			"name": "BearWeb",
+			"path": "../../../../../My_Source/BearWeb"
+		}
+	],
+	"settings": {}
+}
