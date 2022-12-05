@@ -15,12 +15,11 @@ const Love = ({slug}) =>{
         if(cookies.username == undefined){
             error_login({ name: 'ID', message: "You have to login first"});
         }
-    
-    console.log("there you go love "+slug);
-        fetch('http://localhost:8080/addfav?articleId='+ slug+'&&userEmail=' +cookies.username
+           else{  NotificationManager.info('Added to your favorite article');
+            fetch('http://localhost:8080/addfav?articleId='+ slug+'&&userEmail=' +cookies.username
         )
           .then(response => {
-            });
+            });}
       
     }
     
@@ -30,6 +29,8 @@ const Love = ({slug}) =>{
           <button className="btn btn-primary" onClick={handleClick}>
             Love</button>
             {renderErrorMessage("ID")}
+            <NotificationContainer/>
+
             </>
       );
     
