@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useCookies } from 'react-cookie';
 import {
   MDBCol,
   MDBContainer,
@@ -207,6 +208,13 @@ function SearchResultList (){
     });
   };
 
+  let myurl = "/";
+  const [cookies, setCookie, removeCookie] = useCookies(['username']);
+
+  if(cookies.username!=undefined){
+    myurl = "/userHome"
+  }
+
   return (
     <>
       <OffcanvasMenu ofcshow={show} ofcHandleClose={handleClose} />
@@ -255,7 +263,7 @@ function SearchResultList (){
           <div className="container">
             <div className="navbar-inner">
               <div className="brand-logo-container">
-                <Link href="/">
+                <Link href={myurl}>
                   <a>
                     <Image
                       src="/images/Bear_Mark_1_Color_01.jpg"

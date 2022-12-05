@@ -1,6 +1,8 @@
 import WidgetInstagram from "../../widget/WidgetInstagram";
 import WidgetPost from "../../widget/WidgetPost";
 import Notification from "../Notification";
+import Link from "next/link";
+
 import WidgetSocialShare from "../../widget/WidgetSocialShare";
 import MetaDataOne from "./elements/meta/MetaDataOne";
 import PostAuthor from "./elements/PostAuthor";
@@ -29,6 +31,13 @@ const PostFormatStandard = ({postData, allData, slug}) => {
                   <article className="post-details">
                     <div className="single-blog-wrapper">
                       <div dangerouslySetInnerHTML={{__html: postContent}}></div>
+                      <div><a>Need more detail?          </a>
+                        <Link href={postData.detaillink} >
+                        <a>
+                           Click me
+                        </a>
+                        </Link>
+                        </div>
                     </div>
                   </article>
 				  <SocialShareBottom slug={slug}/>

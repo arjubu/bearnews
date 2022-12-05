@@ -161,6 +161,7 @@ export async function getPostBySlug(slug, fields = []) {
     url: "https://linkedin.com"}];
 
   items['author_bio'] = '';
+  items['detaillink'] = article.data.detailLink;
   //console.log(items);
 
   return items;
