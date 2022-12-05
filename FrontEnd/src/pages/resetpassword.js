@@ -38,21 +38,16 @@ function Login() {
           }
         })
           .then(response => {
+            return response.json();
              
-            if (response.status == 200) {
-              console.log('go'); 
-              window.location.href =  "/login";
+
               
-            } else if (response.status == 400) {
-              error_login({ name: "ID", message: response.responseMessage.message});
-              //throw new Error('Something went wrong ...');
-    
-            }else{
-              error_login({ name: "ID", message: response.responseMessage.message});
-              //throw new Error('Something went wrong ...');
-    
-            }
-              
+            }).then(data=>{
+              if (data.hasError == false) {
+                window.location.href =  "/login";
+              }else{
+                error_login({ name: "ID", message: data.responseMessage.message});
+              }
             });
           
           
