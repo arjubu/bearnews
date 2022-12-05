@@ -1,6 +1,7 @@
 package com.baylor.se.project.bearnews.Service;
 
 import com.baylor.se.project.bearnews.Controller.ServiceResponseHelper;
+import com.baylor.se.project.bearnews.Controller.dto.UserInterestDto;
 import com.baylor.se.project.bearnews.Controller.dto.UserProfileDto;
 import com.baylor.se.project.bearnews.Models.Article;
 import com.baylor.se.project.bearnews.Models.Tag;
@@ -122,16 +123,50 @@ public class UsersService {
             return true;
     }
 
-    public Users interestListAttach(List<String> interestLists,Long id){
-        Users usersToUpdate = new Users();
-        List<Tag> tagsToAttach = tagService.ListOfTagsFound(interestLists);
-        Optional<Users> userQueryOpt = userRepo.findById(id);
-        if(userQueryOpt.isPresent()){
-            usersToUpdate = userQueryOpt.get();
-            usersToUpdate.setIsLiked(tagsToAttach);
-            userRepo.save(usersToUpdate);
-        }
-        return usersToUpdate;
+    public ServiceResponseHelper interestListAttach(UserInterestDto userInterestDto){
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+
+       Optional<Users>usersQueryOpt = userRepo.findByEmail(userInterestDto.getUsername());
+       if(usersQueryOpt.isPresent()) {
+           Users usersQuery = usersQueryOpt.get();
+           String interests = userInterestDto.getTagsContaining();
+           ArrayList<String> iL = new ArrayList<>(Arrays.asList(interests.split(",")));
+           if(iL.size()>0){
+               List<Tag> isLikedTags = new ArrayList<>();
+               for(String s: iL){
+                   Tag queryTag = tagService.findTagsByText(s);
+                   if(queryTag!=null) {
+                       usersQuery.getIsLiked().add(queryTag);
+                   }
+                     //usersQuery.setIsLiked();
+               }
+               //usersQuery.setIsLiked(isLikedTags);
+               userRepo.save(usersQuery);
+               serviceResponseHelper.setHasError(false);
+               successResponse.put("message", "updated successfully");
+               serviceResponseHelper.setResponseMessage(successResponse);
+               serviceResponseHelper.setContent(null);
+
+           }
+           else{
+               serviceResponseHelper.setHasError(true);
+               errorResponse.put("message", "give valid tags");
+               serviceResponseHelper.setResponseMessage(errorResponse);
+               serviceResponseHelper.setContent(null);
+               return serviceResponseHelper;
+           }
+       }
+       else {
+           serviceResponseHelper.setHasError(true);
+           errorResponse.put("message", "No such users exsists");
+           serviceResponseHelper.setResponseMessage(errorResponse);
+           serviceResponseHelper.setContent(null);
+           return serviceResponseHelper;
+       }
+        return serviceResponseHelper;
+
 
     }
     public Users foundUserById(Long id){
@@ -325,6 +360,44 @@ public class UsersService {
 
         }
         else{
+            serviceResponseHelper.setHasError(true);
+            errorResponse.put("message", "No such user is there");
+            serviceResponseHelper.setResponseMessage(errorResponse);
+            serviceResponseHelper.setContent(null);
+            return serviceResponseHelper;
+        }
+
+    }
+
+    public ServiceResponseHelper displayUserTagsLiked(String userEmail){
+        Map errorResponse = new HashMap<>();
+        Map successResponse = new HashMap<>();
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+
+        Optional<Users> userQueryOpt = userRepo.findByEmail(userEmail);
+        if(userQueryOpt.isPresent()){
+            Users userQuery = userQueryOpt.get();
+            List<String> tagsLiked = new ArrayList<>();
+               if(userQuery.getIsLiked().isEmpty()==false){
+                   for(Tag t: userQuery.getIsLiked()){
+                       tagsLiked.add(t.getTagText());
+                   }
+                   serviceResponseHelper.setHasError(false);
+                   successResponse.put("message", "No Found Tags");
+                   serviceResponseHelper.setResponseMessage(successResponse);
+                   serviceResponseHelper.setContent(tagsLiked);
+                   return serviceResponseHelper;
+               }
+
+            else{
+                serviceResponseHelper.setHasError(false);
+                successResponse.put("message", "No Interest list found");
+                serviceResponseHelper.setResponseMessage(successResponse);
+                serviceResponseHelper.setContent(tagsLiked);
+                return serviceResponseHelper;
+            }
+        }
+        else {
             serviceResponseHelper.setHasError(true);
             errorResponse.put("message", "No such user is there");
             serviceResponseHelper.setResponseMessage(errorResponse);
