@@ -1,29 +1,27 @@
 import SectionTitle from "../elements/SectionTitle";
 import PostLayoutThree from "./layout/PostLayoutThree";
+import PostLayoutTwo from "./layout/PostLayoutTwo";
 
 const PostSectionTwo = ({ postData }) => {
 
   const storyPost = postData.filter(post => post.articleType === "TWITTER");
+  console.log("This is for twitter"+storyPost);
 
   return (
-    <div className="section-gap section-gap-top__with-text top-stories bg-grey-light-three">
+    <div className="section-gap section-gap-top__with-text trending-stories">
       <div className="container">
-        <SectionTitle title="Twitter News" btnText="All Top Stories" />
-        <div className="row">
-          <div className="col-lg-8">
-          	{storyPost.slice(0, 1).map((data) => (
-				<PostLayoutThree data={data} postSizeLg={true} key={data.slug}/>
-			))}
+        <SectionTitle title="Twitter News" />
+      <div className="row">
+        {storyPost.slice(0, 6).map((data) => (
+          <div className="col-lg-6" key={data.slug}>
+              <PostLayoutTwo data={data}/>
           </div>
-		  <div className="col-lg-4">
-		  	{storyPost.slice(1, 3).map((data) => (
-				<PostLayoutThree data={data} key={data.slug}/>
-			))}
-		  </div>
-        </div>
+        ))}
+      </div>
       </div>
     </div>
   );
+
 };
 
 export default PostSectionTwo;

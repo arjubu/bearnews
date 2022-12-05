@@ -41,7 +41,11 @@ export async function getPostSlugs() {
 export async function getTwitterPostSlugs() {
   //console.log(fs.readdirSync(postsDirectory));
   let Mylist = {};
+
     Mylist = await fetch('http://137.184.37.205:8080/getAllTwitterArticleTitle'
+
+  
+
   )
     .then(response => {
        
@@ -202,7 +206,10 @@ export async function getPostBySlug(slug, fields = []) {
 export async function getAllPosts(fields = []) {
   const slugs = await getPostSlugs();
   const baylorslugs = await getBaylorPostSlugs();
+  const Tslugs = await getTwitterPostSlugs();
   baylorslugs.forEach((slug)=>slugs.push(slug));
+  Tslugs.forEach((slug)=>slugs.push(slug));
+
   //fields.push("articleType");
   //console.log("fields");
 
