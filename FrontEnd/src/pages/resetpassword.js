@@ -12,6 +12,8 @@ function Login() {
     const [islogin, login_set_true] = useState(false);
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
+    const [otp, setOtp] =useState("");
+    const [repassword, setRepassword] = useState("");
     const [id, setID] = useState();
 
   
@@ -21,45 +23,40 @@ function Login() {
     };
   
     const login_handle = (event) => {
-      event.preventDefault();
-  
-      fetch('http://localhost', {
-        method: 'POST',
-        body: JSON.stringify({
-          email : username,
-          password : password
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        }
-      })
-        .then(response => {
-           
-          if (response.status == 200) {
-            console.log('go'); 
-            return response.json();
-            
-          } else {
-            error_login({ name: "ID", message: errors.username});
-            throw new Error('Something went wrong ...');
-  
+        event.preventDefault();
+    
+          fetch('http://localhost:8080/resetPassword', {
+          method: 'POST',
+          body: JSON.stringify({
+            username : username,
+            otp:otp,
+            newPassword:password,
+            retypeNewPassword:repassword
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
           }
-            
-          }).then(data=>{
-
-            if(data.list[0].isManager==0){
-              setID(data.list[0].id);
-              login_set_true(true);
+        })
+          .then(response => {
+             
+            if (response.status == 200) {
+              console.log('go'); 
+              window.location.href =  "/";
+              
+            } else if (response.status == 400) {
+              error_login({ name: "ID", message: response.renderMessage});
+              throw new Error('Something went wrong ...');
+    
+            }else{
+              error_login({ name: "ID", message: "Send email fail"});
+              throw new Error('Something went wrong ...');
+    
             }
-            else if(data.list[0].isManager==1){
-              setID(data.list[0].id);
-              login_set_true(true);
-            }
-          });
-        
-        
-    };
-  
+              
+            });
+          
+          
+      };
     const renderErrorMessage = (name) =>
       name === errorMessages.name && (
         <div className="error">{errorMessages.message}</div>
@@ -79,9 +76,11 @@ function Login() {
             <input type="text" name="username" id="username" required onChange={e => setUserName(e.target.value)}/>
             {renderErrorMessage("username")}
             <label>Code</label>
-            <input type="text" name="username" id="username" required onChange={e => setUserName(e.target.value)}/>
+            <input type="text" name="username" id="username" required onChange={e => setOtp(e.target.value)}/>
             <label>New password</label>
-            <input type="text" name="username" id="username" required onChange={e => setUserName(e.target.value)}/>
+            <input type="text" name="username" id="username" required onChange={e => setPassword(e.target.value)}/>
+            <label>Retype password</label>
+            <input type="text" name="username" id="username" required onChange={e => setRepassword(e.target.value)}/>
           </div>
 
           <div className="button-container">
@@ -122,13 +121,11 @@ function Login() {
                   </a>
                   </Link>
           {(() => {
-        if (islogin) {
-          navigate('/User/'+id, { state: { id: id}});
-        } else {
+
           return (
             renderForm
           )
-        }
+        
       })()}   
         </div>
         </div>

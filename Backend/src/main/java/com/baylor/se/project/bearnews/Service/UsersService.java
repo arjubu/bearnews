@@ -450,7 +450,7 @@ public class UsersService {
         Map successResponse = new HashMap<>();
         ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
 
-        Optional<Users> userQueryOpt = userRepo.findByEmail(requestBody.get("email"));
+        Optional<Users> userQueryOpt = userRepo.findByEmail(requestBody.get("username"));
         if(userQueryOpt.isPresent()){
             if(requestBody.get("otp") == null){
                 serviceResponseHelper.setHasError(true);
@@ -469,7 +469,7 @@ public class UsersService {
 
             DefaultJedisClientConfig defaultJedisClientConfig = DefaultJedisClientConfig.builder().password(redisPassword).build();
             Jedis jedis = new Jedis(redisServer, Integer.valueOf(redisPort),defaultJedisClientConfig);
-            String otp = jedis.get(requestBody.get("email"));
+            String otp = jedis.get(requestBody.get("username"));
 
             if(otp == null || !otp.equals(requestBody.get("otp"))){
                 serviceResponseHelper.setHasError(true);
@@ -480,6 +480,7 @@ public class UsersService {
             }
             String passwordHash = Hashing.sha256().hashString(requestBody.get("otp"), StandardCharsets.UTF_8).toString();
             userQueryOpt.get().setPassword(passwordHash);
+            userQueryOpt.get().set
             userRepo.save(userQueryOpt.get());
 
             serviceResponseHelper.setHasError(false);
