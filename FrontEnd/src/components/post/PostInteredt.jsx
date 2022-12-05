@@ -13,7 +13,7 @@ const [taglist,setTaglist] = useState([]);
 
 useEffect(() => {
     
-    fetch('http://137.184.37.205:8080/showUserInterest', {
+    fetch('http://localhost:8080/showUserInterest', {
         method: 'POST',
         body: JSON.stringify({
             useremail :cookies.username ,

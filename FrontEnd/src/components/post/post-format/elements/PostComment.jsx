@@ -55,7 +55,7 @@ function PostComment ({slug}) {
         error_login({ name: 'ID', message: "You need to login first to create a comment" });
       }else{
 
-    fetch('http://137.184.37.205:8080/insertComment?articleId='+slug, {
+    fetch('http://localhost:8080/insertComment?articleId='+slug, {
       method: 'POST',
       body: JSON.stringify({
         commentText: inputElement.current.value,

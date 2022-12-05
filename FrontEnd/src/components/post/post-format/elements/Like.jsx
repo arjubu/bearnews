@@ -6,7 +6,7 @@ const LikeButton = ({slug}) => {
   const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
-    fetch('http://137.184.37.205:8080/likecount?articleId='+slug
+    fetch('http://localhost:8080/likecount?articleId='+slug
   )
     .then(response => {
        
@@ -30,7 +30,7 @@ const LikeButton = ({slug}) => {
   const handleClick = () => {
    // window.location.reload(false);
 
-    fetch('http://137.184.37.205:8080/addlike?articleId='+slug
+    fetch('http://localhost:8080/addlike?articleId='+slug
     )
       .then(response => {
          

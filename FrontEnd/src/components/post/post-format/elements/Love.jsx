@@ -16,7 +16,7 @@ const Love = ({slug}) =>{
             error_login({ name: 'ID', message: "You have to login first"});
         }
            else{  NotificationManager.info('Added to your favorite article');
-            fetch('http://137.184.37.205:8080/addfav?articleId='+ slug+'&&userEmail=' +cookies.username
+            fetch('http://localhost:8080/addfav?articleId='+ slug+'&&userEmail=' +cookies.username
         )
           .then(response => {
             });}

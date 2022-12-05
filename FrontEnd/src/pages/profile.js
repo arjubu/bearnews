@@ -59,7 +59,7 @@ export default function PersonalProfile() {
   
     const getProfileData = async () => {
         const response = await fetch(
-            "http://137.184.37.205:8080/displayUserProfile", {
+            "http://localhost:8080/displayUserProfile", {
             method: 'POST',
             body: JSON.stringify({
                 username: cookies.username,
@@ -99,7 +99,7 @@ export default function PersonalProfile() {
         const [DATASET, setDataset] = useState();
       
          function handlerChange(input){
-             fetch('http://137.184.37.205:8080/getTagByLetter', {
+             fetch('http://localhost:8080/getTagByLetter', {
             method: 'POST',
             body: JSON.stringify({
               suggString : input,
@@ -190,7 +190,7 @@ export default function PersonalProfile() {
         console.log(tagstring);
         
         //console.log(tagsConsole)
-        fetch('http://137.184.37.205:8080/updateUserProfile', {
+        fetch('http://localhost:8080/updateUserProfile', {
             mode: 'cors',
             method: 'PUT',
             body: JSON.stringify({
