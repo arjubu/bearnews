@@ -1,33 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { useCookies } from 'react-cookie';
 
-class Love extends React.Component {
-    constructor() {
-      super();
-      this.state = {
-        liked: false
-      };
-      this.handleClick = this.handleClick.bind(this);
-    } 
+const Love = ({slug}) =>{
+    const [cookies, setCookie, removeCookie] = useCookies(['username']);
+
+    const [errorMessages, error_login] = useState('');
+    const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+      <div className="error">{errorMessages.message}</div>
+    );
+
+   const handleClick=()=> {
+        if(cookies.username == undefined){
+            error_login({ name: 'ID', message: "You have to login first"});
+        }
     
-    handleClick() {
-        console.log("there you go");
-      this.setState({
-        liked: !this.state.liked
-      });
+    console.log("there you go love "+slug);
+        fetch('http://localhost:8080/addfav?articleId='+ slug+'&&userEmail=' +cookies.username
+        )
+          .then(response => {
+            });
       
     }
     
-    render() {
-      const text = this.state.liked ? 'liked' : 'haven\'t liked';
-      const label = this.state.liked ? 'UnLove' : 'Love'
+
       return (
 <>
-          <button className="btn btn-primary" onClick={this.handleClick}>
-            {label}</button>
+          <button className="btn btn-primary" onClick={handleClick}>
+            Love</button>
+            {renderErrorMessage("ID")}
             </>
       );
-    }
+    
   }
   
   export default Love;

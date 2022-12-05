@@ -28,7 +28,7 @@ const LikeButton = ({slug}) => {
   });
 
   const handleClick = () => {
-    window.location.reload(false);
+   // window.location.reload(false);
 
     fetch('http://localhost:8080/addlike?articleId='+slug
     )
@@ -36,10 +36,10 @@ const LikeButton = ({slug}) => {
          
         if (response.status == 200) {
           console.log('go'); 
-         
+          setLikes(likes+1);
           
         } else {
-          setLikes(likes+1);
+          
           console.log("Something went wrong ...");
   
         }

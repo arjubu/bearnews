@@ -9,7 +9,7 @@ const SocialShareBottom = ({slug}) => {
         <Like slug={slug}/>
         </li>
         <li>
-          <Love/>
+          <Love slug={slug}/>
         </li>
       </ul>
     </div>
