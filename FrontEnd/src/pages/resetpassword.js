@@ -44,11 +44,11 @@ function Login() {
               window.location.href =  "/login";
               
             } else if (response.status == 400) {
-              error_login({ name: "ID", message: response.renderMessage});
+              error_login({ name: "ID", message: response.responseMessage.message});
               //throw new Error('Something went wrong ...');
     
             }else{
-              error_login({ name: "ID", message: response.renderMessage});
+              error_login({ name: "ID", message: response.responseMessage.message});
               //throw new Error('Something went wrong ...');
     
             }
@@ -74,13 +74,14 @@ function Login() {
           <div className="input-container">
             <label>Email address</label>
             <input type="text" name="username" id="username" required onChange={e => setUserName(e.target.value)}/>
-            {renderErrorMessage("username")}
+           
             <label>Code</label>
             <input type="text" name="username" id="username" required onChange={e => setOtp(e.target.value)}/>
             <label>New password</label>
             <input type="password" name="username" id="username" required onChange={e => setPassword(e.target.value)}/>
             <label>Retype password</label>
             <input type="password" name="username" id="username" required onChange={e => setRepassword(e.target.value)}/>
+            {renderErrorMessage("ID")}
           </div>
 
           <div className="button-container">
