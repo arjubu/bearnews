@@ -260,4 +260,18 @@ public class ArticleController {
     }
 
 
+
+    @RequestMapping("/testTweet")
+    public void testTweet() throws JsonProcessingException {
+        Map map = new HashMap();
+        ArrayList list = new ArrayList();
+        list.add("bearfeed");
+        map.put("hashTags",list);
+        map.put("description","bearfeed2");
+        map.put("detailLink","bearfeed2");
+        map.put("thumbLink","bearfeed2");
+        articleService.saveBaylorTweet(map);
+    }
+
+
 }
