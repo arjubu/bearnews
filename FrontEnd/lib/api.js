@@ -41,7 +41,7 @@ export async function getPostSlugs() {
 export async function getBaylorPostSlugs() {
   //console.log(fs.readdirSync(postsDirectory));
   let Mylist = {};
-    Mylist = await fetch('http://localhost:8080/fetchBaylorNewsArticleTitles'
+    Mylist = await fetch('http://137.184.37.205:8080/fetchBaylorNewsArticleTitles'
   )
     .then(response => {
        

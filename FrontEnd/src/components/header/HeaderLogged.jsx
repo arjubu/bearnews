@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useCookies } from 'react-cookie';
+import SockJsClient from 'react-stomp';
 
 import {
     MDBCol,
@@ -25,8 +26,7 @@ import SocialLink from "../../data/social/SocialLink.json";
 import MenuData from "../../data/menu/HeaderMenu.json";
 import OffcanvasMenu from "./OffcanvasMenu";
 import Select from 'react-select';
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Button extends React.Component {
 
@@ -66,17 +66,7 @@ const HeaderLogged = () => {
                     element.classList.remove("active");
                     element.childNodes[1].classList.remove("opened");
                 }
-                // } else {
-                //   dropdownList.forEach((submenu) => {
-                //     if (element !== submenu) {
-                //       submenu.classList.remove("active");
-                //       submenu.childNodes[1].classList.remove("opened");
-                //     } else {
-                //       submenu.classList.add("active");
-                //       submenu.childNodes[1].classList.add("opened");
-                //     }
-                //   });
-                // }
+             
             });
         });
     };
@@ -89,7 +79,22 @@ const HeaderLogged = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [cookies, setCookie,removeCookie] = useCookies(['username']);
+    const [cookies, setCookie, removeCookie] = useCookies(['username']);
+
+    const SOCKET_URL = 'http://localhost:8080/ws';
+    const [message, setMessage] = useState(' ');
+    const [bgClr, setBgClr] = useState("red");
+
+    const onMessageReceived = (msg) => {
+        setBgClr("yellow");
+        console.log("--message recieved function--");
+        setMessage(msg.message);
+        console.log(message);
+        console.log(msg)
+        
+        window.location.reload(false);
+        alert(msg.message);
+    }
 
     const handlerSearchChange = (e) => {
         setsearchValue(e);
@@ -220,6 +225,13 @@ const HeaderLogged = () => {
 
     return (
         <>
+            <SockJsClient
+                url={SOCKET_URL}
+                topics={['/topic/newPost']}
+                onConnect={console.log("Connected!")}
+                onMessage={msg => onMessageReceived(msg)}
+                debug={false}
+            />
             <OffcanvasMenu ofcshow={show} ofcHandleClose={handleClose} />
             <header className="page-header">
                 <div className="header-top bg-grey-dark-one">
@@ -253,6 +265,13 @@ const HeaderLogged = () => {
                                         </a>
                                     </li>
                                     <li>
+                                        <Button
+                                            variant="default"
+                                            style={{background: bgClr}}
+                                        >
+                                        </Button>
+                                    </li>
+                                    <li>
                                         <Link href="/profile">
                                             <a>Profile</a>
                                         </Link>
@@ -262,6 +281,7 @@ const HeaderLogged = () => {
                                             <a onClick={() =>logOutClick()}>Logout</a>
                                         </Link>
                                     </li>
+                                   
                                 </ul>
                             </div>
                         </div>

@@ -10,13 +10,16 @@ import PostSectionThree from "../components/post/PostSectionThree";
 import PostSectionTwo from "../components/post/PostSectionTwo";
 import PostInterest from "../components/post/PostInteredt"
 import HeaderLogged from "../components/header/HeaderLogged";
-import React, { useEffect } from 'react';
 
+
+import SockJsClient from 'react-stomp';
 import FullCalendar from "@fullcalendar/react";
 // The import order DOES MATTER here. If you change it, you'll get an error!
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useCookies } from 'react-cookie';
+import React, { useState, Component, useEffect } from "react";
+
 
 const HomeOne = ({ allPosts }) => {
     const [cookies, setCookie] = useCookies(['username'])
@@ -33,13 +36,18 @@ const HomeOne = ({ allPosts }) => {
             {cookies.username != "undefined" && (
                 <HeaderLogged />
             )}
+           
             <PostSectionOne postData={allPosts} />
             {/* {console.log(allPosts)} */}
             <PostSectionTwo postData={allPosts} />
             <PostSectionThree postData={allPosts} />
             <PostInterest postData={allPosts}/>
+           
+           
+
             {/* <PostSectionSix postData={allPosts}/> */}
             <FooterOne />
+          
         </>
     );
 }
