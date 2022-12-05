@@ -78,7 +78,7 @@ function Login() {
           </div>
 
           <div className="button-container">
-            <input type="submit" value="Send Email"/>
+            <input type="submit" value="Confirm"/>
           </div>
           <div className="forgotandreg">
           <div className="regis">
