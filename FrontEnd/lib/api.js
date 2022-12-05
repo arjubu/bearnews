@@ -8,7 +8,7 @@ const postsDirectory = join(process.cwd(), 'posts')
 export async function getPostSlugs() {
   //console.log(fs.readdirSync(postsDirectory));
   let Mylist = {};
-    Mylist = await fetch('http://localhost:8080/fetchArticleTitles'
+    Mylist = await fetch('http://137.184.37.205:8080/fetchArticleTitles'
   )
     .then(response => {
        
@@ -41,7 +41,7 @@ export async function getPostSlugs() {
 export async function getTwitterPostSlugs() {
   //console.log(fs.readdirSync(postsDirectory));
   let Mylist = {};
-    Mylist = await fetch('http://localhost:8080/getAllTwitterArticleTitle'
+    Mylist = await fetch('http://137.184.37.205:8080/getAllTwitterArticleTitle'
   )
     .then(response => {
        
@@ -73,7 +73,7 @@ export async function getTwitterPostSlugs() {
 export async function getBaylorPostSlugs() {
   //console.log(fs.readdirSync(postsDirectory));
   let Mylist = {};
-    Mylist = await fetch('http://localhost:8080/fetchBaylorNewsArticleTitles'
+    Mylist = await fetch('http://137.184.37.205:8080/fetchBaylorNewsArticleTitles'
   )
     .then(response => {
        
@@ -108,7 +108,7 @@ export async function getPostBySlug(slug, fields = []) {
   // console.log(realSlug);
 
   //console.log(typeof realSlug);
-    let article = await fetch('http://localhost:8080/fetchArticleById?articleId='+realSlug
+    let article = await fetch('http://137.184.37.205:8080/fetchArticleById?articleId='+realSlug
   )
     .then(response => {
        
