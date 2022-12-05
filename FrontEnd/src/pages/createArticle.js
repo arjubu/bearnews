@@ -34,9 +34,6 @@ name === errorMessages.name && (
   <div className="error">{errorMessages.message}</div>
 );
 
-useEffect(() => {
-    setCookie('username',cookies.username);
-  });
 
 function SearchResultList (){
     const [DATASET, setDataset] = useState();
