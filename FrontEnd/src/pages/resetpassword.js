@@ -40,10 +40,8 @@ function Login() {
           .then(response => {
             return response.json();
              
-
-              
             }).then(data=>{
-              if (data.hasError == false) {
+              if (data.data != undefined) {
                 window.location.href =  "/login";
               }else{
                 error_login({ name: "ID", message: data.responseMessage.message});
