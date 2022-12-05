@@ -45,11 +45,11 @@ function Login() {
               
             } else if (response.status == 400) {
               error_login({ name: "ID", message: response.renderMessage});
-              throw new Error('Something went wrong ...');
+              //throw new Error('Something went wrong ...');
     
             }else{
-              error_login({ name: "ID", message: "Send email fail"});
-              throw new Error('Something went wrong ...');
+              error_login({ name: "ID", message: response.renderMessage});
+              //throw new Error('Something went wrong ...');
     
             }
               
