@@ -90,7 +90,7 @@ const HeaderOne = () => {
 
   const handlerSearchChange = (e) => {
    setsearchValue(e);
-   window.location.href = "http://localhost:3000/category/"+ e;
+   window.location.href = "http://137.184.37.205:3000/category/"+ e;
 };
 
 
@@ -99,7 +99,7 @@ function SearchResultList (){
 
    function handlerChange(input){
     //setsearchValue(input);
-       fetch('http://localhost:8080/getTagByLetter', {
+       fetch('http://137.184.37.205:8080/getTagByLetter', {
            mode: 'cors',
       method: 'POST',
       body: JSON.stringify({

@@ -81,7 +81,7 @@ const HeaderLogged = () => {
     const handleShow = () => setShow(true);
     const [cookies, setCookie, removeCookie] = useCookies(['username']);
 
-    const SOCKET_URL = 'http://localhost:8080/ws';
+    const SOCKET_URL = 'http://137.184.37.205:8080/ws';
     const [message, setMessage] = useState(' ');
     const [bgClr, setBgClr] = useState("red");
 
@@ -99,7 +99,7 @@ const HeaderLogged = () => {
 
     const handlerSearchChange = (e) => {
         setsearchValue(e);
-        window.location.href = "http://localhost:3000/category/" + e;
+        window.location.href = "http://137.184.37.205:3000/category/" + e;
     };
     function logOutClick() {
         console.log("--logout button clicked---")
@@ -115,7 +115,7 @@ const HeaderLogged = () => {
 
         function handlerChange(input) {
             //setsearchValue(input);
-            fetch('http://localhost:8080/getTagByLetter', {
+            fetch('http://137.184.37.205:8080/getTagByLetter', {
                 mode: 'cors',
                 method: 'POST',
                 body: JSON.stringify({

@@ -24,7 +24,7 @@ function OTP() {
         console.log(cookies.username);
         console.log(otp);
 
-        fetch('http://localhost:8080/validateOtp', {
+        fetch('http://137.184.37.205:8080/validateOtp', {
         method: 'POST',
         body: JSON.stringify({
             email: cookies.username,
