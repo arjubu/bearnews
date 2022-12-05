@@ -3,19 +3,21 @@ import { getAllPosts, getPostBySlug } from "../../../lib/api";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import HeadMeta from "../../components/elements/HeadMeta";
 import FooterOne from "../../components/footer/FooterOne";
-import HeaderOne from "../../components/header/HeaderOne";
+import HeaderLogged from "../../components/header/HeaderLogged";
 import PostLayoutTwo from "../../components/post/layout/PostLayoutTwo";
 import WidgetCategory from "../../components/widget/WidgetCategory";
 import WidgetPost from "../../components/widget/WidgetPost";
 import { slugify } from "../../utils";
+import { useCookies } from 'react-cookie';
 
 const PostAuthor = ({postData, allPosts}) => {
     const authorContent = postData[0];
-
+    const [cookies, setCookie] = useCookies(['username'])
+    console.log(cookies.username);
     return ( 
         <>
         <HeadMeta metaTitle={authorContent.author_name} />
-        <HeaderOne />
+        <HeaderLogged />
         <Breadcrumb aPage={authorContent.author_name} />
         <div className="banner banner__default bg-grey-light-three">
             <div className="container">
@@ -40,7 +42,6 @@ const PostAuthor = ({postData, allPosts}) => {
                                     <div className="post-metas">
                                         <ul className="list-inline">
                                             <li><a href="#"><i className="fal fa-user-edit" />Total Post ({postData.length})</a></li>
-                                            <li><a href="#"><i className="fal fa-comment" />Comments (12)</a></li>
                                         </ul>
                                     </div>
                                     <div className="author-social-share">

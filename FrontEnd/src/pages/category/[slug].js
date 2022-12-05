@@ -8,7 +8,7 @@ import WidgetSocialShare from "../../components/widget/WidgetSocialShare";
 import WidgetPost from "../../components/widget/WidgetPost";
 import PostLayoutTwo from "../../components/post/layout/PostLayoutTwo";
 import WidgetCategory from "../../components/widget/WidgetCategory";
-
+import HeaderLogged from "../../components/header/HeaderLogged";
 
 const PostCategory = ({ postData, allPosts }) => {
     const cateContent = postData[0];
@@ -16,7 +16,7 @@ const PostCategory = ({ postData, allPosts }) => {
     return (
         <>
             <HeadMeta metaTitle={cateContent.cate}/>
-            <HeaderOne />
+            <HeaderLogged />
             <Breadcrumb aPage={cateContent.cate} />
             {/* Banner Start here  */}
             <div className="banner banner__default bg-grey-light-three">

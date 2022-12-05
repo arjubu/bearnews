@@ -10,13 +10,16 @@ import PostFormatStandard from "../../components/post/post-format/PostFormatStan
 import PostFormatText from "../../components/post/post-format/PostFormatText";
 import PostFormatVideo from "../../components/post/post-format/PostFormatVideo";
 import PostSectionSix from "../../components/post/PostSectionSix";
-
+import HeaderLogged from "../../components/header/HeaderLogged";
+import { useCookies } from 'react-cookie';
 
 const PostDetails = ({postContent, allPosts}) => {
 	
 //console.log(postContent)
 
 	const PostFormatHandler = () => {
+		const [cookies, setCookie] = useCookies(['username'])
+		console.log(cookies.username);
 		
 		if (postContent.postFormat === 'video') {
 			return <PostFormatVideo postData={postContent} allData={allPosts}/>
@@ -34,7 +37,7 @@ const PostDetails = ({postContent, allPosts}) => {
     return ( 
         <>
 		<HeadMeta metaTitle="Post Details"/>
-        <HeaderOne />
+        <HeaderLogged />
         <Breadcrumb bCat={postContent.cate} aPage={postContent.title}/>
 		<PostFormatHandler />
         <FooterOne />
