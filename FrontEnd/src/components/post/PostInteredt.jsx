@@ -1,14 +1,14 @@
 import SectionTitle from "../elements/SectionTitle";
 import PostLayoutTwo from "./layout/PostLayoutTwo";
 
-const PostSectionThree = ({ postData }) => {
+const PostInterest = ({ postData }) => {
 //console.log(postData);
 const trendingPost = postData.filter(post => post.articleType === "BAYLORNEWS");
 
   return (
     <div className="section-gap section-gap-top__with-text trending-stories">
       <div className="container">
-        <SectionTitle title="Baylor News" btnText="ALL Baylor News" btnUrl="/category/baylornews"/>
+        <SectionTitle title="Recommondation" />
       <div className="row">
         {trendingPost.slice(0, 6).map((data) => (
           <div className="col-lg-6" key={data.slug}>
@@ -21,4 +21,4 @@ const trendingPost = postData.filter(post => post.articleType === "BAYLORNEWS");
   );
 };
 
-export default PostSectionThree;
+export default PostInterest;

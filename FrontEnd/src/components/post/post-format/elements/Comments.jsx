@@ -18,9 +18,10 @@ import {
     MDBListGroup,
     MDBListGroupItem
   } from 'mdb-react-ui-kit';
+import { useEffect } from "react";
 
   function DeleteComment(id) {
-    fetch('http://localhost:8080/deleteComment?commentId='+id, {
+    fetch('http://137.184.37.205:8080/deleteComment?commentId='+id, {
         method: 'DELETE',
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -29,7 +30,7 @@ import {
         .then(response => {
            
           if (response.status == 200) {
-            console.log('deleted');             
+           // console.log('deleted');             
           } 
             
           });
@@ -65,13 +66,14 @@ function CommentList({slug}) {
     //   {username: 'Jerry', content: 'Hello'},
     //   {username: 'Tomy', content: 'World'},
     //   {username: 'Lucy', content: "window.location.href"}
-    console.log("slug for the comment reveiving: "+slug);  
-    fetch('http://localhost:8080/fetchArticleAndComments/'+slug
+    //console.log("slug for the comment reveiving: "+slug); 
+    useEffect(() => {
+    fetch('http://137.184.37.205:8080/fetchArticleAndComments/'+slug
   )
     .then(response => {
        
       if (response.status == 200) {
-        console.log('go'); 
+        //console.log('go'); 
         return response.json();
         
       } else {
@@ -86,8 +88,9 @@ function CommentList({slug}) {
         setComment(data.content.commentUsers);
         //console.log(Mylist);
       });
+    });
     
-      console.log(comments);
+      //console.log(comments);
 
       
 

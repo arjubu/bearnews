@@ -1,5 +1,7 @@
 package com.baylor.se.project.bearnews.Controller.dto;
 
+import com.baylor.se.project.bearnews.Models.ArticleType;
+
 import java.time.LocalDateTime;
 public class ArticleResponseDto {
     public long idOfArticle;
@@ -12,6 +14,12 @@ public class ArticleResponseDto {
     public String titleOfArticle;
     public String contentOfArticle;
     public LocalDateTime timeOfCreation;
+
+    public  String thumbLink;
+
+    public String detailLink;
+
+    public ArticleType articleType;
 
     public long getIdOfArticle() {
         return idOfArticle;
@@ -83,5 +91,29 @@ public class ArticleResponseDto {
 
     public void setTimeOfCreation(LocalDateTime timeOfCreation) {
         this.timeOfCreation = timeOfCreation;
+    }
+
+    public String getThumbLink() {
+        return thumbLink;
+    }
+
+    public void setThumbLink(String thumbLink) {
+        this.thumbLink = thumbLink;
+    }
+
+    public String getDetailLink() {
+        return detailLink;
+    }
+
+    public void setDetailLink(String detailLink) {
+        this.detailLink = detailLink;
+    }
+
+    public ArticleType getArticleType() {
+        return articleType;
+    }
+
+    public void setArticleType(ArticleType articleType) {
+        this.articleType = articleType;
     }
 }

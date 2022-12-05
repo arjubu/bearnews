@@ -76,7 +76,7 @@ export async function getPostBySlug(slug, fields = []) {
   // console.log(realSlug);
 
   //console.log(typeof realSlug);
-    let article = await fetch('http://137.184.37.205:8080/fetchArticleById?articleId='+realSlug
+    let article = await fetch('http://localhost:8080/fetchArticleById?articleId='+realSlug
   )
     .then(response => {
        
@@ -121,7 +121,7 @@ export async function getPostBySlug(slug, fields = []) {
   items['cate'] = article.data.textOfTag;
   items['author_name'] = article.data.firstNameofCreator +" "+article.data.lastNameofCreator;
   items['postFormat'] = 'standard';
-  if(article.data.nameofCreator == "BAYLORNEWS"){
+  if(article.data.articleType == "BAYLORNEWS"){
     items['cate_bg'] = 'bg-color-green-one';
   }else{
     items['cate_bg'] = 'bg-color-purple-one';
@@ -136,11 +136,13 @@ export async function getPostBySlug(slug, fields = []) {
       items['featureImg'] = article.data.image;
     }
 
-    if(article.data.thumbLink!=null && article.data.thumbLink!=undefined && article.data.thumbLink!="undefined" ){
+    if(article.data.thumbLink!=null && article.data.thumbLink!=undefined && article.data.thumbLink!="undefined"  && article.data.thumbLink!=''){
        console.log(article.data.thumbLink);
       items['featureImg'] = article.data.thumbLink;
     }
   items['author_img'] = '/images/author/amachea_jajah.png';
+  items['articleType'] = article.data.articleType;
+  console.log("data TYPE: "+slug+ " "+article.data.articleType);
   items['author_social'] =     
   [
   {icon: "fab fa-facebook-f",
@@ -161,14 +163,17 @@ export async function getPostBySlug(slug, fields = []) {
   items['author_bio'] = '';
   //console.log(items);
 
-  return items
+  return items;
 }
 
 export async function getAllPosts(fields = []) {
   const slugs = await getPostSlugs();
   const baylorslugs = await getBaylorPostSlugs();
   baylorslugs.forEach((slug)=>slugs.push(slug));
-  //console.log(slugs);
+  //fields.push("articleType");
+  //console.log("fields");
+
+  //console.log(fields);
   
    const posts = await Promise.all(slugs.map( async(slug) => getPostBySlug(slug, fields)))
      //console.log("posts");
@@ -176,15 +181,7 @@ export async function getAllPosts(fields = []) {
 
   return posts;
 }
-export async function getAllBaylorPosts(fields = []) {
-  const slugs = await getPostSlugs();
 
-   const posts = await Promise.all(slugs.map( async(slug) => getPostBySlug(slug, fields)))
-     //console.log("posts");
-     //console.log(posts);
-
-  return posts;
-}
 
 
 // Get Markdown File Content 

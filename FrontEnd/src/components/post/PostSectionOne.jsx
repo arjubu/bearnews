@@ -9,13 +9,17 @@ import PostLayoutSix from "./layout/PostLayoutSix";
 
 
 const PostSectionOne = ({postData}) => {
+  // console.log("article info");
+  // console.log(postData);
     SortingByDate(postData);
+    const trendingPost = postData.filter(post => post.articleType === "SYSTEM");
+
     return (
       <div className="recent-news-wrapper section-gap p-t-xs-15 p-t-sm-60">
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
-              {postData.slice(0, 1).map((data) => (
+              {trendingPost.slice(0, 1).map((data) => (
                 <PostLayoutOne data={data} key={data.slug} />
               ))}
             </div>
@@ -27,7 +31,7 @@ const PostSectionOne = ({postData}) => {
                   pClass="m-b-xs-30"
                 />
                 <div className="axil-content">
-                	{postData.slice(1, 5).map((data) =>(
+                	{trendingPost.slice(1, 5).map((data) =>(
                     	<PostLayoutFive data={data} key={data.slug} />
                   	))}
                 </div>

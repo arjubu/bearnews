@@ -251,5 +251,13 @@ public class ArticleController {
 
     }
 
+    @RequestMapping(value = "/addfav", method = RequestMethod.GET)
+    public ResponseEntity<?> favAnArticle( @RequestParam (name="articleId" , required = true) Long articleId,
+                                           @RequestParam(name="userEmail") String userEmail) throws JsonProcessingException{
+        articleService.favAnArticle(userEmail,articleId);
+        return new ResponseEntity(HttpStatus.OK);
+
+    }
+
 
 }
