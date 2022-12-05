@@ -4,6 +4,7 @@ package com.baylor.se.project.bearnews.Controller;
 
 import com.baylor.se.project.bearnews.Controller.dto.CommentDto;
 import com.baylor.se.project.bearnews.Controller.dto.EventDto;
+import com.baylor.se.project.bearnews.Controller.dto.WebMsgDto;
 import com.baylor.se.project.bearnews.Models.Event;
 import com.baylor.se.project.bearnews.Models.Tag;
 import com.baylor.se.project.bearnews.ResponseObjectMappers.ArticleWithUsersObjectMapper;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -27,6 +29,9 @@ public class EventController {
 
     @Autowired
     EventService eventService;
+
+    @Autowired
+    SimpMessagingTemplate template;
 
 @GetMapping("/getAllEvent")
 public List<Event> getAllEvent()
@@ -43,12 +48,16 @@ public List<Event> getAllEvent()
     public ResponseEntity<?> createEvent(@RequestBody Event event) throws JsonProcessingException{
         ServiceResponseHelper serviceResponseHelper = eventService.createEvent(event);
         ObjectMapper objectMapper = new ObjectMapper();
+        WebMsgDto webMsgDto = new WebMsgDto();
+
         if(serviceResponseHelper.getHasError()){
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper),HttpStatus.OK);
         }
         else {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("data", serviceResponseHelper.getContent());
+            webMsgDto.setMessage(objectMapper.writeValueAsString(serviceResponseHelper.getResponseMessage()));
+            template.convertAndSend("/topic/newPost", webMsgDto);
             return new ResponseEntity<>(objectMapper.writeValueAsString(serviceResponseHelper.getResponseMessage()),HttpStatus.OK);
         }
     }
