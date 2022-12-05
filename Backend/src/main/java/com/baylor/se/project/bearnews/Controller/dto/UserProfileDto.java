@@ -6,9 +6,8 @@ public class UserProfileDto {
 
     public String reqUserEmail;
 
-    public String reqFirstName;
+    public String reqName;
 
-    public String reqLastName;
 
     public String reqSocialLink;
 
@@ -18,26 +17,15 @@ public class UserProfileDto {
         return reqUserEmail;
     }
 
-    public String getReqFirstName() {
-        return reqFirstName;
-    }
-
-    public void setReqFirstName(String reqFirstName) {
-        this.reqFirstName = reqFirstName;
-    }
-
-    public void setReqUserEmail(String reqUserEmail) {
+    public void setReqUserEmail(String reqUserEmail){
         this.reqUserEmail = reqUserEmail;
     }
-
-    public String getReqLastName() {
-        return reqLastName;
+    public String getReqName() {
+        return reqName;
     }
-
-    public void setReqLastName(String reqLastName) {
-        this.reqLastName = reqLastName;
+    public void setReqName(String reqName) {
+        this.reqName = reqName;
     }
-
     public String getReqSocialLink() {
         return reqSocialLink;
     }
@@ -53,4 +41,5 @@ public class UserProfileDto {
     public void setReqInterestList(List<String> reqInterestList) {
         this.reqInterestList = reqInterestList;
     }
+
 }

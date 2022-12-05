@@ -40,7 +40,8 @@ public class UsersService {
     @Autowired
     TagService tagService;
 
-
+//    @Autowired
+//    ArticleRepository articleRepository;
 
     public static boolean patternMatches(String emailAddress, String regexPattern) {
         return Pattern.compile(regexPattern)
@@ -335,8 +336,8 @@ public class UsersService {
             Users userQuery = userQueryOpt.get();
 
             userProfileDto.setReqUserEmail(userQuery.getEmail());
-            userProfileDto.setReqFirstName(userQuery.getFirstName());
-            userProfileDto.setReqLastName(userQuery.getLastName());
+            userProfileDto.setReqName(userQuery.getFirstName()+" "+userQuery.getLastName());
+            //userProfileDto.setfavouriteArticleTitle(userQuery.getFavouriteArticleTitle());
             if(userQuery.getSocialMediaLink()==null)
                 userProfileDto.setReqSocialLink("no url found");
             if(userQuery.getIsLiked().isEmpty()==false){
@@ -347,6 +348,13 @@ public class UsersService {
                 }
                 userProfileDto.setReqInterestList(interestTagsToShow);
             }
+//            if(userQuery.getlikedArticleId()!=null){
+//                Optional<Article> articleOptional = articleService.fetchArticle(userQuery.getlikedArticleId());
+//                if(articleOptional.isPresent()){
+//                    userProfileDto.setfavouritesArticleId(articleOptional.get().getId());
+//                    userProfileDto.setfavouriteArticleTitle(articleOptional.get().getTitle());
+//                }
+//            }
             else{
                 List<String> interestTagsToShow = new ArrayList<>();
                 interestTagsToShow.add("select tags to interest list");

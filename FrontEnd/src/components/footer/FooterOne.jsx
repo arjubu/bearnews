@@ -115,6 +115,7 @@ const FooterOne = () => {
             </div>
             <div className="col-md-9">
             <Link href="/">
+              <a>
             <Image 
                          src="/images/GoBear.png"
                          alt="footer logo"
@@ -122,6 +123,7 @@ const FooterOne = () => {
                          width={500}
                          height={250}
                         />
+                        </a>
                         </Link>
                                         </div>
                                         
