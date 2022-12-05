@@ -85,11 +85,11 @@ function Login() {
           </div>
           <div className="input-container">
             <label>Password </label>
-            <input type="text" name="Password" required onChange={e => setPassword(e.target.value)}/>
+            <input type="password" name="Password" required onChange={e => setPassword(e.target.value)}/>
           </div>
           <div className="input-container">
             <label>Re-enter Password </label>
-            <input type="text" name="Password" required onChange={e => setRepassword(e.target.value)}/>
+            <input type="password" name="Password" required onChange={e => setRepassword(e.target.value)}/>
           </div>
           <div className="input-container">
             <label>First Name </label>
