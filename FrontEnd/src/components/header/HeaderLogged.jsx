@@ -99,7 +99,7 @@ const HeaderLogged = () => {
 
     const handlerSearchChange = (e) => {
         setsearchValue(e);
-        window.location.href = "http://137.184.37.205:3000/category/" + e;
+        window.location.href = "/category/" + e;
     };
     function logOutClick() {
         console.log("--logout button clicked---")
