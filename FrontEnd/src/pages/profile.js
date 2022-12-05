@@ -47,6 +47,9 @@ export default function PersonalProfile() {
     var tags = [];
     const [err, setErr] = useState('');
     const [errorMessages, error_login] = useState('');
+    const [email, setEmail] = useState("");
+    const [socialLink, setSocialLink] = useState("");
+    const [Alltag, setAlltag] = useState([]);
 
     console.log("--profile page cookie--");
     console.log(cookies.username);
@@ -56,7 +59,7 @@ export default function PersonalProfile() {
   
     const getProfileData = async () => {
         const response = await fetch(
-            "http://137.184.37.205:8080/displayUserProfile", {
+            "http://localhost:8080/displayUserProfile", {
             method: 'POST',
             body: JSON.stringify({
                 username: cookies.username,
@@ -77,6 +80,13 @@ export default function PersonalProfile() {
                 console.log('response', response);
                 console.log("--response fields--");
                 console.log(response.data.reqLastName);
+                setName(response.data.reqName)
+                setEmail(response.data.reqUserEmail);
+                setSocialLink(response.data.reqSocialLink);
+                let t = "";
+                response.data.reqInterestList.forEach(element => t = t+element+" , ");
+                t = t.slice(0,-2)
+                setAlltag(t);
                 console.log(response.data.reqInterestList);
                       
                     })
@@ -142,6 +152,7 @@ export default function PersonalProfile() {
             <div className="upload-tag">
   
               <Creatable
+              placeholder="Change my interest to..."
               isMulti
               onInputChange = {(event) => handlerChange(event) }
               options={DATASET}
@@ -247,16 +258,9 @@ export default function PersonalProfile() {
 
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="twitter fa-lg" style={{ color: '#55acee' }} />
-                    <MDBCardText>@mdbootstrap</MDBCardText>
+                    <MDBCardText>{socialLink}</MDBCardText>
                   </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="instagram fa-lg" style={{ color: '#ac2bac' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
+   
                 </MDBListGroup>
               </MDBCardBody>
             </MDBCard>
@@ -269,7 +273,7 @@ export default function PersonalProfile() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Johnatan Smith</MDBCardText>
+                    <MDBCardText className="text-muted">{name}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -278,34 +282,7 @@ export default function PersonalProfile() {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">example@example.com</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Phone</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(097) 234-5678</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Mobile</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(098) 765-4321</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Address</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
+                    <MDBCardText className="text-muted">{email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -314,7 +291,7 @@ export default function PersonalProfile() {
                     <MDBCardText>My interest tags</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">tag,tag</MDBCardText>
+                    <MDBCardText className="text-muted">{Alltag}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>
