@@ -38,6 +38,38 @@ export async function getPostSlugs() {
   return a;
 }
 
+export async function getTwitterPostSlugs() {
+  //console.log(fs.readdirSync(postsDirectory));
+  let Mylist = {};
+    Mylist = await fetch('http://localhost:8080/getAllTwitterArticleTitle'
+  )
+    .then(response => {
+       
+      if (response.status == 200) {
+        console.log('go'); 
+        return response.json();
+        
+      } else {
+        
+        console.log("Something went wrong ...");
+
+      }
+        
+      }).then(data=>{
+
+        return data;
+        //console.log(Mylist);
+      });
+      let a = [];
+      Mylist.forEach(myfunction)
+      function myfunction(item){
+        a.push(item);
+      }
+      //console.log(a);
+      //console.log(JSON.parse(Mylist));
+  return a;
+}
+
 export async function getBaylorPostSlugs() {
   //console.log(fs.readdirSync(postsDirectory));
   let Mylist = {};

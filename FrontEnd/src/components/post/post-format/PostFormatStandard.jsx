@@ -11,11 +11,29 @@ import Comments from "./elements/Comments";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import SocialShareBottom from "./elements/SocialShareBottom";
 import SocialShareSide from "./elements/SocialShareSide";
+import { useState } from "react";
+import { Cookies } from "next/dist/server/web/spec-extension/cookies";
 
 
 const PostFormatStandard = ({postData, allData, slug}) => {
   // console.log("postData");
   // console.log(postData);
+  const [iflink,setiflink] = useState("");
+  const renderErrorMessage = (name) =>
+  name === iflink && (
+    <div><a>Need more detail?          </a>
+                        <Link href={postData.detaillink} >
+                        <a>
+                           Click me
+                        </a>
+                        </Link>
+                        </div>
+  );
+
+  if(postData.detaillink!=null){
+    setiflink("ID");
+  }
+
   const basePathLink = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_BASEPATH ?? "" : "";
   
   const postContent = postData.content.replaceAll('/images/', basePathLink + '/images/');
@@ -31,13 +49,7 @@ const PostFormatStandard = ({postData, allData, slug}) => {
                   <article className="post-details">
                     <div className="single-blog-wrapper">
                       <div dangerouslySetInnerHTML={{__html: postContent}}></div>
-                      <div><a>Need more detail?          </a>
-                        <Link href={postData.detaillink} >
-                        <a>
-                           Click me
-                        </a>
-                        </Link>
-                        </div>
+                      {renderErrorMessage("ID")}
                     </div>
                   </article>
 				  <SocialShareBottom slug={slug}/>
@@ -50,7 +62,6 @@ const PostFormatStandard = ({postData, allData, slug}) => {
               </div>
               <div className="col-lg-4">
                 <div className="post-sidebar">
-                  <WidgetSocialShare />
                   <WidgetPost dataPost={allData} />
                   {/* <WidgetInstagram /> */}
                 </div>
