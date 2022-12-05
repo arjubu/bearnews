@@ -235,7 +235,9 @@ public class ArticleService {
         articles.add(article);
         users.setArticles(articles);
         usersRepository.save(users);*/
-        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,article,null);
+        Map successResponse = new HashMap<>();
+        successResponse.put("message","New tweet about baylor!");
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,article,successResponse);
         simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
 
     }
