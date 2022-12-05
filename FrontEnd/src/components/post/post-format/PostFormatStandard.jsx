@@ -11,7 +11,7 @@ import Comments from "./elements/Comments";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import SocialShareBottom from "./elements/SocialShareBottom";
 import SocialShareSide from "./elements/SocialShareSide";
-import { useState } from "react";
+import { useState,useEffect  } from "react";
 import { Cookies } from "next/dist/server/web/spec-extension/cookies";
 
 
@@ -29,10 +29,12 @@ const PostFormatStandard = ({postData, allData, slug}) => {
                         </Link>
                         </div>
   );
+  useEffect(() => {
+    if(postData.detaillink!=null){
+      setiflink("ID");
+    }  });
 
-  if(postData.detaillink!=null){
-    setiflink("ID");
-  }
+ 
 
   const basePathLink = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_BASEPATH ?? "" : "";
   
