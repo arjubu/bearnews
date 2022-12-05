@@ -53,6 +53,7 @@ public class ArticleService {
         String tagContainingText = articleDto.getTagContainingText();
         Tag tagsToAttach = tagRepository.findTagsByTagText(tagContainingText);
         String userSentEmail = articleDto.getCreatedUsersEmail();
+
         Optional<Users> usersQueryopt = usersRepository.findByEmail(userSentEmail);
 
         if(articleDto.getArticleTitle()==""){
@@ -191,7 +192,9 @@ public class ArticleService {
         }
        // users.setArticles(articles);
         //usersRepository.save(users);
-        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        Map successResponse = new HashMap<>();
+        successResponse.put("message","New news from baylor news!");
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,successResponse);
         simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
         /*for (Article a: articles){
             ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,a,null);
