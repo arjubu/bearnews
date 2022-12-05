@@ -478,15 +478,16 @@ public class UsersService {
                 serviceResponseHelper.setContent(null);
                 return serviceResponseHelper;
             }
-            String passwordHash = Hashing.sha256().hashString(requestBody.get("otp"), StandardCharsets.UTF_8).toString();
-            userQueryOpt.get().setPassword(passwordHash);
-            userQueryOpt.get().set
-            userRepo.save(userQueryOpt.get());
+            Users existingUser = userQueryOpt.get();
+            String passwordHash = Hashing.sha256().hashString(requestBody.get("newPassword"), StandardCharsets.UTF_8).toString();
+            existingUser.setPassword(passwordHash);
+            existingUser.setActive(true);
+            userRepo.save(existingUser);
 
             serviceResponseHelper.setHasError(false);
             successResponse.put("message", "Password reset successful!");
             serviceResponseHelper.setResponseMessage(successResponse);
-            serviceResponseHelper.setContent(userQueryOpt);
+            serviceResponseHelper.setContent(existingUser);
             return serviceResponseHelper;
 
         }else{

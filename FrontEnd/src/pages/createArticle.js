@@ -252,10 +252,10 @@ return (
         <h6 className="mb-0">Upload Picture or Media</h6>
         </MDBCol>
 
-        <MDBCol md='9' className='pe-5'>
+        {/* <MDBCol md='9' className='pe-5'>
         <MDBFile size='lg' id='customFile' onChange={e => setFiles(e.target.files)} />
         <div className="small text-muted mt-2">Upload your picture if you want. Max file size 50 MB</div>
-        </MDBCol>
+        </MDBCol> */}
 
     </MDBRow>
 
