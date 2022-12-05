@@ -25,7 +25,7 @@ function Login() {
     const login_handle = (event) => {
         event.preventDefault();
     
-          fetch('http://localhost:8080/resetPassword', {
+          fetch('http://137.184.37.205:8080/resetPassword', {
           method: 'POST',
           body: JSON.stringify({
             username : username,

@@ -183,15 +183,20 @@ public class ArticleService {
 
 
                 article.setContains(tags1.get(0));
-                articles.add(article);
+                articleRepository.save(article);
+                usersService.usersArticleAttach(users.getId(), article);
+                //articles.add(article);
             }
+
         }
-        users.setArticles(articles);
-        usersRepository.save(users);
-        for (Article a: articles){
+       // users.setArticles(articles);
+        //usersRepository.save(users);
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(false,null,null);
+        simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
+        /*for (Article a: articles){
             ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,a,null);
             simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
-        }
+        }*/
 
     }
 
@@ -223,11 +228,16 @@ public class ArticleService {
             List<Tag> tags1 = tagRepository.findByTagText("BEARFEED");
             article.setContains(tags1.get(0));
         }
-        List<Article> articles = new ArrayList<>();
+
+        articleRepository.save(article);
+        usersService.usersArticleAttach(users.getId(), article);
+        /*List<Article> articles = new ArrayList<>();
         articles.add(article);
         users.setArticles(articles);
-        usersRepository.save(users);
-        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,article,null);
+        usersRepository.save(users);*/
+        Map successResponse = new HashMap<>();
+        successResponse.put("message","New tweet about baylor!");
+        ServiceResponseHelper serviceResponseHelper = new ServiceResponseHelper(true,article,successResponse);
         simpMessagingTemplate.convertAndSend("/topic/newPost",new ObjectMapper().writeValueAsString(serviceResponseHelper));
 
     }
@@ -363,7 +373,7 @@ public class ArticleService {
         if(queryArticleOpt.isPresent()){
             queryArticle = queryArticleOpt.get();
             List<Users> authorQuery = usersService.findingArticlesByUser(queryArticle.getId());
-            if(authorQuery.isEmpty()==false){
+            //if(authorQuery.isEmpty()==false){
 
                 sentArticleResp.setIdOfCreator(authorQuery.get(0).getId());
                 sentArticleResp.setFirstNameofCreator(authorQuery.get(0).getFirstName());
@@ -387,14 +397,14 @@ public class ArticleService {
                 serviceResponseHelper.setContent(sentArticleResp);
                 return serviceResponseHelper;
 
-            }
-            else{
+           // }
+            /*else{
                 serviceResponseHelper.setHasError(true);
                 errorResponse.put("message", "article author is empty");
                 serviceResponseHelper.setResponseMessage(errorResponse);
                 serviceResponseHelper.setContent(null);
                 return serviceResponseHelper;
-            }
+            }*/
         }
         else{
             serviceResponseHelper.setHasError(true);

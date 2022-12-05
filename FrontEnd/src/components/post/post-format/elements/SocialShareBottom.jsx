@@ -1,6 +1,6 @@
 import Like from "./Like"
 import Love from "./Love"
-import ShareToFB from "./ShareToFB"
+import Facebook from "./ShareToFB"
 const SocialShareBottom = ({slug}) => {
   return (
     <div className="post-shares m-t-xs-60">
@@ -13,7 +13,8 @@ const SocialShareBottom = ({slug}) => {
           <Love slug={slug}/>
         </li>
         <li>
-          <ShareToFB slug={slug}/>
+          {/* <ShareToFB slug={slug}/> */}
+          <Facebook url={"http://bearfeed.online/post/"+slug} />
         </li>
       </ul>
     </div>
